@@ -1,7 +1,9 @@
 package com.example.hotel.exception;
 
 import com.example.hotel.constant.AppConstant;
+import com.example.hotel.model.response.ErrorResponseObj;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,7 +17,7 @@ public class BookingExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponseObj> handleInvalidArgument(MethodArgumentNotValidException ex) {
 
         // This map store the error fields and corresponding error messages
         Map<String, String> errors = new HashMap<String, String>();
@@ -33,18 +35,24 @@ public class BookingExceptionHandler {
                     errors.put(fieldInfo.toString(), error.getDefaultMessage());
                 }
         );
-        return errors;
+        ErrorResponseObj errObj = ErrorResponseObj.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .errors(errors).build();
+        return new ResponseEntity<>(errObj, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BookingBusinessException.class)
-    public Map<String, String> handleBusinessException(BookingBusinessException ex) {
+    public ResponseEntity<ErrorResponseObj> handleBusinessException(BookingBusinessException ex) {
         // This map store the error fields and corresponding error messages
         Map<String, String> errors = new HashMap<String, String>();
 
         // Add error message to the stored map
         errors.put(AppConstant._LABEL._ERROR_MESSAGE, ex.getMessage());
 
-        return errors;
+        ErrorResponseObj errObj = ErrorResponseObj.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .errors(errors).build();
+        return new ResponseEntity<>(errObj, HttpStatus.BAD_REQUEST);
     }
 }

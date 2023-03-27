@@ -4,6 +4,7 @@ import com.example.hotel.exception.BookingBusinessException;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.BookingRequest;
 import com.example.hotel.model.request.OrderRequest;
+import com.example.hotel.model.response.SuccessResponseObj;
 import com.example.hotel.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class BookingController {
     }
 
     @PostMapping("/booking-rooms")
-    public ResponseEntity<String> bookARoom(@RequestBody @Valid OrderRequest orderRequest) throws BookingBusinessException {
+    public ResponseEntity<SuccessResponseObj> bookARoom(@RequestBody @Valid OrderRequest orderRequest) throws BookingBusinessException {
         return bookingService.bookingRooms(orderRequest);
     }
 

@@ -7,6 +7,7 @@ import com.example.hotel.model.RoomType;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.BookingRequest;
 import com.example.hotel.model.request.OrderRequest;
+import com.example.hotel.model.response.SuccessResponseObj;
 import com.example.hotel.repository.BookingRepository;
 import com.example.hotel.repository.OrderBookingRepository;
 import com.example.hotel.repository.RoomRepository;
@@ -90,7 +91,7 @@ public class BookingServiceBean implements BookingService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException {
+    public ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException {
         List<RoomType> roomTypeList = roomTypeRepository.findAll();
 
         for (BookingRequest bookingRequest : orderRequest.getBookingRequestList()) {
@@ -118,7 +119,11 @@ public class BookingServiceBean implements BookingService {
             bookingRepository.save(booking);
         }
 
-        return new ResponseEntity<>("Booking Successfully", HttpStatus.OK);
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Booking Successfully").build();
+
+        return new ResponseEntity<SuccessResponseObj>(successResponseObj, HttpStatus.OK);
     }
 
     public Boolean isValidRoomTypeId(Object requestObject, List<RoomType> roomTypeList){
