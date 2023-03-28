@@ -1,9 +1,10 @@
 package com.example.hotel.service.serviceImp;
 
 import com.example.hotel.exception.BookingBusinessException;
-import com.example.hotel.model.Booking;
-import com.example.hotel.model.OrderBooking;
-import com.example.hotel.model.RoomType;
+import com.example.hotel.model.entity.Booking;
+import com.example.hotel.model.entity.OrderBooking;
+import com.example.hotel.model.entity.RoomType;
+import com.example.hotel.model.enums.BookingStatus;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.BookingRequest;
 import com.example.hotel.model.request.OrderRequest;
@@ -115,7 +116,7 @@ public class BookingServiceBean implements BookingService {
                     .checkOutDate(bookingRequest.getInputCheckoutDate())
                     .roomTypeId(bookingRequest.getRoomTypeId())
                     .amount(bookingRequest.getAmount())
-                    .status("Ordered").build();
+                    .status(BookingStatus.ORDERED).build();
             bookingRepository.save(booking);
         }
 

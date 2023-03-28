@@ -1,4 +1,4 @@
-package com.example.hotel.model;
+package com.example.hotel.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

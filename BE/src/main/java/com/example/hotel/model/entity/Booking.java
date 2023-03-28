@@ -1,5 +1,6 @@
-package com.example.hotel.model;
+package com.example.hotel.model.entity;
 
+import com.example.hotel.model.enums.BookingStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +28,8 @@ public class Booking {
 
     private Long roomTypeId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 
     private Long amount;
 
