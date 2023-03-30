@@ -23,9 +23,9 @@
                             placeholder="Your Destination and Hotel Name"
                           />
                           <div *ngIf="test.invalid && (test.dirty || test.touched)"
-                              class="alert alert-danger mt-2">
+                              class="mt-2 ml-2">
                             <div *ngIf="test.errors?.['required']">
-                              Name is required.
+                              <span style="color: red;">Name is required.</span>
                             </div>
                           </div>
                         </div>
@@ -173,11 +173,13 @@
                       </div>
                       <div class="col-lg-2 col-md-6">
                         <label class="submit"></label>
-                        <button nz-button
+                        <button
                           type="submit"
                           class="btn-first btn-submit full-width btn-height"
+                          [disabled]="!formValidation.valid"
+                          [ngClass]="!formValidation.valid ? 'quick-book-disabled' : ''"
                         >
-                          Search Now
+                          Quick Book
                         </button>
                       </div>
                     </div>

@@ -17,6 +17,7 @@
   border-bottom-right-radius: 0px !important;
 }
 
+/* datetime css */
 .dp-hidden {
   width: 0;
   margin: 0;
@@ -40,4 +41,12 @@
 }
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
+}
+
+/* Quick book css */
+.quick-book-disabled {
+  border: 1px solid gray;
+  color: gray;
+  background: white;
+  pointer-events: none;
 }

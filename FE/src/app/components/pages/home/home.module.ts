@@ -23,6 +23,7 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
+import { QuickBookFormComponent } from './search-form/quick-book-form/quick-book-form.component';
 // import { NgZorroModule } from 'src/app/_theme/ng-zorro.module';
 // import { IconsProviderModule } from 'src/app/_theme/iconsProvider.module';
 
@@ -43,7 +44,8 @@ registerLocaleData(vi);
     TeamComponent,
     WhyUsComponent,
     TestimonialsComponent,
-    BlogsComponent
+    BlogsComponent,
+    QuickBookFormComponent
   ],
   imports: [
     CommonModule,
