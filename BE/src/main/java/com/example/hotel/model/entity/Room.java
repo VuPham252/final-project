@@ -1,7 +1,9 @@
 package com.example.hotel.model.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +14,8 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
@@ -23,6 +27,12 @@ public class Room {
     private String name;
 
     private Long roomTypeId;
+
+    private String description;
+
+    private double area;
+
+    private int size;
 
     @CreationTimestamp
     private LocalDateTime createdTime;
