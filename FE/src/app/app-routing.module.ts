@@ -19,8 +19,8 @@ const routes: Routes = [
   { path: 'blog-details-left/:id', loadChildren: () => import('./components/pages/blog-details-left/blog-details-left.module').then(m => m.BlogDetailsLeftModule), data: { breadcrumb: "Blog Details" } },
   { path: 'blog-details-right/:id', loadChildren: () => import('./components/pages/blog-details-right/blog-details-right.module').then(m => m.BlogDetailsRightModule), data: { breadcrumb: "Blog Details" } },
   // Hotels
-  { path: 'hotel/:minPrice/:maxPrice', loadChildren: () => import('./components/pages/hotels-grid/hotels-grid.module').then(m => m.HotelsGridModule), data: { breadcrumb: "Hotels Grid" } },
-  { path: 'hotel-grid', loadChildren: () => import('./components/pages/hotels-grid/hotels-grid.module').then(m => m.HotelsGridModule), data: { breadcrumb: "Hotels Grid" } },
+  { path: 'hotel/:minPrice/:maxPrice', loadChildren: () => import('./components/pages/hotels-grid/hotels-grid.module').then(m => m.HotelsGridModule), data: { breadcrumb: "Hotels" } },
+  { path: 'hotel-grid', loadChildren: () => import('./components/pages/hotels-grid/hotels-grid.module').then(m => m.HotelsGridModule), data: { breadcrumb: "Room Types" } },
   { path: 'hotel-grid-left', loadChildren: () => import('./components/pages/hotels-grid-left/hotels-grid-left.module').then(m => m.HotelsGridLeftModule), data: { breadcrumb: "Hotels Grid" } },
   { path: 'hotel-grid-right', loadChildren: () => import('./components/pages/hotels-grid-right/hotels-grid-right.module').then(m => m.HotelsGridRightModule), data: { breadcrumb: "Hotels Grid" } },
   { path: 'hotel-details/:id', loadChildren: () => import('./components/pages/hotels-details/hotels-details.module').then(m => m.HotelsDetailsModule), data: { breadcrumb: "Hotels Details" } },
