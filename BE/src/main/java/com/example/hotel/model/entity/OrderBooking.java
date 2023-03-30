@@ -1,4 +1,4 @@
-package com.example.hotel.model;
+package com.example.hotel.model.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

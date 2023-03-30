@@ -1,6 +1,6 @@
 package com.example.hotel.service.serviceImp;
 
-import com.example.hotel.model.OrderBooking;
+import com.example.hotel.model.entity.OrderBooking;
 import com.example.hotel.model.response.OrderBookingResponse;
 import com.example.hotel.repository.OrderBookingRepository;
 import com.example.hotel.service.OrderBookingService;
