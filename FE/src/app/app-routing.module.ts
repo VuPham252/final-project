@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'hotel-grid', loadChildren: () => import('./components/pages/hotels-grid/hotels-grid.module').then(m => m.HotelsGridModule), data: { breadcrumb: "Room Types" } },
   { path: 'hotel-grid-left', loadChildren: () => import('./components/pages/hotels-grid-left/hotels-grid-left.module').then(m => m.HotelsGridLeftModule), data: { breadcrumb: "Hotels Grid" } },
   { path: 'hotel-grid-right', loadChildren: () => import('./components/pages/hotels-grid-right/hotels-grid-right.module').then(m => m.HotelsGridRightModule), data: { breadcrumb: "Hotels Grid" } },
-  { path: 'hotel-details/:id', loadChildren: () => import('./components/pages/hotels-details/hotels-details.module').then(m => m.HotelsDetailsModule), data: { breadcrumb: "Hotels Details" } },
+  { path: 'hotel-details/:id', loadChildren: () => import('./components/pages/hotels-details/hotels-details.module').then(m => m.HotelsDetailsModule), data: { breadcrumb: "Room Details" } },
   // Flights
   { path: 'flight/:minPrice/:maxPrice', loadChildren: () => import('./components/pages/flights-grid/flights-grid.module').then(m => m.FlightsGridModule), data: { breadcrumb: "Flights Grid" } },
   { path: 'flight-grid', loadChildren: () => import('./components/pages/flights-grid/flights-grid.module').then(m => m.FlightsGridModule), data: { breadcrumb: "Flights Grid" } },

@@ -9,6 +9,8 @@ import { HotelsGridRoutingModule } from './hotels-grid-routing.module';
 import { HotelsGridComponent } from './hotels-grid.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from './content/content.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ContentComponent } from './content/content.component';
     FormsModule,
     ReactiveFormsModule,
     NiceSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule,
+    CoreModule.forRoot(),
   ]
 })
 export class HotelsGridModule { }
