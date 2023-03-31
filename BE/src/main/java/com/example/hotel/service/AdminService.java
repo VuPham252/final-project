@@ -1,13 +1,23 @@
 package com.example.hotel.service;
 
+import com.example.hotel.exception.BookingBusinessException;
+import com.example.hotel.model.entity.Room;
 import com.example.hotel.model.entity.RoomType;
+import com.example.hotel.model.request.BookingCheckRequest;
+import com.example.hotel.model.request.CheckInRequest;
 import com.example.hotel.model.response.RoomResponse;
 import com.example.hotel.model.response.RoomTypeResponse;
+import com.example.hotel.model.response.SuccessResponseObj;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface AdminService {
-    public List<RoomTypeResponse> getAllRoomTypes();
+    List<RoomTypeResponse> getAllRoomTypes();
 
-    public  List<RoomResponse> getAllRoom();
+    List<RoomResponse> getAllRoom();
+
+    List<RoomResponse> getAvailableRooms(BookingCheckRequest bookingCheckRequest);
+
+    ResponseEntity<SuccessResponseObj> checkIn(CheckInRequest checkInRequest) throws BookingBusinessException;
 }

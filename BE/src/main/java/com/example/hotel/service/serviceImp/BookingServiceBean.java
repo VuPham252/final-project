@@ -124,7 +124,7 @@ public class BookingServiceBean implements BookingService {
                 .statusCode(HttpStatus.OK.value())
                 .message("Booking Successfully").build();
 
-        return new ResponseEntity<SuccessResponseObj>(successResponseObj, HttpStatus.OK);
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
     public Boolean isValidRoomTypeId(Object requestObject, List<RoomType> roomTypeList){
