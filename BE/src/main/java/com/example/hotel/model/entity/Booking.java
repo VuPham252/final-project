@@ -31,6 +31,8 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
+    private Long roomId;
+
     private Long amount;
 
     @CreationTimestamp

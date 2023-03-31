@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface BookingService {
 
-    public int getNumberOfAvailableRooms(BookingCheckRequest bookingCheckRequest) throws BookingBusinessException;
+    int getNumberOfAvailableRooms(BookingCheckRequest bookingCheckRequest) throws BookingBusinessException;
 
-    public ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException;
+    ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException;
 }

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,6 +22,8 @@ public class RoomType {
     private Long id;
 
     private String typeName;
+
+    private BigDecimal price;
 
     @CreationTimestamp
     private LocalDateTime createdTime;
