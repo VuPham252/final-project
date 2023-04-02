@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="col-left">
+      <div class="login-text">
+        <h2>Logo</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros
+          dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum
+          placerat
+        </p>
+        <a class="btn" href="">Read More</a>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="login-form">
+        <h2>Register</h2>
+        <form [formGroup]="formValidation" method="POST">
+          <p>
+            <input formControlName="username" name="username" type="text" placeholder="Username" required />
+          </p>
+          <p>
+            <input formControlName="password" name="password" type="password" placeholder="Password" required />
+          </p>
+          <p>
+            <input formControlName="email" name="email" type="email" placeholder="Email" required />
+          </p>
+          <p>
+            <input [disabled]="!formValidation.valid" (click)="register()" class="btn" type="submit" value="Sign Up" required />
+          </p>
+          <p>
+            <!-- <a href="">Forget password?</a> -->
+            <a href="login">Have a account? Return to Login</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="credit">
+    Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+  </div>
+</div>

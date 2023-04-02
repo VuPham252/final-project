@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
+import { CoreModule } from './core/core.module';
 
 registerLocaleData(vi);
 
@@ -25,7 +26,8 @@ registerLocaleData(vi);
     BrowserAnimationsModule,
     BreadcrumbModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

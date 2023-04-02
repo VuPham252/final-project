@@ -4,13 +4,18 @@ import { RoomTypeApi } from './api/room-type/room-type.api';
 import { RoomTypeData } from './api/room-type/room-type-data';
 import { RoomTypeService } from './api/room-type/room-type.service';
 import { BaseModule } from '../base/base.module';
+import { RegisterApi } from './api/register/register.api';
+import { RegisterData } from './api/register/register-data';
+import { RegisterService } from './api/register/register.service';
 
 const API = [
-  RoomTypeApi
+  RoomTypeApi,
+  RegisterApi,
 ];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
+  { provide: RegisterData, useClass: RegisterService },
 ];
 
 @NgModule({
