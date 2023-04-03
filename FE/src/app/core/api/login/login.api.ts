@@ -2,16 +2,16 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/base/http.service';
-import { Register } from '../../model/register';
+import { Login } from '../../model/login';
 
 @Injectable()
-export class RegisterApi {
+export class LoginApi {
 
-  private readonly apiController: string = 'auth/signup';
+  private readonly apiController: string = 'auth/signin';
 
   constructor(private http: HttpService) { }
 
-  save(data: Register): Observable<any> {
+  login(data: Login): Observable<any> {
     return this.http.post(this.apiController, data);
   }
 

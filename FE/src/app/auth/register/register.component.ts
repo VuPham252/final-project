@@ -7,13 +7,16 @@ import { Register } from 'src/app/core/model/register';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-
   formValidation!: FormGroup;
 
-  constructor(private fb: FormBuilder, private registerData: RegisterData, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private registerData: RegisterData,
+    private router: Router
+  ) {}
 
   get username() {
     return this.formValidation.get('username');
@@ -39,15 +42,12 @@ export class RegisterComponent implements OnInit {
     const item: Register = this.formValidation.value;
     this.registerData.save(item).subscribe({
       next: (res) => {
-        if (res.success) {
-          console.log(res);
-          this.router.navigate(['login']);
-        }
+        console.log(res);
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
-
 }

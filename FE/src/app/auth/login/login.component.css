@@ -166,7 +166,7 @@ p {
 }
 
 .login-form label span {
-  color: #ff574e;
+  color: #01b7f2;
   padding-left: 2px;
 }
 
@@ -183,7 +183,7 @@ p {
 }
 
 .login-form input:focus {
-  border-color: #ff574e;
+  border-color: #01b7f2;
 }
 
 .login-form input.btn {
