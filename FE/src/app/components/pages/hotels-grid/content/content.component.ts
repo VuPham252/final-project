@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { HotelHelperService } from 'src/app/components/helper/hotel/hotel-helper.service';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
@@ -18,6 +19,12 @@ export class ContentComponent implements OnInit {
   }
 
   getRoomType() {
+    // const token = localStorage.getItem('token');
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${token}`
+    // });
+
+    // const req = { headers: headers };
     this.roomTypeData.search().subscribe({
       next: (res) => {
         if(res) {

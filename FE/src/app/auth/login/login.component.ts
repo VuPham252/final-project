@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit {
     const item: Login = this.formValidation.value;
     this.loginData.login(item).subscribe({
       next: (res) => {
-        this.router.navigate(['/']);
         localStorage.setItem('token', res.token);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         console.log(err);

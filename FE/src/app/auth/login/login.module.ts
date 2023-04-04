@@ -17,8 +17,8 @@ import { CoreModule } from 'src/app/core/core.module';
     LoginRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    CoreModule.forRoot(),
+    // HttpClientModule,
+    // CoreModule.forRoot(),
   ]
 })
 export class LoginModule { }
