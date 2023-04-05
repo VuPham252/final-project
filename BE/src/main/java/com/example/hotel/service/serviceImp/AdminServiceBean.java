@@ -7,6 +7,7 @@ import com.example.hotel.model.entity.RoomType;
 import com.example.hotel.model.enums.BookingStatus;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.CheckInRequest;
+import com.example.hotel.model.request.CheckOutRequest;
 import com.example.hotel.model.response.OrderBookingResponse;
 import com.example.hotel.model.response.RoomResponse;
 import com.example.hotel.model.response.RoomTypeResponse;
@@ -102,6 +103,24 @@ public class AdminServiceBean implements AdminService {
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Checked in Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponseObj> checkOut(CheckOutRequest checkOutRequest) throws BookingBusinessException {
+        Booking currentBooking = bookingRepository.findById(checkOutRequest.getOrderId())
+                .orElseThrow(() -> new BookingBusinessException("There is no booking with id: " + checkOutRequest.getOrderId()));
+
+        if(currentBooking.getStatus().equals(BookingStatus.CHECKED_OUT)) {
+            throw new BookingBusinessException("This booking is already checked-out!");
+        }
+
+        currentBooking.setStatus(BookingStatus.CHECKED_OUT);
+        bookingRepository.save(currentBooking);
+
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Checked out Successfully").build();
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 }
