@@ -32,10 +32,7 @@ public class AdminController {
         return orderBookingService.getOrderBookingByPhone(phoneNumber);
     }
 
-    @GetMapping("/roomTypes")
-    public List<RoomTypeResponse> getAllRoomType() {
-        return adminService.getAllRoomTypes();
-    }
+
 
     @GetMapping("/rooms")
     public List<RoomResponse> getAllRoom() {
@@ -56,4 +53,5 @@ public class AdminController {
     public ResponseEntity<SuccessResponseObj> checkOut(@RequestBody CheckOutRequest checkOutRequest) throws BookingBusinessException {
         return adminService.checkOut(checkOutRequest);
     }
+
 }

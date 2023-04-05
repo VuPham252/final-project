@@ -8,6 +8,7 @@ import com.example.hotel.model.enums.BookingStatus;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.CheckInRequest;
 import com.example.hotel.model.request.CheckOutRequest;
+import com.example.hotel.model.request.RoomTypeRequest;
 import com.example.hotel.model.response.OrderBookingResponse;
 import com.example.hotel.model.response.RoomResponse;
 import com.example.hotel.model.response.RoomTypeResponse;
@@ -18,9 +19,11 @@ import com.example.hotel.repository.RoomTypeRepository;
 import com.example.hotel.service.AdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +121,15 @@ public class AdminServiceBean implements AdminService {
         currentBooking.setStatus(BookingStatus.CHECKED_OUT);
         bookingRepository.save(currentBooking);
 
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Checked out Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
+
+    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest){
+        RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
+        roomTypeRepository.save(roomType);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Checked out Successfully").build();
