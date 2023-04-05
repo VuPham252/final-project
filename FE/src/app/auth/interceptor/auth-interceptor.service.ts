@@ -15,11 +15,15 @@ export class AuthInterceptorService implements HttpInterceptor {
   // }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('token');
     return next.handle(req).pipe(catchError((error: HttpErrorResponse) => {
-      if(error.status === 401) {
-
+      if(error.status === 401 && token == null) {
+        console.log("Chưa đăng nhập");
         this.router.navigate(['/login']);
-
+      }
+      if(error.status === 403) {
+        console.log("Chưa đủ quyền");
+        this.router.navigate(['/']);
       }
       return throwError(() => new Error(error.message));
     }));
