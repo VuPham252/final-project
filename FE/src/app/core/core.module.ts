@@ -13,6 +13,7 @@ import { LoginService } from './api/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../auth/interceptor/jwt-interceptor.service';
 import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.service';
+import { ShareService } from '../share/share.service';
 
 const API = [RoomTypeApi, RegisterApi, LoginApi];
 
@@ -36,6 +37,7 @@ const SERVICES = [
   declarations: [],
   imports: [CommonModule, BaseModule.forRoot()],
   exports: [],
+  providers: [],
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
