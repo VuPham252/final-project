@@ -18,11 +18,11 @@ export class AuthInterceptorService implements HttpInterceptor {
     const token = localStorage.getItem('token');
     return next.handle(req).pipe(catchError((error: HttpErrorResponse) => {
       if(error.status === 401 && token == null) {
-        alert('Bạn cần phải đăng nhập');
+        console.log("Chưa đăng nhập");
         this.router.navigate(['/login']);
       }
       if(error.status === 403) {
-        alert("Bạn không có quyền để thực hiện hành động này");
+        console.log("Chưa đủ quyền");
         this.router.navigate(['/']);
       }
       return throwError(() => new Error(error.message));

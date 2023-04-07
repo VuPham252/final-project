@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterComponent } from './register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ShareModule } from 'src/app/share/share.module';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -17,8 +17,8 @@ import { ShareModule } from 'src/app/share/share.module';
     RegisterRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule,
-    ShareModule,
+    // HttpClientModule,
+    // CoreModule.forRoot(),
   ]
 })
 export class RegisterModule { }

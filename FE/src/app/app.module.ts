@@ -13,7 +13,6 @@ import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import { CoreModule } from './core/core.module';
 import { JwtInterceptorService } from './auth/interceptor/jwt-interceptor.service';
-import { ShareModule } from './share/share.module';
 
 registerLocaleData(vi);
 
@@ -30,7 +29,6 @@ registerLocaleData(vi);
     NgbModule,
     HttpClientModule,
     CoreModule.forRoot(),
-    ShareModule.forRoot()
   ],
   providers: [
     {

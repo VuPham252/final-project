@@ -1,32 +1,14 @@
 <div class="wrapper">
-  <ngb-alert
-    #successAlert
-    [dismissible]="false"
-    *ngIf="successAlertClosed"
-    (closed)="successAlertClosed = false"
-    type="success"
-    class="toast-container position-fixed p-4"
-    style="z-index: 10; top: 30px; right: 50%;"
-    >Register Success</ngb-alert
-  >
-  <ngb-alert
-    #errorAlert
-    [dismissible]="false"
-    *ngIf="errorAlertClosed"
-    (closed)="errorAlertClosed = false"
-    type="danger"
-    class="toast-container position-fixed py-2 px-3"
-    style="z-index: 10; top: 30px; right: 50%;"
-    >Register Error</ngb-alert
-  >
   <div class="container">
-    <div class="col-left align-items-center">
+    <div class="col-left">
       <div class="login-text">
-        <h2>Home</h2>
+        <h2>Logo</h2>
         <p>
-          Return to your home page
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros
+          dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum
+          placerat
         </p>
-        <a class="btn" href="">Redirect</a>
+        <a class="btn" href="">Read More</a>
       </div>
     </div>
     <div class="col-right">
@@ -34,71 +16,16 @@
         <h2>Register</h2>
         <form [formGroup]="formValidation" method="POST">
           <p>
-            <input
-              formControlName="username"
-              name="username"
-              type="text"
-              placeholder="Username"
-              [ngClass]="username.invalid && (username.dirty || username.touched) ? 'error' : ''"
-              required
-            />
-            <ng-container *ngIf="username.invalid && (username.dirty || username.touched)" class="d-flex flex-column">
-              <ng-container *ngIf="username.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username is required.</div>
-              </ng-container>
-              <ng-container *ngIf="username.errors?.['minlength'] || username.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username range between 3 and 20.</div>
-              </ng-container>
-            </ng-container>
+            <input formControlName="username" name="username" type="text" placeholder="Username" required />
           </p>
           <p>
-            <input
-              formControlName="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              [ngClass]="password.invalid && (password.dirty || password.touched) ? 'error' : ''"
-              required
-            />
-            <ng-container *ngIf="password.invalid && (password.dirty || password.touched)">
-              <ng-container *ngIf="password.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password is required.</div>
-              </ng-container>
-              <ng-container *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password range between 6 and 40.</div>
-              </ng-container>
-            </ng-container>
+            <input formControlName="password" name="password" type="password" placeholder="Password" required />
           </p>
           <p>
-            <input
-              formControlName="email"
-              name="email"
-              type="email"
-              placeholder="Email"
-              [ngClass]="email.invalid && (email.dirty || email.touched) ? 'error' : ''"
-              required
-            />
-            <ng-container *ngIf="email.invalid && (email.dirty || email.touched)">
-              <ng-container *ngIf="email.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email is required.</div>
-              </ng-container>
-              <ng-container *ngIf="email.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email max length is 50.</div>
-              </ng-container>
-              <ng-container *ngIf="email.errors?.['email']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Invalid Email format.</div>
-              </ng-container>
-            </ng-container>
+            <input formControlName="email" name="email" type="email" placeholder="Email" required />
           </p>
           <p>
-            <input
-              [disabled]="!formValidation.valid"
-              (click)="register()"
-              class="btn"
-              type="submit"
-              value="Sign Up"
-              required
-            />
+            <input [disabled]="!formValidation.valid" (click)="register()" class="btn" type="submit" value="Sign Up" required />
           </p>
           <p>
             <!-- <a href="">Forget password?</a> -->
@@ -107,5 +34,8 @@
         </form>
       </div>
     </div>
+  </div>
+  <div class="credit">
+    Designed by <a href="https://htmlcodex.com">HTML Codex</a>
   </div>
 </div>
