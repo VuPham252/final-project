@@ -9,15 +9,12 @@ import { HotelsGridRoutingModule } from './hotels-grid-routing.module';
 import { HotelsGridComponent } from './hotels-grid.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from './content/content.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from 'src/app/core/core.module';
-
+import { JwtInterceptorService } from 'src/app/auth/interceptor/jwt-interceptor.service';
 
 @NgModule({
-  declarations: [
-    HotelsGridComponent,
-    ContentComponent
-  ],
+  declarations: [HotelsGridComponent, ContentComponent],
   imports: [
     CommonModule,
     HotelsGridRoutingModule,
@@ -27,8 +24,9 @@ import { CoreModule } from 'src/app/core/core.module';
     ReactiveFormsModule,
     NiceSelectModule,
     NgxPaginationModule,
-    HttpClientModule,
-    CoreModule.forRoot(),
-  ]
+    // HttpClientModule,
+    // CoreModule.forRoot(),
+  ],
+
 })
-export class HotelsGridModule { }
+export class HotelsGridModule {}
