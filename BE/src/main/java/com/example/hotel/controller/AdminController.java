@@ -3,6 +3,7 @@ package com.example.hotel.controller;
 import com.example.hotel.exception.BookingBusinessException;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.CheckInRequest;
+import com.example.hotel.model.request.CheckOutRequest;
 import com.example.hotel.model.response.OrderBookingResponse;
 import com.example.hotel.model.response.RoomResponse;
 import com.example.hotel.model.response.RoomTypeResponse;
@@ -31,10 +32,7 @@ public class AdminController {
         return orderBookingService.getOrderBookingByPhone(phoneNumber);
     }
 
-    @GetMapping("/roomTypes")
-    public List<RoomTypeResponse> getAllRoomType() {
-        return adminService.getAllRoomTypes();
-    }
+
 
     @GetMapping("/rooms")
     public List<RoomResponse> getAllRoom() {
@@ -50,4 +48,10 @@ public class AdminController {
     public ResponseEntity<SuccessResponseObj> checkIn(@RequestBody CheckInRequest checkInRequest) throws BookingBusinessException {
         return adminService.checkIn(checkInRequest);
     }
+
+    @PostMapping("/check-out")
+    public ResponseEntity<SuccessResponseObj> checkOut(@RequestBody CheckOutRequest checkOutRequest) throws BookingBusinessException {
+        return adminService.checkOut(checkOutRequest);
+    }
+
 }
