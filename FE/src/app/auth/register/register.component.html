@@ -6,7 +6,7 @@
     (closed)="successAlertClosed = false"
     type="success"
     class="toast-container position-fixed p-4"
-    style="z-index: 10; top: 30px; right: 50%;"
+    style="z-index: 10; top: 30px; right: 45%;"
     >Register Success</ngb-alert
   >
   <ngb-alert
@@ -16,7 +16,7 @@
     (closed)="errorAlertClosed = false"
     type="danger"
     class="toast-container position-fixed py-2 px-3"
-    style="z-index: 10; top: 30px; right: 50%;"
+    style="z-index: 10; top: 30px; right: 45%;"
     >Register Error</ngb-alert
   >
   <div class="container">
@@ -44,10 +44,10 @@
             />
             <ng-container *ngIf="username.invalid && (username.dirty || username.touched)" class="d-flex flex-column">
               <ng-container *ngIf="username.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username is required.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username is required</div>
               </ng-container>
               <ng-container *ngIf="username.errors?.['minlength'] || username.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username range between 3 and 20.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username length between 3 - 20</div>
               </ng-container>
             </ng-container>
           </p>
@@ -62,10 +62,10 @@
             />
             <ng-container *ngIf="password.invalid && (password.dirty || password.touched)">
               <ng-container *ngIf="password.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password is required.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password is required</div>
               </ng-container>
               <ng-container *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password range between 6 and 40.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password length between 6 - 40</div>
               </ng-container>
             </ng-container>
           </p>
@@ -80,13 +80,13 @@
             />
             <ng-container *ngIf="email.invalid && (email.dirty || email.touched)">
               <ng-container *ngIf="email.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email is required.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email is required</div>
               </ng-container>
               <ng-container *ngIf="email.errors?.['maxlength']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email max length is 50.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Email max length is 50</div>
               </ng-container>
               <ng-container *ngIf="email.errors?.['email']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Invalid Email format.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Invalid Email format</div>
               </ng-container>
             </ng-container>
           </p>

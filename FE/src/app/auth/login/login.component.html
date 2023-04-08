@@ -6,7 +6,7 @@
     (closed)="successAlertClosed = false"
     type="success"
     class="toast-container position-fixed py-2 px-3"
-    style="z-index: 10; top: 30px; right: 50%;"
+    style="z-index: 10; top: 30px; right: 45%;"
     >Login Success</ngb-alert
   >
   <ngb-alert
@@ -16,7 +16,7 @@
     (closed)="errorAlertClosed = false"
     type="danger"
     class="toast-container position-fixed py-2 px-3"
-    style="z-index: 10; top: 30px; right: 50%;"
+    style="z-index: 10; top: 30px; right: 45%;"
     >Login Error</ngb-alert
   >
   <div class="container">
@@ -44,7 +44,7 @@
             />
             <ng-container *ngIf="username.invalid && (username.dirty || username.touched)" class="d-flex flex-column">
               <ng-container *ngIf="username.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username is required.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Username is required</div>
               </ng-container>
             </ng-container>
           </p>
@@ -59,7 +59,7 @@
             />
             <ng-container *ngIf="password.invalid && (password.dirty || password.touched)">
               <ng-container *ngIf="password.errors?.['required']">
-                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password is required.</div>
+                <div class="mt-2" style="color: red; margin-bottom: -10px;">Password is required</div>
               </ng-container>
             </ng-container>
           </p>

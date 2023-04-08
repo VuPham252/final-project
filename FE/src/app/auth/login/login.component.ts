@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { LoginData } from 'src/app/core/api/login/login-data';
 import { Login } from 'src/app/core/model/login';
-import { ShareService } from 'src/app/share/share.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginData: LoginData,
     private router: Router,
-    private shareService: ShareService,
   ) {}
 
   get username() {
@@ -46,7 +45,13 @@ export class LoginComponent implements OnInit {
     const item: Login = this.formValidation.value;
     this.loginData.login(item).subscribe({
       next: (res) => {
+        debugger;
         localStorage.setItem('token', res.token);
+        let tokenData = {};
+        let helper = new JwtHelperService();
+        tokenData = helper.decodeToken(res.token);
+        console.log(tokenData);
+        localStorage.setItem('user', helper.decodeToken(res.token).sub);
         this.successAlertClosed = true;
         setTimeout(() => this.successAlert.close(), 2000);
         setTimeout(() => {

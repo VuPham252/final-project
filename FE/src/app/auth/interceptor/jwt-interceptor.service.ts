@@ -17,10 +17,11 @@ export class JwtInterceptorService implements HttpInterceptor {
       }
     });
     console.log(req);
-    let tokenData = {};
-    let helper = new JwtHelperService();
-    tokenData = helper.decodeToken(token);
-    console.log(tokenData);
+    // let tokenData = {};
+    // let helper = new JwtHelperService();
+    // tokenData = helper.decodeToken(token);
+    // console.log(tokenData);
+    // localStorage.setItem('user', helper.decodeToken(token));
     return next.handle(req);
   }
 }
