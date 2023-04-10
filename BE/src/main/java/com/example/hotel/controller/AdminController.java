@@ -32,13 +32,6 @@ public class AdminController {
         return orderBookingService.getOrderBookingByPhone(phoneNumber);
     }
 
-
-
-    @GetMapping("/rooms")
-    public List<RoomResponse> getAllRoom() {
-        return adminService.getAllRoom();
-    }
-
     @PostMapping("/availableRooms")
     public List<RoomResponse> getAvailableRooms(@RequestBody BookingCheckRequest bookingCheckRequest) {
         return adminService.getAvailableRooms(bookingCheckRequest);
