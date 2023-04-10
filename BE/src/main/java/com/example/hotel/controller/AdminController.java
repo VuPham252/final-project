@@ -4,16 +4,18 @@ import com.example.hotel.exception.BookingBusinessException;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.CheckInRequest;
 import com.example.hotel.model.request.CheckOutRequest;
-import com.example.hotel.model.response.OrderBookingResponse;
-import com.example.hotel.model.response.RoomResponse;
-import com.example.hotel.model.response.RoomTypeResponse;
-import com.example.hotel.model.response.SuccessResponseObj;
+import com.example.hotel.model.response.*;
 import com.example.hotel.service.AdminService;
 import com.example.hotel.service.OrderBookingService;
+import com.example.hotel.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -47,4 +49,21 @@ public class AdminController {
         return adminService.checkOut(checkOutRequest);
     }
 
+    @PostMapping("/uploadFile")
+    public ResponseEntity<FileUploadResponse> uploadFile(
+            @RequestParam("file") MultipartFile multipartFile)
+            throws IOException {
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        long size = multipartFile.getSize();
+
+        String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
+
+        FileUploadResponse response = new FileUploadResponse();
+        response.setFileName(fileName);
+        response.setSize(size);
+        response.setDownloadUri("/downloadFile/" + filecode);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
