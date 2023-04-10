@@ -1,12 +1,8 @@
 package com.example.hotel.service;
 
 import com.example.hotel.exception.BookingBusinessException;
-import com.example.hotel.model.entity.Room;
-import com.example.hotel.model.entity.RoomType;
-import com.example.hotel.model.request.BookingCheckRequest;
-import com.example.hotel.model.request.CheckInRequest;
-import com.example.hotel.model.request.CheckOutRequest;
-import com.example.hotel.model.request.RoomTypeRequest;
+import com.example.hotel.exception.RoomTypeException;
+import com.example.hotel.model.request.*;
 import com.example.hotel.model.response.RoomResponse;
 import com.example.hotel.model.response.RoomTypeResponse;
 import com.example.hotel.model.response.SuccessResponseObj;
@@ -25,7 +21,23 @@ public interface AdminService {
 
     ResponseEntity<SuccessResponseObj> checkOut(CheckOutRequest checkOutRequest) throws BookingBusinessException;
 
+
+    //CRUD RoomType
     ResponseEntity<SuccessResponseObj> saveRoomType(RoomTypeRequest roomTypeRequest);
 
+    RoomTypeResponse getRoomTypeById(Long id)throws RoomTypeException;
 
+    ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeResponse roomTypeResponse) throws RoomTypeException;
+
+    ResponseEntity<SuccessResponseObj>deleteRoomType(Long id);
+
+
+    //CRUD ROOM
+    ResponseEntity<SuccessResponseObj> saveRoom(RoomRequest roomRequest);
+
+    RoomResponse getRoomById(Long id)throws RoomTypeException;
+
+    ResponseEntity<SuccessResponseObj> updateRoom(RoomResponse roomResponse) throws RoomTypeException;
+
+    ResponseEntity<SuccessResponseObj>deleteRoom(Long id);
 }
