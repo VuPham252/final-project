@@ -10,23 +10,34 @@ import { RegisterService } from './api/register/register.service';
 import { LoginApi } from './api/login/login.api';
 import { LoginData } from './api/login/login-data';
 import { LoginService } from './api/login/login.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptorService } from '../auth/interceptor/jwt-interceptor.service';
+import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.service';
+import { ShareService } from '../share/share.service';
 
-const API = [
-  RoomTypeApi,
-  RegisterApi,
-  LoginApi,
-];
+const API = [RoomTypeApi, RegisterApi, LoginApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptorService,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true,
+  },
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, BaseModule.forRoot()],
   exports: [],
+  providers: [],
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {

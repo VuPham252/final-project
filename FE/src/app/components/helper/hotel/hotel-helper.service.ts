@@ -6,7 +6,7 @@ import hotelamenities from '../../data/hotels/amenities.json';
 import hotelaccomodation from '../../data/hotels/accomodation.json';
 import hotelcategory from '../../data/category.json';
 import testimonials from '../../data/testimonials.json';
-import { Options, LabelType } from "@angular-slider/ngx-slider"; 
+import { Options, LabelType } from "@angular-slider/ngx-slider";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import { Options, LabelType } from "@angular-slider/ngx-slider";
 @Directive({})
 export class HotelHelperService implements AfterContentInit, OnInit {
   // pagination
-  page: number = 1; 
+  page: number = 1;
   // Hotel
   public hotelblock: any[] = hotel;
   public hoteldetails = hotel;

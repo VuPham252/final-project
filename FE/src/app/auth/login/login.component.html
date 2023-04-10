@@ -1,36 +1,100 @@
-<div class="wrapper">
+<body>
+  <ngb-alert
+    #successAlert
+    [dismissible]="false"
+    *ngIf="successAlertClosed"
+    (closed)="successAlertClosed = false"
+    type="success"
+    class="toast-container position-fixed p-4"
+    style="z-index: 10; top: 30px; right: 47%"
+    >Login Success</ngb-alert
+  >
+  <ngb-alert
+    #errorAlert
+    [dismissible]="false"
+    *ngIf="errorAlertClosed"
+    (closed)="errorAlertClosed = false"
+    type="danger"
+    class="toast-container position-fixed py-2 px-3"
+    style="z-index: 10; top: 30px; right: 47%"
+    >Login Error</ngb-alert
+  >
   <div class="container">
-    <div class="col-left">
-      <div class="login-text">
-        <h2>Logo</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum placerat
-        </p>
-        <a class="btn" href="">Read More</a>
+    <h2 class="login-title" style="color: #01b7f2; font-size: 25px;">Log in</h2>
+
+    <form class="login-form" [formGroup]="formValidation" method="POST">
+      <div>
+        <label for="username">Username </label>
+        <input
+          id="username"
+          type="text"
+          placeholder="Username"
+          name="username"
+          formControlName="username"
+          [ngClass]="
+            username.invalid && (username.dirty || username.touched)
+              ? 'error'
+              : ''
+          "
+          required
+        />
+        <ng-container
+          *ngIf="username.invalid && (username.dirty || username.touched)"
+          class="d-flex flex-column"
+        >
+          <ng-container *ngIf="username.errors?.['required']">
+            <div class="mt-2" style="color: red; margin-bottom: -10px">
+              Username is required
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
-    </div>
-    <div class="col-right">
-      <div class="login-form">
-        <h2>Login</h2>
-        <form [formGroup]="formValidation" method="POST">
-          <p>
-            <input formControlName="username" name="username" type="text" placeholder="Username" required />
-          </p>
-          <p>
-            <input formControlName="password" name="password" type="password" placeholder="Password" required />
-          </p>
-          <p>
-            <input [disabled]="!formValidation.valid" (click)="login()" class="btn" type="submit" value="Login" />
-          </p>
-          <p>
-            <!-- <a href="">Forget password?</a> -->
-            <a href="register">Create an account.</a>
-          </p>
-        </form>
+
+      <div class="mt-2">
+        <label for="password">Password </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          name="password"
+          [ngClass]="
+            password.invalid && (password.dirty || password.touched)
+              ? 'error'
+              : ''
+          "
+          required
+        />
+        <ng-container
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+        >
+          <ng-container *ngIf="password.errors?.['required']">
+            <div class="mt-2" style="color: red; margin-bottom: -10px">
+              Password is required
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
-    </div>
+
+      <button
+        class="btn btn--form mt-2"
+        type="submit"
+        value="Log In"
+        [disabled]="!formValidation.valid"
+        [ngClass]="!formValidation.valid ? 'disabled' : ''"
+        (click)="login()"
+      >
+        Log In
+      </button>
+
+      <div class="d-flex justify-content-center mt-3">
+        <span style="font-size: 16px"
+          >Don't have an account?
+          <a href="register" style="color: #01b7f2; cursor: pointer"
+            >Sign Up</a
+          ></span
+        >
+      </div>
+    </form>
   </div>
-  <div class="credit">
-    Designed by <a href="https://htmlcodex.com">HTML Codex</a>
-  </div>
-</div>
+</body>

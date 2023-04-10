@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { HotelHelperService } from 'src/app/components/helper/hotel/hotel-helper.service';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';

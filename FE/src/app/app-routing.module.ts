@@ -8,13 +8,13 @@ const routes: Routes = [
   // About
   { path: 'about', loadChildren: () => import('./components/pages/about/about.module').then(m => m.AboutModule), data: { breadcrumb: "About Us" } },
   // Blog
-  { path: 'blog/cat/:catId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog/tag/:tagId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog/author/:authorId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog/search/:query', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog-grid', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog-grid-left', loadChildren: () => import('./components/pages/blog-grid-left/blog-grid-left.module').then(m => m.BlogGridLeftModule), data: { breadcrumb: "Blog Grid" } },
-  { path: 'blog-grid-right', loadChildren: () => import('./components/pages/blog-grid-right/blog-grid-right.module').then(m => m.BlogGridRightModule), data: { breadcrumb: "Blog Grid" } },
+  { path: 'blog/cat/:catId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog/tag/:tagId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog/author/:authorId', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog/search/:query', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog-grid', loadChildren: () => import('./components/pages/blog-grid/blog-grid.module').then(m => m.BlogGridModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog-grid-left', loadChildren: () => import('./components/pages/blog-grid-left/blog-grid-left.module').then(m => m.BlogGridLeftModule), data: { breadcrumb: "Blog" } },
+  { path: 'blog-grid-right', loadChildren: () => import('./components/pages/blog-grid-right/blog-grid-right.module').then(m => m.BlogGridRightModule), data: { breadcrumb: "Blog" } },
   { path: 'blog-details/:id', loadChildren: () => import('./components/pages/blog-details/blog-details.module').then(m => m.BlogDetailsModule), data: { breadcrumb: "Blog Details" } },
   { path: 'blog-details-left/:id', loadChildren: () => import('./components/pages/blog-details-left/blog-details-left.module').then(m => m.BlogDetailsLeftModule), data: { breadcrumb: "Blog Details" } },
   { path: 'blog-details-right/:id', loadChildren: () => import('./components/pages/blog-details-right/blog-details-right.module').then(m => m.BlogDetailsRightModule), data: { breadcrumb: "Blog Details" } },
@@ -58,7 +58,8 @@ const routes: Routes = [
   // Login
   { path: 'login', loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule)},
   // Register
-  { path: 'register', loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterModule)}
+  { path: 'register', loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterModule)},
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)}
 ];
 
 @NgModule({

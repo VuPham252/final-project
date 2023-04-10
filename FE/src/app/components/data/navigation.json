@@ -1,69 +1,32 @@
 [
-    {
-        "id": 1,
-        "linkText": "Home",
-        "link": "/"
-    },
-    {
-        "id": 2,
-        "linkText": "Hotels",
-        "link": "/hotel-grid"
-    },
-    {
-      "id": 3,
-      "linkText": "About Us",
-      "link": "/about"
-    },
-    {
-      "id": 4,
-      "linkText": "Contact Us",
-      "link": "/contact"
-    },
-    {
-      "id": 5,
-      "linkText": "Blog",
-      "link": "/blog-grid"
-    },
-    {
-        "id": 6,
-        "linkText": "Pages",
-        "child": true,
-        "submenu": [
-            {
-                "id": 6.1,
-                "link": "/about",
-                "linkText": "About Us"
-            },
-            {
-                "id": 6.2,
-                "link": "/contact",
-                "linkText": "Contact Us"
-            },
-            {
-                "id": 6.3,
-                "link": "/faqs",
-                "linkText": "FAQ's"
-            },
-            {
-                "id": 6.4,
-                "link": "/booking",
-                "linkText": "Booking"
-            },
-            {
-                "id": 6.5,
-                "link": "/gallery",
-                "linkText": "Gallery"
-            },
-            {
-                "id": 6.6,
-                "link": "/error-page",
-                "linkText": "Error 404"
-            },
-            {
-                "id": 6.7,
-                "link": "/coming-soon",
-                "linkText": "Coming Soon"
-            }
-        ]
-    }
+  {
+    "id": 1,
+    "linkText": "Home",
+    "link": "/"
+  },
+  {
+    "id": 2,
+    "linkText": "Hotels",
+    "link": "/hotel-grid"
+  },
+  {
+    "id": 3,
+    "linkText": "About Us",
+    "link": "/about"
+  },
+  {
+    "id": 4,
+    "linkText": "Contact Us",
+    "link": "/contact"
+  },
+  {
+    "id": 5,
+    "linkText": "Blog",
+    "link": "/blog-grid"
+  },
+  {
+    "id": 6,
+    "linkText": "Gallery",
+    "link": "/gallery"
+  }
 ]
