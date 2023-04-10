@@ -1,163 +1,181 @@
 <div class="tab-inner">
-    <div class="row">
-        <div class="col-lg-12">
-            <h5 class="text-custom-black">Your Personal Information</h5>
-            <form class="row mb-md-80" [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="fs-14 text-custom-black fw-500">First Name</label>
-                        <input type="text" formControlName="firstname" class="form-control form-control-custom"
-                            placeholder="First Name" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="fs-14 text-custom-black fw-500">Last Name</label>
-                        <input type="text" formControlName="lastname" class="form-control form-control-custom"
-                            placeholder="Last Name" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="fs-14 text-custom-black fw-500">Email I'd</label>
-                        <input type="email" formControlName="email" class="form-control form-control-custom"
-                            placeholder="Email I'd" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="fs-14 text-custom-black fw-500">Verify Email I'd</label>
-                        <input type="email" formControlName="verifyemail" class="form-control form-control-custom"
-                            placeholder="Email I'd" required>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="fs-14 text-custom-black fw-500">Phone No.</label>
-                        <input type="text" formControlName="phone" class="form-control form-control-custom"
-                            placeholder="Phone No." required>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <label class="custom-checkbox mb-0">
-                        <input type="checkbox" name="#">
-                        <span class="checkmark"></span>
-                        I want to receive <a href="#">Company name</a> promotional offers in the future
-                    </label>
-                </div>
-                <div class="col-12">
-                    <hr>
-                </div>
-                <div class="col-12">
-                    <h5 class="text-custom-black">Check Availability</h5>
-                </div>
-                <div class="col-12">
-                    <div class="row" formGroupName="cardInfo">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="fs-14 text-custom-black fw-500">Card Type</label>
-                                <div class="group-form">
-                                    <select class="custom-select form-control form-control-custom"
-                                        formControlName="cardtype" nice-select>
-                                        <option value="Select Card">Select Card</option>
-                                        <option value="Visa">Visa</option>
-                                        <option value="Master Card">Master Card</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Americal Express">Americal Express</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="fs-14 text-custom-black fw-500">Card Holder Name</label>
-                                <input type="text" formControlName="cardname" class="form-control form-control-custom"
-                                    placeholder="Card Holder Name" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="fs-14 text-custom-black fw-500">Card Number</label>
-                                <input type="text" formControlName="cardnumber" class="form-control form-control-custom"
-                                    placeholder="Card Number" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="fs-14 text-custom-black fw-500">Card Identification Number</label>
-                                <input type="text" formControlName="cvv" class="form-control form-control-custom"
-                                    placeholder="Card Identification Number" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="fs-14 text-custom-black fw-500">Expiration Month</label>
-                                        <div class="group-form">
-                                            <select class="custom-select form-control form-control-custom"
-                                                formControlName="expmonth" nice-select>
-                                                <option value="Month">Month</option>
-                                                <option value="Jan">Jan</option>
-                                                <option value="Feb">Feb</option>
-                                                <option value="Mar">Mar</option>
-                                                <option value="Apr">Apr</option>
-                                                <option value="May">May</option>
-                                                <option value="June">June</option>
-                                                <option value="July">July</option>
-                                                <option value="Aug">Aug</option>
-                                                <option value="Sep">Sep</option>
-                                                <option value="Oct">Oct</option>
-                                                <option value="Nov">Nov</option>
-                                                <option value="Dec">Dec</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="fs-14 text-custom-black fw-500">Expiration Year</label>
-                                        <div class="group-form">
-                                            <select class="custom-select form-control form-control-custom"
-                                                formControlName="expyear" nice-select>
-                                                <option value="2021">2021</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2023">2023</option>
-                                                <option value="2024">2024</option>
-                                                <option value="2025">2025</option>
-                                                <option value="2026">2026</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="fs-14 text-custom-black fw-500">Billing Zip Code</label>
-                                <input type="text" formControlName="zipcode" class="form-control form-control-custom"
-                                    placeholder="Billing Zip Code" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="mt-4"></div>
-                    <div class="form-group">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="#">
-                            <span class="checkmark"></span>
-                            By continuing, you agree to the<a href="#">Terms and Conditions.</a>
-                        </label>
-                    </div>
-                    <button type="submit" style="cursor: pointer;" class="btn-first btn-submit" [disabled]="!bookingForm.valid">Confirm
-                        Booking</button>
-                </div>
-            </form>
+  <div class="row">
+    <div class="col-lg-12">
+      <h5 class="text-custom-black">Your Personal Information</h5>
+      <form
+        class="row mb-md-80"
+        [formGroup]="bookingForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fs-14 text-custom-black fw-500">First Name</label>
+            <input
+              type="text"
+              formControlName="firstname"
+              class="form-control form-control-custom"
+              placeholder="First Name"
+              required
+            />
+          </div>
         </div>
-        <!-- <div class="col-lg-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fs-14 text-custom-black fw-500">Last Name</label>
+            <input
+              type="text"
+              formControlName="lastname"
+              class="form-control form-control-custom"
+              placeholder="Last Name"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fs-14 text-custom-black fw-500">Email I'd</label>
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control form-control-custom"
+              placeholder="Email I'd"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fs-14 text-custom-black fw-500"
+              >Verify Email I'd</label
+            >
+            <input
+              type="email"
+              formControlName="verifyemail"
+              class="form-control form-control-custom"
+              placeholder="Email I'd"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fs-14 text-custom-black fw-500">Phone No.</label>
+            <input
+              type="text"
+              formControlName="phone"
+              class="form-control form-control-custom"
+              placeholder="Phone No."
+              required
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="custom-checkbox mb-0">
+            <input type="checkbox" name="#" />
+            <span class="checkmark"></span>
+            I want to receive <a href="#">Company name</a> promotional offers in
+            the future
+          </label>
+        </div>
+        <div class="col-12">
+          <hr />
+        </div>
+        <div class="col-12">
+          <h5 class="text-custom-black">Check available</h5>
+        </div>
+        <div class="col-12">
+          <div class="row" formGroupName="cardInfo">
+            <div class="col-md-6">
+              <label class="fs-14 text-custom-black fw-500">Check in</label>
+              <div class="group-form input-group">
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                />
+                <button
+                  class="btn btn-outline-secondary bi bi-calendar3"
+                  (click)="d.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="fs-14 text-custom-black fw-500">Check out</label>
+              <div class="group-form input-group">
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dp1"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                />
+                <button
+                  class="btn btn-outline-secondary bi bi-calendar3"
+                  (click)="d.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fs-14 text-custom-black fw-500">Room Type</label>
+                <div class="group-form">
+                  <select
+                    class="custom-select form-control form-control-custom"
+                    formControlName="cardtype"
+                    nice-select
+                  >
+                    <option value="Credit Card">Big</option>
+                    <option value="Americal Express">Small</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fs-14 text-custom-black fw-500">Quantity</label>
+                <div class="group-form">
+                  <select
+                    class="custom-select form-control form-control-custom"
+                    formControlName="cardtype"
+                    nice-select
+                  >
+                    <option value="Credit Card">1</option>
+                    <option value="Americal Express">2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mt-4"></div>
+          <div class="form-group">
+            <label class="custom-checkbox">
+              <input type="checkbox" name="#" />
+              <span class="checkmark"></span>
+              By continuing, you agree to the<a href="#"
+                >Terms and Conditions.</a
+              >
+            </label>
+          </div>
+          <button
+            type="submit"
+            style="cursor: pointer"
+            class="btn-first btn-submit"
+            [disabled]="!bookingForm.valid"
+          >
+            Confirm Booking
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- <div class="col-lg-4">
             <div class="row">
                 <div class="col-12">
                     <div class="hotel-grid mb-xl-30" *ngFor="let item of getRecentHotel() | slice:0:1">
@@ -212,5 +230,5 @@
                 </div>
             </div>
         </div> -->
-    </div>
+  </div>
 </div>

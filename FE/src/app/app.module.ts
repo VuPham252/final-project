@@ -14,12 +14,14 @@ import vi from '@angular/common/locales/vi';
 import { CoreModule } from './core/core.module';
 import { JwtInterceptorService } from './auth/interceptor/jwt-interceptor.service';
 import { ShareModule } from './share/share.module';
+import { AdminComponent } from './admin/admin.component';
 
 registerLocaleData(vi);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

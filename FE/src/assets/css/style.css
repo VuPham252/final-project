@@ -2460,3 +2460,10 @@ label.custom-checkbox .checkmark:after {
     opacity: 1;
     transform: translateX(0%);
 }
+
+app-header {
+  position: sticky;
+  top: 0;
+  right: auto;
+  position: -webkit-sticky;
+}
