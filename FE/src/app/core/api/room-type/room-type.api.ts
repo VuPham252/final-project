@@ -7,7 +7,7 @@ import { roomType } from '../../model/room-type';
 @Injectable()
 export class RoomTypeApi {
 
-  private readonly apiController: string = 'admin/roomTypes';
+  private readonly apiController: string = 'room-type/roomtypes';
 
   constructor(private http: HttpService) { }
 

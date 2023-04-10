@@ -19,12 +19,6 @@ export class ContentComponent implements OnInit {
   }
 
   getRoomType() {
-    // const token = localStorage.getItem('token');
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${token}`
-    // });
-
-    // const req = { headers: headers };
     this.roomTypeData.search().subscribe({
       next: (res) => {
         if(res) {

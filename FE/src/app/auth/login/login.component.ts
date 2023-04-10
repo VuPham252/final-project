@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   isShow: boolean = false;
   successAlertClosed = false;
   errorAlertClosed = false;
+  submitted = false;
 
   @ViewChild('successAlert', { static: false }) successAlert: NgbAlert;
   @ViewChild('errorAlert', { static: false }) errorAlert: NgbAlert;
@@ -42,10 +43,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.submitted = true;
     const item: Login = this.formValidation.value;
     this.loginData.login(item).subscribe({
       next: (res) => {
-        debugger;
+        // debugger;
         localStorage.setItem('token', res.token);
         let tokenData = {};
         let helper = new JwtHelperService();

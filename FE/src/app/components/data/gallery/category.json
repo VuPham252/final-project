@@ -1,18 +1,14 @@
 [
     {
         "id":1,
-        "title":"Hotels"
+        "title":"Hotel"
     },
     {
         "id":2,
-        "title":"Flights"
+        "title":"Rooms"
     },
     {
         "id":3,
-        "title":"Cruises"
-    },
-    {
-        "id":4,
-        "title":"Cars"
+        "title":"Services"
     }
 ]

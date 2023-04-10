@@ -1,6 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -17,11 +16,6 @@ export class JwtInterceptorService implements HttpInterceptor {
       }
     });
     console.log(req);
-    // let tokenData = {};
-    // let helper = new JwtHelperService();
-    // tokenData = helper.decodeToken(token);
-    // console.log(tokenData);
-    // localStorage.setItem('user', helper.decodeToken(token));
     return next.handle(req);
   }
 }

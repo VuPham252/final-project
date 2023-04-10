@@ -30,7 +30,7 @@
         "accomondation":[
             {
                 "icon":"fas fa-building",
-                "title":"Over 1000 Hotels"                                        
+                "title":"Over 1000 Hotels"
             },
             {
                 "icon":"fas fa-map-marker-alt",
@@ -49,7 +49,7 @@
     },
     {
         "id":3,
-        "title":"Upto 25% off on first booking <span class='text-custom-blue'>Car</span> through your app!",
+        "title":"Upto 25% off on first booking through your app!",
         "image":"assets/images/car-1.jpg",
         "accomondation":[
             {

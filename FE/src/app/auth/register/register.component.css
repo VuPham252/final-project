@@ -1,204 +1,93 @@
-/* * * * * General CSS * * * * */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
 body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #666666;
-  background: #eaeff4;
-}
-
-.wrapper {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1140px;
-  min-height: 100vh;
+  line-height: 1.4;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  background: linear-gradient(to right bottom, #c0c0aa, #01b7f2);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
 }
 
 .container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  display: flex;
-  background: #ffffff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+  width: 400px;
+  margin: auto;
+  padding: 36px 48px 48px 48px;
+  background-color: #f2efee;
+  border-radius: 11px;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.15);
 }
 
-.credit {
-  position: relative;
-  margin: 25px auto 0 auto;
-  width: 100%;
-  text-align: center;
-  color: #666666;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.credit a {
-  color: #222222;
-  font-size: 16px;
+.login-title {
+  padding: 15px;
+  font-size: 22px;
   font-weight: 600;
-}
-
-/* * * * * Login Form CSS * * * * */
-h2 {
-  margin: 0 0 15px 0;
-  font-size: 30px;
-  font-weight: 700;
-}
-
-h2 img {
-  width: 120px;
-}
-
-p {
-  margin: 0 0 20px 0;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 22px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 7px 20px;
-  font-size: 16px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  border-radius: 5px;
-  color: #ffffff;
-  outline: none;
-  border: 1px solid #ffffff;
-  transition: .3s;
-  -webkit-transition: .3s;
-}
-
-.btn:hover {
-  color: #01b7f2;
-  background: #ffffff;
-}
-
-.col-left,
-.col-right {
-  width: 55%;
-  padding: 45px 35px;
-  display: flex;
-}
-
-.col-left {
-  width: 45%;
-  background: #01b7f2;
-  -webkit-clip-path: polygon(98% 17%, 100% 34%, 98% 51%, 100% 68%, 98% 84%, 100% 100%, 0 100%, 0 0, 100% 0);
-  clip-path: polygon(98% 17%, 100% 34%, 98% 51%, 100% 68%, 98% 84%, 100% 100%, 0 100%, 0 0, 100% 0);
-}
-
-@media(max-width: 575.98px) {
-  .container {
-    flex-direction: column;
-    box-shadow: none;
-  }
-
-  .col-left,
-  .col-right {
-    width: 100%;
-    margin: 0;
-    padding: 30px;
-    -webkit-clip-path: none;
-    clip-path: none;
-  }
-}
-
-.login-text {
-  position: relative;
-  width: 100%;
-  color: #ffffff;
   text-align: center;
-}
-
-.login-text h2 {
-  color: white;
 }
 
 .login-form {
-  position: relative;
-  width: 100%;
-  color: #666666;
-}
-
-.login-form h2 {
-  color: #01b7f2;
-}
-
-.login-form p:last-child {
-  margin: 0;
-}
-
-.login-form p a {
-  color: #01b7f2;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.login-form p:last-child a:last-child {
-  float: right;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 16px;
 }
 
 .login-form label {
   display: block;
-  width: 100%;
-  margin-bottom: 2px;
-  letter-spacing: .5px;
-}
-
-.login-form p:last-child label {
-  width: 60%;
-  float: left;
-}
-
-.login-form label span {
-  color: #01b7f2;
-  padding-left: 2px;
+  margin-bottom: 8px;
 }
 
 .login-form input {
-  display: block;
   width: 100%;
-  height: 40px;
-  padding: 0 10px;
-  font-size: 16px;
-  letter-spacing: 1px;
-  outline: none;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
+  padding: 1.2rem;
+  border-radius: 9px;
+  border: none;
 }
 
 .login-form input:focus {
-  border-color: #01b7f2;
-}
-
-.login-form input.btn {
-  color: #ffffff;
-  background: #01b7f2;
-  border-color: #01b7f2;
   outline: none;
-  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(253, 242, 233, 0.5);
 }
 
-.login-form input.btn:hover {
-  color: #01b7f2;
-  background: #ffffff;
+.btn--form {
+  background-color: #01b7f2;
+  color: #fdf2e9;
+  align-self: end;
+  padding: 8px;
 }
+
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 9px;
+  border: none;
+
+  cursor: pointer;
+  font-family: inherit;
+
+  transition: all 0.3s;
+}
+
+button {
+  outline: 1px solid #01b7f2;
+}
+
+/* .btn--form:hover {
+  background-color: #fdf2e9;
+  color: #01b7f2;
+} */
 
 .error {
   border: 1px solid red !important;
+}
+
+.disabled {
+  border: 1px solid gray;
+  outline: 1px solid gray;
+  color: gray;
+  background: white;
+  cursor: not-allowed;
 }

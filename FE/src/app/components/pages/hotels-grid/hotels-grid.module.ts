@@ -9,9 +9,6 @@ import { HotelsGridRoutingModule } from './hotels-grid-routing.module';
 import { HotelsGridComponent } from './hotels-grid.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from './content/content.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { CoreModule } from 'src/app/core/core.module';
-import { JwtInterceptorService } from 'src/app/auth/interceptor/jwt-interceptor.service';
 
 @NgModule({
   declarations: [HotelsGridComponent, ContentComponent],

@@ -25,10 +25,14 @@ export class HeaderComponent extends HelperService implements OnInit {
       this.userName = getLocalUser;
       this.getUser = true;
     }
+    else {
+      this.getUser = false;
+    }
   }
 
   public signOut() {
-    this.router.navigate(['/login']);
     localStorage.clear();
+    location.reload();
+    this.User();
   }
 }
