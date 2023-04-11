@@ -1,30 +1,77 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HotelHelperService } from 'src/app/components/helper/hotel/hotel-helper.service';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  Validators,
+  FormArray,
+  FormBuilder,
+} from '@angular/forms';
+import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 
 @Component({
   selector: 'app-hotel-booking',
   templateUrl: './hotel-booking.component.html',
-  styleUrls: ['./hotel-booking.component.css']
+  styleUrls: ['./hotel-booking.component.css'],
 })
-export class HotelBookingComponent extends HotelHelperService {
-  bookingForm = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    verifyemail: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    cardInfo: new FormGroup({
-      cardtype: new FormControl('', [Validators.required]),
-      cardname: new FormControl('', [Validators.required]),
-      cardnumber: new FormControl('', [Validators.required,Validators.minLength(16)]),
-      cvv: new FormControl('', [Validators.required,Validators.minLength(3)]),
-      expmonth: new FormControl('', [Validators.required]),
-      expyear: new FormControl('', [Validators.required]),
-      zipcode: new FormControl('', [Validators.required,Validators.minLength(6)])
+export class HotelBookingComponent implements OnInit {
+  public bookingForm!: FormGroup;
+  public roomTypeList: any[] = [];
+
+  constructor(private fb: FormBuilder, private roomTypeData: RoomTypeData) {}
+
+  get name() {
+    return this.bookingForm.get('name');
+  }
+
+  get email() {
+    return this.bookingForm.get('email');
+  }
+
+  get phone() {
+    return this.bookingForm.get('phone');
+  }
+
+  get bookingRequestList() {
+    return this.bookingForm.get('bookingRequestList') as FormArray;
+  }
+
+  ngOnInit(): void {
+    this.bookingForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      bookingRequestList: this.fb.array([
+        this.fb.group({
+          checkin: ['', [Validators.required]],
+          checkout: ['', [Validators.required]],
+          quantity: ['', [Validators.required]],
+          roomType: [0, [Validators.required]],
+        }),
+      ]),
+    });
+    this.getRoomType();
+  }
+
+  getRoomType() {
+    this.roomTypeData.search().subscribe({
+      next: (res) => {
+        this.roomTypeList = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
     })
-  });
+  }
+
+  test() {
+    let test = this.fb.group({
+      checkin: ['', [Validators.required]],
+      checkout: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      roomType: [0, [Validators.required]],
+    })
+    this.bookingRequestList.push(test);
+  }
+
   onSubmit() {
     console.log(this.bookingForm.value);
     this.bookingForm.reset();

@@ -5,52 +5,30 @@
       <form
         class="row mb-md-80"
         [formGroup]="bookingForm"
+        method="POST"
         (ngSubmit)="onSubmit()"
       >
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500">First Name</label>
+            <label class="fs-14 text-custom-black fw-500">Name</label>
             <input
               type="text"
-              formControlName="firstname"
+              formControlName="name"
+              name="name"
               class="form-control form-control-custom"
-              placeholder="First Name"
+              placeholder="Name"
               required
             />
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500">Last Name</label>
-            <input
-              type="text"
-              formControlName="lastname"
-              class="form-control form-control-custom"
-              placeholder="Last Name"
-              required
-            />
-          </div>
-        </div>
+
         <div class="col-md-6">
           <div class="form-group">
             <label class="fs-14 text-custom-black fw-500">Email I'd</label>
             <input
               type="email"
               formControlName="email"
-              class="form-control form-control-custom"
-              placeholder="Email I'd"
-              required
-            />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500"
-              >Verify Email I'd</label
-            >
-            <input
-              type="email"
-              formControlName="verifyemail"
+              name="email"
               class="form-control form-control-custom"
               placeholder="Email I'd"
               required
@@ -64,98 +42,113 @@
             <input
               type="text"
               formControlName="phone"
+              name="phone"
               class="form-control form-control-custom"
               placeholder="Phone No."
               required
             />
           </div>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
           <label class="custom-checkbox mb-0">
             <input type="checkbox" name="#" />
             <span class="checkmark"></span>
             I want to receive <a href="#">Company name</a> promotional offers in
             the future
           </label>
-        </div>
+        </div> -->
         <div class="col-12">
           <hr />
         </div>
         <div class="col-12">
           <h5 class="text-custom-black">Check available</h5>
+          <button type="button" (click)="test()">test</button>
         </div>
-        <div class="col-12">
-          <div class="row" formGroupName="cardInfo">
-            <div class="col-md-6">
-              <label class="fs-14 text-custom-black fw-500">Check in</label>
-              <div class="group-form input-group">
-                <input
-                  class="form-control"
-                  placeholder="yyyy-mm-dd"
-                  name="dp"
-                  ngbDatepicker
-                  #d="ngbDatepicker"
-                />
-                <button
-                  class="btn btn-outline-secondary bi bi-calendar3"
-                  (click)="d.toggle()"
-                  type="button"
-                ></button>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="fs-14 text-custom-black fw-500">Check out</label>
-              <div class="group-form input-group">
-                <input
-                  class="form-control"
-                  placeholder="yyyy-mm-dd"
-                  name="dp1"
-                  ngbDatepicker
-                  #d="ngbDatepicker"
-                />
-                <button
-                  class="btn btn-outline-secondary bi bi-calendar3"
-                  (click)="d.toggle()"
-                  type="button"
-                ></button>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="fs-14 text-custom-black fw-500">Room Type</label>
-                <div class="group-form">
-                  <select
-                    class="custom-select form-control form-control-custom"
-                    formControlName="cardtype"
-                    nice-select
-                  >
-                    <option value="Credit Card">Big</option>
-                    <option value="Americal Express">Small</option>
-                  </select>
+        <div class="col-12" formArrayName="bookingRequestList">
+          <div class="row">
+            <ng-container
+              *ngFor="let item of bookingRequestList.controls; index as idx"
+            >
+              <ng-container [formGroupName]="idx">
+                <div class="col-md-6">
+                  <label class="fs-14 text-custom-black fw-500">Check in</label>
+                  <div class="group-form input-group">
+                    <input
+                      class="checkIn form-control form-control-custom"
+                      placeholder="yyyy-mm-dd"
+                      formControlName="checkin"
+                      name="checkin"
+                    />
+                    <!-- <button
+                      class="btn btn-outline-secondary bi bi-calendar3"
+                      (click)="startDate.toggle()"
+                      type="button"
+                    ></button> -->
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="fs-14 text-custom-black fw-500">Quantity</label>
-                <div class="group-form">
-                  <select
-                    class="custom-select form-control form-control-custom"
-                    formControlName="cardtype"
-                    nice-select
+                <div class="col-md-6">
+                  <label class="fs-14 text-custom-black fw-500"
+                    >Check out</label
                   >
-                    <option value="Credit Card">1</option>
-                    <option value="Americal Express">2</option>
-                  </select>
+                  <div class="group-form input-group">
+                    <input
+                      class="checkOut form-control form-control-custom"
+                      formControlName="checkout"
+                      placeholder="yyyy-mm-dd"
+                      name="checkout"
+                    />
+                    <!-- <button
+                      class="btn btn-outline-secondary bi bi-calendar3"
+                      (click)="endDate.toggle()"
+                      type="button"
+                    ></button> -->
+                  </div>
                 </div>
-              </div>
-            </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="fs-14 text-custom-black fw-500"
+                      >Room Type</label
+                    >
+                    <div class="group-form">
+                      <select
+                        class="roomType custom-select form-control form-control-custom"
+                        formControlName="roomType"
+                        name="roomType"
+                        nice-select
+                      >
+                        <option
+                          *ngFor="let room of roomTypeList; let i = index"
+                          value="{{ room.id }}"
+                        >
+                          {{ room.typeName }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="fs-14 text-custom-black fw-500"
+                      >Quantity</label
+                    >
+                    <input
+                      type="text"
+                      formControlName="quantity"
+                      name="quantity"
+                      class="Quantity form-control form-control-custom"
+                      placeholder="Quantity"
+                      required
+                    />
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
 
         <div class="col-12">
-          <div class="mt-4"></div>
-          <div class="form-group">
+          <div class="mt-3"></div>
+          <!-- <div class="form-group">
             <label class="custom-checkbox">
               <input type="checkbox" name="#" />
               <span class="checkmark"></span>
@@ -163,7 +156,7 @@
                 >Terms and Conditions.</a
               >
             </label>
-          </div>
+          </div> -->
           <button
             type="submit"
             style="cursor: pointer"
@@ -232,3 +225,7 @@
         </div> -->
   </div>
 </div>
+
+<pre
+  >{{ bookingForm.value | json }}
+</pre>
