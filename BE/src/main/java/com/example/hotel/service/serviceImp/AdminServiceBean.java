@@ -19,10 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,13 +130,13 @@ public class AdminServiceBean implements AdminService {
         RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
         roomTypeRepository.save(roomType);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
-                .statusCode(HttpStatus.OK.value())
+                .statusCode(HttpStatus.CREATED.value())
                 .message("Add Roomtype Successfully").build();
-        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+        return new ResponseEntity<>(successResponseObj, HttpStatus.CREATED);
     }
     @Override
-    public RoomTypeResponse getRoomTypeById(Long id) throws RoomTypeException {
-        RoomType roomType = roomTypeRepository.findById(id).orElseThrow();
+    public RoomTypeResponse getRoomTypeById(Long id) throws BookingBusinessException {
+        RoomType roomType = roomTypeRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room type with id: " + id));
         RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
         BeanUtils.copyProperties(roomType, roomTypeResponse);
         return  roomTypeResponse;
@@ -146,11 +144,10 @@ public class AdminServiceBean implements AdminService {
 
 
     @Override
-    public ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeResponse roomTypeResponse) throws RoomTypeException {
-        RoomType existRoomType = roomTypeRepository.findById(roomTypeResponse.getId()).get();
-        existRoomType.setTypeName(roomTypeResponse.getTypeName());
-        existRoomType.setPrice(roomTypeResponse.getPrice());
-        existRoomType.setUpdatedTime(roomTypeResponse.getUpdatedTime());
+    public ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException {
+        RoomType existRoomType = roomTypeRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room type with id: " + id));
+        existRoomType.setTypeName(roomTypeRequest.getTypeName());
+        existRoomType.setPrice(roomTypeRequest.getPrice());
         roomTypeRepository.save(existRoomType);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
@@ -179,9 +176,9 @@ public class AdminServiceBean implements AdminService {
                 .build();
         roomRepository.save(room);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
-                .statusCode(HttpStatus.OK.value())
+                .statusCode(HttpStatus.CREATED.value())
                 .message("Add Room Successfully").build();
-        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+        return new ResponseEntity<>(successResponseObj, HttpStatus.CREATED);
     }
 
     @Override
@@ -193,14 +190,13 @@ public class AdminServiceBean implements AdminService {
     }
 
     @Override
-    public ResponseEntity<SuccessResponseObj> updateRoom(RoomResponse roomResponse) throws RoomTypeException {
-        Room existRoom = roomRepository.findById(roomResponse.getId()).get();
-        existRoom.setName(roomResponse.getName());
-        existRoom.setRoomTypeId(roomResponse.getRoomTypeId());
-        existRoom.setDescription(roomResponse.getDescription());
-        existRoom.setArea(roomResponse.getArea());
-        existRoom.setSize(roomResponse.getSize());
-        existRoom.setUpdatedTime(roomResponse.getUpdatedTime());
+    public ResponseEntity<SuccessResponseObj> updateRoom(RoomRequest roomRequest, Long id) throws BookingBusinessException {
+        Room existRoom = roomRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room with id: " + id));
+        existRoom.setName(roomRequest.getName());
+        existRoom.setRoomTypeId(roomRequest.getRoomTypeId());
+        existRoom.setDescription(roomRequest.getDescription());
+        existRoom.setArea(roomRequest.getArea());
+        existRoom.setSize(roomRequest.getSize());
         roomRepository.save(existRoom);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())

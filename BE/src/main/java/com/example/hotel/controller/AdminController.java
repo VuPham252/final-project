@@ -1,9 +1,8 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.exception.BookingBusinessException;
-import com.example.hotel.model.request.BookingCheckRequest;
-import com.example.hotel.model.request.CheckInRequest;
-import com.example.hotel.model.request.CheckOutRequest;
+import com.example.hotel.exception.RoomTypeException;
+import com.example.hotel.model.request.*;
 import com.example.hotel.model.response.*;
 import com.example.hotel.service.AdminService;
 import com.example.hotel.service.OrderBookingService;
@@ -65,5 +64,54 @@ public class AdminController {
         response.setDownloadUri("/downloadFile/" + filecode);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/room/all-rooms")
+    public List<RoomResponse> getAllRoom() {
+        return adminService.getAllRoom();
+    }
+
+    @GetMapping("/room/{id}")
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable("id") Long id) throws RoomTypeException {
+        RoomResponse roomResponse = adminService.getRoomById(id);
+        return new ResponseEntity<>(roomResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/room/save")
+    public ResponseEntity<SuccessResponseObj> saveRoom(@RequestBody RoomRequest roomRequest){
+        return adminService.saveRoom(roomRequest);
+    }
+
+    @PutMapping("/room/{id}")
+    public ResponseEntity<SuccessResponseObj>updateRoom(@PathVariable Long id, @RequestBody RoomRequest roomRequest) throws BookingBusinessException, RoomTypeException {
+        return adminService.updateRoom(roomRequest, id);
+    }
+
+    @DeleteMapping("/room/{id}")
+    public  ResponseEntity<SuccessResponseObj>deleteRoom(@PathVariable ("id")Long id){
+        return adminService.deleteRoom(id);
+    }
+
+    //room type
+
+    @GetMapping("/room-type/{id}")
+    public ResponseEntity<RoomTypeResponse> getRoomTypeById(@PathVariable ("id") Long id) throws RoomTypeException, BookingBusinessException {
+        RoomTypeResponse roomTypeResponse = adminService.getRoomTypeById(id);
+        return new ResponseEntity<>(roomTypeResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/room-type/save")
+    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest){
+        return adminService.saveRoomType(roomTypeRequest);
+    }
+
+    @PutMapping("/room-type/{id}")
+    public ResponseEntity<SuccessResponseObj>updateRoomType(@PathVariable Long id, @RequestBody RoomTypeRequest roomTypeRequest) throws BookingBusinessException {
+        return adminService.updateRoomType(roomTypeRequest, id);
+    }
+
+    @DeleteMapping("/room-type/{id}")
+    public  ResponseEntity<SuccessResponseObj>deleteRoomType(@PathVariable ("id")Long id){
+        return adminService.deleteRoomType(id);
     }
 }

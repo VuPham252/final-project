@@ -25,9 +25,9 @@ public interface AdminService {
     //CRUD RoomType
     ResponseEntity<SuccessResponseObj> saveRoomType(RoomTypeRequest roomTypeRequest);
 
-    RoomTypeResponse getRoomTypeById(Long id)throws RoomTypeException;
+    RoomTypeResponse getRoomTypeById(Long id) throws RoomTypeException, BookingBusinessException;
 
-    ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeResponse roomTypeResponse) throws RoomTypeException;
+    ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException;
 
     ResponseEntity<SuccessResponseObj>deleteRoomType(Long id);
 
@@ -37,7 +37,7 @@ public interface AdminService {
 
     RoomResponse getRoomById(Long id)throws RoomTypeException;
 
-    ResponseEntity<SuccessResponseObj> updateRoom(RoomResponse roomResponse) throws RoomTypeException;
+    ResponseEntity<SuccessResponseObj> updateRoom(RoomRequest roomRequest, Long id) throws RoomTypeException, BookingBusinessException;
 
     ResponseEntity<SuccessResponseObj>deleteRoom(Long id);
 }
