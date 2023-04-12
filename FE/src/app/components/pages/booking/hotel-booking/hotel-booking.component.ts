@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  Validators,
-  FormArray,
-  FormBuilder,
-} from '@angular/forms';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { Booking } from 'src/app/core/model/booking';
 
 @Component({
   selector: 'app-hotel-booking',
@@ -16,18 +13,26 @@ export class HotelBookingComponent implements OnInit {
   public bookingForm!: FormGroup;
   public roomTypeList: any[] = [];
 
-  constructor(private fb: FormBuilder, private roomTypeData: RoomTypeData) {}
+  public isAvailable: boolean = false;
+  public availableRoom: number = 0;
 
-  get name() {
-    return this.bookingForm.get('name');
+  constructor(
+    private fb: FormBuilder,
+    private roomTypeData: RoomTypeData,
+    private bookingData: BookingData,
+    private element: ElementRef,
+  ) {}
+
+  get customerName() {
+    return this.bookingForm.get('customerName');
   }
 
   get email() {
     return this.bookingForm.get('email');
   }
 
-  get phone() {
-    return this.bookingForm.get('phone');
+  get phoneNumber() {
+    return this.bookingForm.get('phoneNumber');
   }
 
   get bookingRequestList() {
@@ -36,19 +41,47 @@ export class HotelBookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingForm = this.fb.group({
-      name: ['', [Validators.required]],
+      customerName: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
       bookingRequestList: this.fb.array([
         this.fb.group({
-          checkin: ['', [Validators.required]],
-          checkout: ['', [Validators.required]],
-          quantity: ['', [Validators.required]],
-          roomType: [0, [Validators.required]],
+          inputCheckinDate: ['', [Validators.required]],
+          inputCheckoutDate: ['', [Validators.required]],
+          amount: ['', [Validators.required]],
+          roomTypeId: [0, [Validators.required]],
         }),
       ]),
     });
     this.getRoomType();
+  }
+
+  test(index: number) {
+    let checkin = this.element.nativeElement.querySelectorAll('.checkIn');
+    let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
+    let roomtype = this.element.nativeElement.querySelectorAll('.roomType');
+    if(checkin[index].value.length > 0 && checkout[index].value.length > 0 && roomtype[index].value.length > 0) {
+      let item = {
+        inputCheckinDate: checkin[index].value,
+        inputCheckoutDate: checkout[index].value,
+        roomTypeId: parseInt(roomtype[index].value)
+      }
+      this.bookingData.checkAva(item).subscribe({
+        next: (res) => {
+          console.log(res);
+          if(res>0)
+          {
+            this.isAvailable = true;
+            this.availableRoom = res;
+          }
+
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
+    }
+
   }
 
   getRoomType() {
@@ -58,22 +91,30 @@ export class HotelBookingComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 
-  test() {
-    let test = this.fb.group({
-      checkin: ['', [Validators.required]],
-      checkout: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
-      roomType: [0, [Validators.required]],
-    })
-    this.bookingRequestList.push(test);
+  addNewForm() {
+    let newForm = this.fb.group({
+      inputCheckinDate: ['', [Validators.required]],
+      inputCheckoutDate: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
+      roomTypeId: [0, [Validators.required]],
+    });
+    this.bookingRequestList.push(newForm);
   }
 
   onSubmit() {
-    console.log(this.bookingForm.value);
-    this.bookingForm.reset();
+    let item: Booking = this.bookingForm.value;
+    this.bookingData.booking(item).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.bookingForm.reset();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

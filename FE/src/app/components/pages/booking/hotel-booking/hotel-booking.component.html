@@ -13,8 +13,8 @@
             <label class="fs-14 text-custom-black fw-500">Name</label>
             <input
               type="text"
-              formControlName="name"
-              name="name"
+              formControlName="customerName"
+              name="customerName"
               class="form-control form-control-custom"
               placeholder="Name"
               required
@@ -41,8 +41,8 @@
             <label class="fs-14 text-custom-black fw-500">Phone No.</label>
             <input
               type="text"
-              formControlName="phone"
-              name="phone"
+              formControlName="phoneNumber"
+              name="phoneNumber"
               class="form-control form-control-custom"
               placeholder="Phone No."
               required
@@ -60,9 +60,9 @@
         <div class="col-12">
           <hr />
         </div>
-        <div class="col-12">
+        <div class="col-12 d-flex justify-content-between">
           <h5 class="text-custom-black">Check available</h5>
-          <button type="button" (click)="test()">test</button>
+          <button class="mr-2" type="button" (click)="addNewForm()">Add New Room</button>
         </div>
         <div class="col-12" formArrayName="bookingRequestList">
           <div class="row">
@@ -71,13 +71,14 @@
             >
               <ng-container [formGroupName]="idx">
                 <div class="col-md-6">
-                  <label class="fs-14 text-custom-black fw-500">Check in</label>
+                  <label class="fs-14 text-custom-black fw-500">Check In</label>
                   <div class="group-form input-group">
                     <input
                       class="checkIn form-control form-control-custom"
                       placeholder="yyyy-mm-dd"
-                      formControlName="checkin"
-                      name="checkin"
+                      formControlName="inputCheckinDate"
+                      name="inputCheckinDate"
+                      (change)="test(idx)"
                     />
                     <!-- <button
                       class="btn btn-outline-secondary bi bi-calendar3"
@@ -93,9 +94,10 @@
                   <div class="group-form input-group">
                     <input
                       class="checkOut form-control form-control-custom"
-                      formControlName="checkout"
+                      formControlName="inputCheckoutDate"
                       placeholder="yyyy-mm-dd"
-                      name="checkout"
+                      name="inputCheckoutDate"
+                      (change)="test(idx)"
                     />
                     <!-- <button
                       class="btn btn-outline-secondary bi bi-calendar3"
@@ -112,9 +114,10 @@
                     <div class="group-form">
                       <select
                         class="roomType custom-select form-control form-control-custom"
-                        formControlName="roomType"
-                        name="roomType"
+                        formControlName="roomTypeId"
+                        name="roomTypeId"
                         nice-select
+                        (change)="test(idx)"
                       >
                         <option
                           *ngFor="let room of roomTypeList; let i = index"
@@ -133,14 +136,18 @@
                     >
                     <input
                       type="text"
-                      formControlName="quantity"
-                      name="quantity"
+                      formControlName="amount"
+                      name="amount"
                       class="Quantity form-control form-control-custom"
                       placeholder="Quantity"
                       required
                     />
                   </div>
                 </div>
+
+                <ng-container *ngIf="isAvailable">
+                  {{availableRoom}}
+                </ng-container>
               </ng-container>
             </ng-container>
           </div>

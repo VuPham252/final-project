@@ -936,7 +936,7 @@ label.custom-checkbox .checkmark:after {
 }
 /*Navigation*/
 .header .navigation.sticky{
-    animation-name: fadeHeaderInDown;
+    /* animation-name: fadeHeaderInDown; */
     position: fixed;
     top: 0;
     left: 0;
@@ -2459,11 +2459,4 @@ label.custom-checkbox .checkmark:after {
 .gallery .gallery-item:hover .popup:after{
     opacity: 1;
     transform: translateX(0%);
-}
-
-app-header {
-  position: sticky;
-  top: 0;
-  right: auto;
-  position: -webkit-sticky;
 }

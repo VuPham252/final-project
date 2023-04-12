@@ -13,14 +13,17 @@ import { LoginService } from './api/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../auth/interceptor/jwt-interceptor.service';
 import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.service';
-import { ShareService } from '../share/share.service';
+import { BookingApi } from './api/ava-room/booking.api';
+import { BookingData } from './api/ava-room/booking-data';
+import { BookingService } from './api/ava-room/booking.service';
 
-const API = [RoomTypeApi, RegisterApi, LoginApi];
+const API = [RoomTypeApi, RegisterApi, LoginApi, BookingApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
+  { provide: BookingData, useClass: BookingService },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
