@@ -26,4 +26,10 @@ public class RoomTypeController {
         return adminService.getAllRoomTypes();
     }
 
+    @GetMapping("/room-type/{id}")
+    public ResponseEntity<RoomTypeResponse> getRoomTypeById(@PathVariable ("id") Long id) throws RoomTypeException, BookingBusinessException {
+        RoomTypeResponse roomTypeResponse = adminService.getRoomTypeById(id);
+        return new ResponseEntity<>(roomTypeResponse, HttpStatus.OK);
+    }
+
 }
