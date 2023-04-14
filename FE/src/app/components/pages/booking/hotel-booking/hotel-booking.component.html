@@ -89,7 +89,10 @@
               class="form-control form-control-custom"
               placeholder="Phone No."
               [ngClass]="
-                phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched) ? 'error' : ''
+                phoneNumber.invalid &&
+                (phoneNumber.dirty || phoneNumber.touched)
+                  ? 'error'
+                  : ''
               "
               required
             />
@@ -161,36 +164,90 @@
                     >Check In <span style="color: red">*</span></label
                   >
                   <div class="group-form input-group">
-
-                    <input #checkin="ngbDatepicker"
+                    <input
+                      #checkin="ngbDatepicker"
                       class="checkIn form-control form-control-custom datepickr"
                       formControlName="inputCheckinDate"
                       name="inputCheckinDate"
+                      [ngClass]="
+                        item.get('inputCheckinDate').invalid &&
+                        (item.get('inputCheckinDate').dirty ||
+                          item.get('inputCheckinDate').touched)
+                          ? 'error'
+                          : ''
+                      "
                       (ngModelChange)="onChangeAva(idx)"
-                      ngbDatepicker />
+                      ngbDatepicker
+                    />
 
                     <span class="test" (click)="checkin.toggle()">
                       <i class="far fa-calendar mr-1"></i>
                     </span>
-
                   </div>
+                  <ng-container
+                    *ngIf="
+                      item.get('inputCheckinDate').invalid &&
+                      (item.get('inputCheckinDate').dirty ||
+                        item.get('inputCheckinDate').touched)
+                    "
+                    class="d-flex flex-column"
+                  >
+                    <ng-container
+                      *ngIf="item.get('inputCheckinDate').errors?.['required']"
+                    >
+                      <div
+                        class="mt-2 ml-1"
+                        style="color: red; margin-bottom: -10px"
+                      >
+                        Check in is required
+                      </div>
+                    </ng-container>
+                  </ng-container>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="fs-14 text-custom-black fw-500"
                     >Check out <span style="color: red">*</span></label
                   >
                   <div class="group-form input-group">
-                    <input #checkout="ngbDatepicker"
+                    <input
+                      #checkout="ngbDatepicker"
                       class="checkOut form-control form-control-custom datepickr"
                       formControlName="inputCheckoutDate"
                       name="inputCheckoutDate"
+                      [ngClass]="
+                        item.get('inputCheckoutDate').invalid &&
+                        (item.get('inputCheckoutDate').dirty ||
+                          item.get('inputCheckoutDate').touched)
+                          ? 'error'
+                          : ''
+                      "
                       (ngModelChange)="onChangeAva(idx)"
-                      ngbDatepicker />
+                      ngbDatepicker
+                    />
 
                     <span class="test" (click)="checkout.toggle()">
                       <i class="far fa-calendar mr-1"></i>
                     </span>
                   </div>
+                  <ng-container
+                    *ngIf="
+                      item.get('inputCheckoutDate').invalid &&
+                      (item.get('inputCheckoutDate').dirty ||
+                        item.get('inputCheckoutDate').touched)
+                    "
+                    class="d-flex flex-column"
+                  >
+                    <ng-container
+                      *ngIf="item.get('inputCheckoutDate').errors?.['required']"
+                    >
+                      <div
+                        class="mt-2 ml-1"
+                        style="color: red; margin-bottom: -10px"
+                      >
+                        Check out is required
+                      </div>
+                    </ng-container>
+                  </ng-container>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
@@ -203,15 +260,42 @@
                         formControlName="roomTypeId"
                         name="roomTypeId"
                         nice-select
+                        required
+                        [ngClass]="
+                          item.get('roomTypeId').invalid &&
+                          (item.get('roomTypeId').dirty ||
+                            item.get('roomTypeId').touched)
+                            ? 'error'
+                            : ''
+                        "
                         (change)="onChangeAva(idx)"
                       >
                         <option
                           *ngFor="let room of roomTypeList; let i = index"
-                          value="{{ room.id }}"
+                          [value]="room.id"
                         >
                           {{ room.typeName }}
                         </option>
                       </select>
+                      <ng-container
+                        *ngIf="
+                          item.get('roomTypeId').invalid &&
+                          (item.get('roomTypeId').dirty ||
+                            item.get('roomTypeId').touched)
+                        "
+                        class="d-flex flex-column"
+                      >
+                        <ng-container
+                          *ngIf="item.get('roomTypeId').errors?.['required']"
+                        >
+                          <div
+                            class="mt-2 ml-1"
+                            style="color: red; margin-bottom: -10px"
+                          >
+                            Room type is required
+                          </div>
+                        </ng-container>
+                      </ng-container>
                     </div>
                   </div>
                 </div>
@@ -221,7 +305,10 @@
                       >Quantity <span style="color: red">*</span></label
                     >
                     <input
-                      type="text"
+                      type="number"
+                      min="1"
+                      [max]="availableRoom[idx]"
+                      [value]="availableRoom[idx]"
                       formControlName="amount"
                       name="amount"
                       class="Quantity form-control form-control-custom"
@@ -230,9 +317,9 @@
                     />
                   </div>
                 </div>
-                <div class="col-md-12" *ngIf="isAvailable">
+                <!-- <div class="col-md-12" *ngIf="isAvailable">
                   {{ availableRoom[idx] }}
-                </div>
+                </div> -->
               </ng-container>
               <div class="col-12">
                 <hr />
@@ -257,6 +344,7 @@
             style="cursor: pointer"
             class="btn-first btn-submit"
             [disabled]="!bookingForm.valid"
+            [ngClass]="!bookingForm.valid ? 'disabled' : ''"
           >
             Confirm Booking
           </button>

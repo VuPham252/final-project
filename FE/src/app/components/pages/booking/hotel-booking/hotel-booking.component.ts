@@ -49,11 +49,12 @@ export class HotelBookingComponent implements OnInit {
           inputCheckinDate: ['', [Validators.required]],
           inputCheckoutDate: ['', [Validators.required]],
           amount: ['', [Validators.required]],
-          roomTypeId: [0, [Validators.required]],
+          roomTypeId: ['', [Validators.required]],
         }),
       ]),
     });
     this.getRoomType();
+
   }
 
   onChangeAva(index: number) {
@@ -107,7 +108,7 @@ export class HotelBookingComponent implements OnInit {
       inputCheckinDate: ['', [Validators.required]],
       inputCheckoutDate: ['', [Validators.required]],
       amount: ['', [Validators.required]],
-      roomTypeId: [0, [Validators.required]],
+      roomTypeId: ['', [Validators.required]],
     });
     this.bookingRequestList.push(newForm);
   }

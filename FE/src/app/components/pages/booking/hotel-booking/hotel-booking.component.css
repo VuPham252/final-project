@@ -121,3 +121,12 @@
   border-radius: 0px 50px 50px 0px;
   cursor: pointer;
 }
+
+.disabled {
+  border: 1px solid gray;
+  outline: 1px solid gray;
+  color: gray;
+  background: white;
+  cursor: not-allowed;
+  pointer-events: none;
+}
