@@ -7,17 +7,19 @@ import { roomType } from '../../model/room-type';
 @Injectable()
 export class RoomTypeApi {
 
-  private readonly apiController: string = 'room-type/roomtypes';
+  private readonly apiController: string = 'admin/room-type';
+
+  private readonly apiControllerAll: string = 'room-type';
 
   constructor(private http: HttpService) { }
 
   search(): Observable<any> {
     // let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
-    return this.http.get(this.apiController);
+    return this.http.get(this.apiControllerAll + "/roomtypes");
   }
 
   save(data: roomType): Observable<any> {
-    return this.http.post(this.apiController, data);
+    return this.http.post(this.apiController + "/save", data);
   }
 
   update(id: number, data: roomType): Observable<any> {
