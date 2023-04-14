@@ -10,43 +10,102 @@
       >
         <div class="col-md-12">
           <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500">Name</label>
+            <label class="fs-14 text-custom-black fw-500"
+              >Customer Name <span style="color: red">*</span></label
+            >
             <input
               type="text"
               formControlName="customerName"
               name="customerName"
               class="form-control form-control-custom"
-              placeholder="Name"
+              placeholder="Customer Name"
+              [ngClass]="
+                customerName.invalid &&
+                (customerName.dirty || customerName.touched)
+                  ? 'error'
+                  : ''
+              "
               required
             />
+            <ng-container
+              *ngIf="
+                customerName.invalid &&
+                (customerName.dirty || customerName.touched)
+              "
+              class="d-flex flex-column"
+            >
+              <ng-container *ngIf="customerName.errors?.['required']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Customer Name is required
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500">Email I'd</label>
+            <label class="fs-14 text-custom-black fw-500"
+              >Email <span style="color: red">*</span></label
+            >
             <input
               type="email"
               formControlName="email"
               name="email"
               class="form-control form-control-custom"
-              placeholder="Email I'd"
+              placeholder="Email"
+              [ngClass]="
+                email.invalid && (email.dirty || email.touched) ? 'error' : ''
+              "
               required
             />
+            <ng-container
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="d-flex flex-column"
+            >
+              <ng-container *ngIf="email.errors?.['required']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Email is required
+                </div>
+              </ng-container>
+              <ng-container *ngIf="email.errors?.['email']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Email is Invalid
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <label class="fs-14 text-custom-black fw-500">Phone No.</label>
+            <label class="fs-14 text-custom-black fw-500"
+              >Phone No. <span style="color: red">*</span></label
+            >
             <input
               type="text"
               formControlName="phoneNumber"
               name="phoneNumber"
               class="form-control form-control-custom"
               placeholder="Phone No."
+              [ngClass]="
+                phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched) ? 'error' : ''
+              "
               required
             />
+            <ng-container
+              *ngIf="
+                phoneNumber.invalid &&
+                (phoneNumber.dirty || phoneNumber.touched)
+              "
+              class="d-flex flex-column"
+            >
+              <ng-container *ngIf="phoneNumber.errors?.['required']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Phone number is required
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
         <!-- <div class="col-12">
@@ -60,56 +119,83 @@
         <div class="col-12">
           <hr />
         </div>
-        <div class="col-12 d-flex justify-content-between">
-          <h5 class="text-custom-black">Check available</h5>
-          <button class="mr-2" type="button" (click)="addNewForm()">Add New Room</button>
+        <div
+          class="col-12 d-flex justify-content-between align-items-center mb-3"
+        >
+          <h5 style="margin: 0" class="text-custom-black">Check available</h5>
+          <button class="mr-2 add-room" type="button" (click)="addNewForm()">
+            Add New Room
+          </button>
         </div>
         <div class="col-12" formArrayName="bookingRequestList">
           <div class="row">
             <ng-container
               *ngFor="let item of bookingRequestList.controls; index as idx"
             >
-              <ng-container [formGroupName]="idx">
-                <div class="col-md-6">
-                  <label class="fs-14 text-custom-black fw-500">Check In</label>
-                  <div class="group-form input-group">
-                    <input
-                      class="checkIn form-control form-control-custom"
-                      placeholder="yyyy-mm-dd"
-                      formControlName="inputCheckinDate"
-                      name="inputCheckinDate"
-                      (change)="test(idx)"
-                    />
-                    <!-- <button
-                      class="btn btn-outline-secondary bi bi-calendar3"
-                      (click)="startDate.toggle()"
+              <div class="col-12 d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="mr-2 delete-form-group"
+                  [ngbPopover]="popContent"
+                  placement="bottom"
+                >
+                  X
+                </button>
+                <ng-template #popContent>
+                  <div class="mb-2">Are you sure delete this?</div>
+                  <div style="text-align: right">
+                    <button class="popover-button" type="button">Cancel</button>
+                    <button
+                      class="danger-button"
                       type="button"
-                    ></button> -->
+                      (click)="deleteFormGroup(idx)"
+                    >
+                      OK
+                    </button>
                   </div>
-                </div>
-                <div class="col-md-6">
+                </ng-template>
+              </div>
+              <ng-container [formGroupName]="idx">
+                <div class="col-md-6 mb-3">
                   <label class="fs-14 text-custom-black fw-500"
-                    >Check out</label
+                    >Check In <span style="color: red">*</span></label
                   >
                   <div class="group-form input-group">
-                    <input
-                      class="checkOut form-control form-control-custom"
+
+                    <input #checkin="ngbDatepicker"
+                      class="checkIn form-control form-control-custom datepickr"
+                      formControlName="inputCheckinDate"
+                      name="inputCheckinDate"
+                      (ngModelChange)="onChangeAva(idx)"
+                      ngbDatepicker />
+
+                    <span class="test" (click)="checkin.toggle()">
+                      <i class="far fa-calendar mr-1"></i>
+                    </span>
+
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="fs-14 text-custom-black fw-500"
+                    >Check out <span style="color: red">*</span></label
+                  >
+                  <div class="group-form input-group">
+                    <input #checkout="ngbDatepicker"
+                      class="checkOut form-control form-control-custom datepickr"
                       formControlName="inputCheckoutDate"
-                      placeholder="yyyy-mm-dd"
                       name="inputCheckoutDate"
-                      (change)="test(idx)"
-                    />
-                    <!-- <button
-                      class="btn btn-outline-secondary bi bi-calendar3"
-                      (click)="endDate.toggle()"
-                      type="button"
-                    ></button> -->
+                      (ngModelChange)="onChangeAva(idx)"
+                      ngbDatepicker />
+
+                    <span class="test" (click)="checkout.toggle()">
+                      <i class="far fa-calendar mr-1"></i>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="fs-14 text-custom-black fw-500"
-                      >Room Type</label
+                      >Room Type <span style="color: red">*</span></label
                     >
                     <div class="group-form">
                       <select
@@ -117,7 +203,7 @@
                         formControlName="roomTypeId"
                         name="roomTypeId"
                         nice-select
-                        (change)="test(idx)"
+                        (change)="onChangeAva(idx)"
                       >
                         <option
                           *ngFor="let room of roomTypeList; let i = index"
@@ -132,7 +218,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="fs-14 text-custom-black fw-500"
-                      >Quantity</label
+                      >Quantity <span style="color: red">*</span></label
                     >
                     <input
                       type="text"
@@ -144,11 +230,13 @@
                     />
                   </div>
                 </div>
-
-                <ng-container *ngIf="isAvailable">
-                  {{availableRoom}}
-                </ng-container>
+                <div class="col-md-12" *ngIf="isAvailable">
+                  {{ availableRoom[idx] }}
+                </div>
               </ng-container>
+              <div class="col-12">
+                <hr />
+              </div>
             </ng-container>
           </div>
         </div>
@@ -175,61 +263,6 @@
         </div>
       </form>
     </div>
-    <!-- <div class="col-lg-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="hotel-grid mb-xl-30" *ngFor="let item of getRecentHotel() | slice:0:1">
-                        <div class="hotel-grid-wrapper bx-wrapper">
-                            <div class="image-sec p-relative">
-                                <a routerLink="/hotel-details/{{item.id}}">
-                                    <img [src]="item.image[0]" class="full-width" [alt]="item.title">
-                                </a>
-                            </div>
-                            <div class="hotel-grid-caption padding-20 bg-custom-white p-relative">
-                                <h4 class="title fs-16"><a routerLink="/hotel-details/{{item.id}}"
-                                        class="text-custom-black">{{item.title}}<small
-                                            class="text-light-dark">{{item.location}}</small></a></h4>
-                                <span class="price"><small>avg/night</small>${{item.price | number:'1.0-0'}}</span>
-                                <div class="feedback">
-                                    <div class="ratings">
-                                        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" class="rating">
-                                            <ng-template let-fill="fill" let-index="index">
-                                                <span class="text-light-white fs-12"
-                                                    [class.text-yellow]="fill === 100"><i
-                                                        class="fas fa-star"></i></span>
-                                            </ng-template>
-                                        </ngb-rating>
-                                    </div>
-                                    <span class="review fs-12 text-light-dark">{{item.reviews.length}} reviews</span>
-                                </div>
-                                <p class="text-light-dark">Nunc cursus libero purus ac congue arcu cursus ut sed vitae
-                                    pulvinar massa idporta nequetiam.</p>
-                                <div class="action">
-                                    <a routerLink="/hotel-details/{{item.id}}" class="btn-second btn-small">View</a>
-                                    <a routerLink="/booking" class="btn-first btn-submit">Book</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="need-help bx-wrapper padding-20">
-                        <h5 class="text-custom-black">Need Help?.</h5>
-                        <p class="text-light-dark">We would be more than happy to help you. Our team advisor are 24/7 at
-                            your service to help you.</p>
-                        <ul class="custom">
-                            <li class="text-custom-blue fs-18">
-                                <i class="fas fa-phone-alt"></i>
-                                <a href="#" class="text-light-dark"> (+347) 123 456 7890</a>
-                            </li>
-                            <li class="text-custom-blue fs-18">
-                                <i class="fas fa-envelope"></i>
-                                <a href="#" class="text-light-dark fs-14"> example@example.com</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->
   </div>
 </div>
 

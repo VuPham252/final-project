@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,7 @@ registerLocaleData(vi);
     NgbModule,
     HttpClientModule,
     CoreModule.forRoot(),
-    ShareModule.forRoot()
+    ShareModule.forRoot(),
   ],
   providers: [
     {
@@ -40,6 +40,7 @@ registerLocaleData(vi);
       useClass: JwtInterceptorService,
       multi: true
     },
+
   ],
   bootstrap: [AppComponent],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -13,7 +13,6 @@ import { FlightBookingComponent } from './flight-booking/flight-booking.componen
 import { CruiseBookingComponent } from './cruise-booking/cruise-booking.component';
 import { CarBookingComponent } from './car-booking/car-booking.component';
 
-
 @NgModule({
   declarations: [
     BookingComponent,
@@ -30,7 +29,7 @@ import { CarBookingComponent } from './car-booking/car-booking.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    NiceSelectModule
+    NiceSelectModule,
   ]
 })
 export class BookingModule { }

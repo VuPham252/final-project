@@ -1,0 +1,123 @@
+.add-room {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  user-select: none;
+  height: 30px;
+  line-height: 30px;
+  width: fit-content;
+  padding: 9px;
+  background: #fff;
+  color: black;
+  border-radius: 3px;
+}
+
+.add-room:hover,
+.add-room:focus,
+.delete-form-group:hover,
+.delete-form-group:focus,
+.popover-button:hover,
+.popover-button:focus {
+  color: #01b7f2;
+  border-color: #01b7f2;
+}
+
+.delete-form-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  user-select: none;
+  height: 28px;
+  line-height: 30px;
+  width: fit-content;
+  padding: 9px;
+  background: #fff;
+  color: black;
+  border-radius: 3px;
+}
+
+.error {
+  border: 2px solid #efefef;
+  border-bottom: 2px solid red;
+  box-shadow: none;
+}
+
+.popover-button {
+  margin-left: 8px;
+  height: 24px;
+  padding: 0 7px;
+  font-size: 14px;
+  border-radius: 2px;
+  line-height: 1.5715;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px #00000004;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  color: #000000d9;
+  border-color: #d9d9d9;
+  background: #fff;
+}
+
+.danger-button {
+  margin-left: 8px;
+  height: 24px;
+  padding: 0 7px;
+  font-size: 14px;
+  border-radius: 2px;
+  line-height: 1.5715;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px #00000004;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  color: white;
+  border-color: #d9d9d9;
+  background: #ff4d4f;
+}
+
+.test {
+  height: 40px;
+  width: 30px;
+  background: #2d3e52;
+  color: #fff;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border-radius: 0px 50px 50px 0px;
+  cursor: pointer;
+}

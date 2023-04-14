@@ -14,13 +14,13 @@ export class HotelBookingComponent implements OnInit {
   public roomTypeList: any[] = [];
 
   public isAvailable: boolean = false;
-  public availableRoom: number = 0;
+  public availableRoom: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private roomTypeData: RoomTypeData,
     private bookingData: BookingData,
-    private element: ElementRef,
+    private element: ElementRef
   ) {}
 
   get customerName() {
@@ -42,7 +42,7 @@ export class HotelBookingComponent implements OnInit {
   ngOnInit(): void {
     this.bookingForm = this.fb.group({
       customerName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required]],
       bookingRequestList: this.fb.array([
         this.fb.group({
@@ -56,32 +56,39 @@ export class HotelBookingComponent implements OnInit {
     this.getRoomType();
   }
 
-  test(index: number) {
+  onChangeAva(index: number) {
+    debugger;
     let checkin = this.element.nativeElement.querySelectorAll('.checkIn');
     let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
-    let roomtype = this.element.nativeElement.querySelectorAll('.roomType');
-    if(checkin[index].value.length > 0 && checkout[index].value.length > 0 && roomtype[index].value.length > 0) {
+    let roomtype = this.element.nativeElement.querySelectorAll('select.roomType');
+    if (
+      checkin[index].value.length > 0 &&
+      checkout[index].value.length > 0 &&
+      roomtype[index].value != undefined &&
+      roomtype[index].value != null
+    ) {
       let item = {
         inputCheckinDate: checkin[index].value,
         inputCheckoutDate: checkout[index].value,
-        roomTypeId: parseInt(roomtype[index].value)
-      }
+        roomTypeId: parseInt(roomtype[index].value),
+      };
       this.bookingData.checkAva(item).subscribe({
         next: (res) => {
           console.log(res);
-          if(res>0)
-          {
+          if (res > 0) {
             this.isAvailable = true;
-            this.availableRoom = res;
+            this.availableRoom.push(res);
           }
-
         },
         error: (err) => {
           console.log(err);
-        }
-      })
+        },
+      });
     }
+  }
 
+  deleteFormGroup(index: number) {
+    this.bookingRequestList.removeAt(index);
   }
 
   getRoomType() {
@@ -114,7 +121,7 @@ export class HotelBookingComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 }
