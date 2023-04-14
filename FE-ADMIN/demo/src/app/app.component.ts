@@ -146,7 +146,7 @@ export class AppComponent {
         children: [
           {
             type: 'link',
-            label: 'All-In-One Table',
+            label: 'Room Type',
             route: '/apps/aio-table',
             icon: 'mat:assignment'
           },

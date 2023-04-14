@@ -17,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { ConfirmDialogModule } from "../../../dialogs/confirm-dialog/confirm-dialog.module"
 
 @NgModule({
   declarations: [AioTableComponent],
@@ -34,6 +34,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    ConfirmDialogModule,
 
     FormsModule,
     MatTooltipModule,

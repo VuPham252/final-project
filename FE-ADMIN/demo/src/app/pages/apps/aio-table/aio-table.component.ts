@@ -16,7 +16,12 @@ import { stagger40ms } from '../../../../@vex/animations/stagger.animation';
 import { UntypedFormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatSelectChange } from '@angular/material/select';
+import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 
+//
+import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { roomType } from 'src/app/core/model/room-type';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @UntilDestroy()
 @Component({
@@ -47,35 +52,27 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   subject$: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
   data$: Observable<Customer[]> = this.subject$.asObservable();
   customers: Customer[];
+  room : roomType[];
 
   @Input()
-  columns: TableColumn<Customer>[] = [
-    { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
-    { label: 'Image', property: 'image', type: 'image', visible: true },
-    { label: 'Name', property: 'name', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'First Name', property: 'firstName', type: 'text', visible: false },
-    { label: 'Last Name', property: 'lastName', type: 'text', visible: false },
-    { label: 'Contact', property: 'contact', type: 'button', visible: true },
-    { label: 'Address', property: 'address', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Street', property: 'street', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Zipcode', property: 'zipcode', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'City', property: 'city', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Phone', property: 'phoneNumber', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Labels', property: 'labels', type: 'button', visible: true },
+  columns: TableColumn<roomType>[] = [
+    { label: 'Id', property: 'id', type: 'image', visible: true },
+    { label: 'Name', property: 'typeName', type: 'image', visible: true },
+    { label: 'Price', property: 'price', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
-  dataSource: MatTableDataSource<Customer> | null;
+  dataSource: MatTableDataSource<roomType> | null;
   selection = new SelectionModel<Customer>(true, []);
   searchCtrl = new UntypedFormControl();
-
+  roomTypeList = [];
   labels = aioTableLabels;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private roomType :RoomTypeData, private a : AlertService) {
   }
 
   get visibleColumns() {
@@ -97,12 +94,14 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
     this.dataSource = new MatTableDataSource();
 
-    this.data$.pipe(
-      filter<Customer[]>(Boolean)
-    ).subscribe(customers => {
-      this.customers = customers;
-      this.dataSource.data = customers;
-    });
+    // this.data$.pipe(
+    //   filter<Customer[]>(Boolean)
+    // ).subscribe(customers => {
+    //   this.customers = customers;
+    //   this.dataSource.data = customers;
+    // });
+    this.getDataRoom();
+    // this.dataSource.data = this.getDataRoom();
 
     this.searchCtrl.valueChanges.pipe(
       untilDestroyed(this)
@@ -124,13 +123,14 @@ export class AioTableComponent implements OnInit, AfterViewInit {
          * Here we are updating our local array.
          * You would probably make an HTTP request here.
          */
-        this.customers.unshift(new Customer(customer));
-        this.subject$.next(this.customers);
+        this.getDataRoom();
       }
     });
   }
 
-  updateCustomer(customer: Customer) {
+
+
+  updateCustomer(customer: roomType) {
     this.dialog.open(CustomerCreateUpdateComponent, {
       data: customer
     }).afterClosed().subscribe(updatedCustomer => {
@@ -138,33 +138,11 @@ export class AioTableComponent implements OnInit, AfterViewInit {
        * Customer is the updated customer (if the user pressed Save - otherwise it's null)
        */
       if (updatedCustomer) {
-        /**
-         * Here we are updating our local array.
-         * You would probably make an HTTP request here.
-         */
-        const index = this.customers.findIndex((existingCustomer) => existingCustomer.id === updatedCustomer.id);
-        this.customers[index] = new Customer(updatedCustomer);
-        this.subject$.next(this.customers);
+
+
+        this.getDataRoom();
       }
     });
-  }
-
-  deleteCustomer(customer: Customer) {
-    /**
-     * Here we are updating our local array.
-     * You would probably make an HTTP request here.
-     */
-    this.customers.splice(this.customers.findIndex((existingCustomer) => existingCustomer.id === customer.id), 1);
-    this.selection.deselect(customer);
-    this.subject$.next(this.customers);
-  }
-
-  deleteCustomers(customers: Customer[]) {
-    /**
-     * Here we are updating our local array.
-     * You would probably make an HTTP request here.
-     */
-    customers.forEach(c => this.deleteCustomer(c));
   }
 
   onFilterChange(value: string) {
@@ -190,19 +168,42 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+  handleDelete(id: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      disableClose: false,
+      width: '400px',
+      data: {
+        title: "Are you sure want to remove this Occupation",
+        text: "You will not be able to recover this Occupation!",
+        onYesClick: () => { this.delete(id) }
+      }
+    });
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>) {
-    return column.property;
-  }
+  getDataRoom(){
+    this.roomType.search().subscribe({
+      next: (res) => {
 
-  onLabelChange(change: MatSelectChange, row: Customer) {
-    const index = this.customers.findIndex(c => c === row);
-    this.customers[index].labels = change.value;
-    this.subject$.next(this.customers);
+        this.dataSource.data = res;
+        console.log(res);
+      },
+      error: (err) =>{
+
+      }
+    })
+  }
+  delete(id: number) {
+    this.roomType.deleteById(id)
+      .subscribe({
+        next: () => {
+          this.getDataRoom();
+          this.a.success("Delete success");
+          this.dialog.closeAll();
+        },
+        error: (error) => {
+          this.a.error("Delete fail");
+          console.log(error)
+        }
+      })
   }
 }
