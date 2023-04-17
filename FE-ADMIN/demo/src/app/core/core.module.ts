@@ -13,11 +13,15 @@ import { LoginService } from './api/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../auth/interceptor/jwt-interceptor.service';
 import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.service';
+import { RoomService } from './api/room/room.service';
+import { RoomData } from './api/room/room-data';
+import { RoomApi } from './api/room/room.api';
 
-const API = [RoomTypeApi, RegisterApi, LoginApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
+  { provide: RoomData, useClass: RoomService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
   {

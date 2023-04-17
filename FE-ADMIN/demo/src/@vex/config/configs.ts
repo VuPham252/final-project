@@ -25,8 +25,8 @@ const defaultConfig: VexConfig = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'VEX',
-    imageUrl: 'assets/img/demo/logo.svg',
+    title: '',
+    imageUrl: 'assets/img/demo/toor-logo.png',
     showCollapsePin: true,
     user: {
       visible: true

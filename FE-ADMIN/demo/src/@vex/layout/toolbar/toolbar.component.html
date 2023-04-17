@@ -6,19 +6,18 @@
   <a *ngIf="isVerticalLayout$ | async"
      [routerLink]="['/']"
      class="ltr:mr-4 rtl:ml-4 block flex items-center">
-    <img alt="Logo" class="w-8 select-none" src="assets/img/demo/logo.svg"/>
-    <h1 [class.hidden]="!mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">VEX</h1>
+    <img alt="Logo" class="w-8 select-none" style="width:80%" src="assets/img/demo/toor-logo.png"/>
   </a>
 
-  <button *ngIf="isHorizontalLayout$ | async"
+  <!-- <button *ngIf="isHorizontalLayout$ | async"
           [class.hidden]="mobileQuery"
           [matMenuTriggerFor]="addNewMenu"
           color="primary"
           mat-flat-button
           type="button">Add New
-  </button>
+  </button> -->
 
-  <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
+  <!-- <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
     <button mat-menu-item>
       <mat-icon svgIcon="mat:person_add"></mat-icon>
       <span>Add Contact</span>
@@ -68,7 +67,7 @@
       <span>Mega Menu</span>
       <mat-icon class="icon-sm" svgIcon="mat:arrow_drop_down"></mat-icon>
     </button>
-  </div>
+  </div> -->
 
 
   <div *ngIf="(isVerticalLayout$ | async) && isNavbarInToolbar$ | async"
