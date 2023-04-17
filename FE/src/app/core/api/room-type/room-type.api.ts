@@ -25,7 +25,7 @@ export class RoomTypeApi {
   }
 
   getById(id: number): Observable<any> {
-    return this.http.get(`${this.apiController}` + "/" + id);
+    return this.http.get(`${this.apiController}` + "/room-type/" + id);
   }
 
   deleteById(id: number): Observable<any> {

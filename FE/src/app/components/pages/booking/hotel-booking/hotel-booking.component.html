@@ -177,7 +177,9 @@
                           : ''
                       "
                       (ngModelChange)="onChangeAva(idx)"
+                      [maxDate]="item.get('inputCheckoutDate').value"
                       ngbDatepicker
+                      readonly
                     />
 
                     <span class="test" (click)="checkin.toggle()">
@@ -202,6 +204,16 @@
                         Check in is required
                       </div>
                     </ng-container>
+                    <ng-container
+                      *ngIf="item.get('inputCheckinDate').errors?.['pattern']"
+                    >
+                      <div
+                        class="mt-2 ml-1"
+                        style="color: red; margin-bottom: -10px"
+                      >
+                        Check in format is yyyy-mm-dd
+                      </div>
+                    </ng-container>
                   </ng-container>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -221,8 +233,10 @@
                           ? 'error'
                           : ''
                       "
+                      [minDate]="item.get('inputCheckinDate').value"
                       (ngModelChange)="onChangeAva(idx)"
                       ngbDatepicker
+                      readonly
                     />
 
                     <span class="test" (click)="checkout.toggle()">
@@ -269,6 +283,7 @@
                             : ''
                         "
                         (change)="onChangeAva(idx)"
+                        (change)="onSelect(idx)"
                       >
                         <option
                           *ngFor="let room of roomTypeList; let i = index"
@@ -313,8 +328,52 @@
                       name="amount"
                       class="Quantity form-control form-control-custom"
                       placeholder="Quantity"
+                      [ngClass]="
+                        item.get('amount').invalid &&
+                        (item.get('amount').dirty || item.get('amount').touched)
+                          ? 'error'
+                          : ''
+                      "
                       required
                     />
+                    <ng-container
+                      *ngIf="
+                        item.get('amount').invalid &&
+                        (item.get('amount').dirty || item.get('amount').touched)
+                      "
+                      class="d-flex flex-column"
+                    >
+                      <ng-container
+                        *ngIf="item.get('amount').errors?.['required']"
+                      >
+                        <div
+                          class="mt-2 ml-1"
+                          style="color: red; margin-bottom: -10px"
+                        >
+                          Quantity is required
+                        </div>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="item.get('amount').errors?.['max']"
+                      >
+                        <div
+                          class="mt-2 ml-1"
+                          style="color: red; margin-bottom: -10px"
+                        >
+                          Quantity is capped to maximum
+                        </div>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="item.get('amount').errors?.['min']"
+                      >
+                        <div
+                          class="mt-2 ml-1"
+                          style="color: red; margin-bottom: -10px"
+                        >
+                          Quantity minimum is 1
+                        </div>
+                      </ng-container>
+                    </ng-container>
                   </div>
                 </div>
                 <!-- <div class="col-md-12" *ngIf="isAvailable">
@@ -342,7 +401,7 @@
           <button
             type="submit"
             style="cursor: pointer"
-            class="btn-first btn-submit"
+            class="btn-first btn-submit mb-3"
             [disabled]="!bookingForm.valid"
             [ngClass]="!bookingForm.valid ? 'disabled' : ''"
           >

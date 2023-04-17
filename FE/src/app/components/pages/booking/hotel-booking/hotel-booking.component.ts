@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormArray, FormBuilder, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { Booking } from 'src/app/core/model/booking';
@@ -12,9 +12,12 @@ import { Booking } from 'src/app/core/model/booking';
 export class HotelBookingComponent implements OnInit {
   public bookingForm!: FormGroup;
   public roomTypeList: any[] = [];
+  public roomTypeListEdit: any[] = [];
+  public selectedRoomTypes: any[] = [];
 
   public isAvailable: boolean = false;
   public availableRoom: any[] = [];
+  public isHidden: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -46,27 +49,25 @@ export class HotelBookingComponent implements OnInit {
       phoneNumber: ['', [Validators.required]],
       bookingRequestList: this.fb.array([
         this.fb.group({
-          inputCheckinDate: ['', [Validators.required]],
-          inputCheckoutDate: ['', [Validators.required]],
-          amount: ['', [Validators.required]],
+          inputCheckinDate: [null, [Validators.required]],
+          inputCheckoutDate: [null, [Validators.required]],
+          amount: ['', [Validators.required, Validators.max, Validators.min]],
           roomTypeId: ['', [Validators.required]],
         }),
-      ]),
+      ], [Validators.required]),
     });
     this.getRoomType();
 
   }
 
   onChangeAva(index: number) {
-    debugger;
     let checkin = this.element.nativeElement.querySelectorAll('.checkIn');
     let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
     let roomtype = this.element.nativeElement.querySelectorAll('select.roomType');
     if (
       checkin[index].value.length > 0 &&
       checkout[index].value.length > 0 &&
-      roomtype[index].value != undefined &&
-      roomtype[index].value != null
+      roomtype[index].value.length > 0
     ) {
       let item = {
         inputCheckinDate: checkin[index].value,
@@ -76,15 +77,26 @@ export class HotelBookingComponent implements OnInit {
       this.bookingData.checkAva(item).subscribe({
         next: (res) => {
           console.log(res);
+          // debugger;
           if (res > 0) {
             this.isAvailable = true;
-            this.availableRoom.push(res);
+            if(this.availableRoom.length == index)
+              this.availableRoom.push(res);
+            if(this.availableRoom.length > index)
+              this.availableRoom[index] = res;
           }
         },
         error: (err) => {
           console.log(err);
         },
       });
+    }
+  }
+
+  onSelect(index: number) {
+    if(!this.selectedRoomTypes.includes(index)) {
+      debugger;
+      this.selectedRoomTypes.push(index);
     }
   }
 
@@ -96,6 +108,8 @@ export class HotelBookingComponent implements OnInit {
     this.roomTypeData.search().subscribe({
       next: (res) => {
         this.roomTypeList = res;
+        this.roomTypeListEdit = res;
+
       },
       error: (err) => {
         console.log(err);

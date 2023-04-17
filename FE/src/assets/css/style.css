@@ -665,8 +665,8 @@ label.submit{
     height: 40px;
     display: block;
     position: absolute;
-    right: 0;
-    top: -2px;
+    right: -3px;
+    top: -1.8px;
     border-radius: 0px 50px 50px 0px;
     margin-top: 0;
 }
