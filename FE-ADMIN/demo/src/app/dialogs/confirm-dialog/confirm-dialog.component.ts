@@ -19,8 +19,8 @@ export class ConfirmDialogComponent implements OnInit {
   ngOnInit(): void {
     this.title = this.defaults.title;
     this.text = this.defaults.text;
-    this.confirmButtonText = this.defaults.confirmButtonText || "Đồng ý";
-    this.cancelButtonText = this.defaults.cancelButtonText || "Hủy";
+    this.confirmButtonText = this.defaults.confirmButtonText || "Yes";
+    this.cancelButtonText = this.defaults.cancelButtonText || "No";
   }
 
   onYesClick() {
