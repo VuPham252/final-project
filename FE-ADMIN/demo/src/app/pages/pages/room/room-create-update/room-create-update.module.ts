@@ -11,7 +11,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { RoomCreateUpdateComponent } from './room-create-update.component';
+import { MatDividerModule } from '@angular/material/divider';
 
+import { MtxSelectModule } from "@ng-matero/extensions/select";
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   imports: [
     CommonModule,
@@ -25,6 +28,9 @@ import { RoomCreateUpdateComponent } from './room-create-update.component';
     MatRadioModule,
     MatSelectModule,
     MatMenuModule,
+    MatDialogModule,
+    MatDividerModule,
+    MtxSelectModule,
   ],
   declarations: [RoomCreateUpdateComponent],
   exports: [RoomCreateUpdateComponent]

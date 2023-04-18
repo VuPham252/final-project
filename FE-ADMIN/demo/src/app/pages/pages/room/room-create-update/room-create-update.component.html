@@ -1,54 +1,52 @@
-<vex-secondary-toolbar [current]="isCreateMode ? 'Create' : 'Update'">
-  <vex-breadcrumbs [crumbs]="['Room', isCreateMode ? 'Create' : 'Update']" class="flex-auto"></vex-breadcrumbs>
-
-  <button class="ml-2" color="primary" mat-icon-button type="button">
-      <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
-</vex-secondary-toolbar>
-<div class="p-gutter fullwidth">
-
-  <div class="flex flex-col sm:flex-row gap-4">
-      <div class="card flex-auto">
-          <div class="px-6 py-4 border-b flex items-center">
-              <h2 class="title m-0">{{isCreateMode ? 'Create' : 'Update'}} Room</h2>
-          </div>
-
-          <form (ngSubmit)="onSubmit()" [formGroup]="form" class="px-6 py-4 flex flex-col">
-              <div class="flex flex-col sm:flex-row sm:gap-4">
-
-                  <mat-form-field appearance="outline" class="flex-auto">
-                      <mat-label>Name</mat-label>
-                      <input formControlName="name" matInput>
-                      <mat-error *ngIf="submitted && f.name.hasError('required')">Name is required</mat-error>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="flex-auto">
-                    <mat-label>Room Type</mat-label>
-                    <input formControlName="roomTypeId" matInput>
-                    <mat-error *ngIf="submitted && f.roomTypeId.hasError('required')">Room Type is required</mat-error>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="flex-auto">
-                    <mat-label>Area</mat-label>
-                    <input formControlName="area" matInput>
-                    <mat-error *ngIf="submitted && f.area.hasError('required')">Area is required</mat-error>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="flex-auto">
-                    <mat-label>Size</mat-label>
-                    <input formControlName="size" matInput>
-                    <mat-error *ngIf="submitted && f.size.hasError('required')">Size is required</mat-error>
-                  </mat-form-field>
-              </div>
-              <mat-form-field appearance="outline">
-                  <mat-label>Description</mat-label>
-                  <textarea formControlName="description" matInput></textarea>
-              </mat-form-field>
-
-              <div class="flex items-center justify-end gap-2">
-                  <button type="button" routerLink="/setting/parameter-ex" mat-button>Cancel</button>
-                  <button color="primary" mat-raised-button type="submit">Submit</button>
-              </div>
-          </form>
-      </div>
-
+<form (ngSubmit)="onSubmit()" [formGroup]="form" >
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">{{isCreateMode ? 'Room Create' : 'Room Update'}}</h2>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
   </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="flex flex-col">
+    <div class="flex flex-col sm:flex-row">
 
-</div>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput>
+        <mat-error *ngIf="submitted && f.name.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <!-- <mat-label>Room Type</mat-label>
+        <input formControlName="roomTypeId" matInput>
+        <mat-error *ngIf="submitted && f.roomTypeId.hasError('required')">Room Type is required</mat-error>
+       -->
+        <mat-label>Room Type</mat-label>
+        <mtx-select [items]="listRoomType" bindLabel="typeName" formControlName="roomTypeId" appendTo="body"
+                    bindValue="id" notFoundText="Không tìm thấy dữ liệu" [clearable]="false">
+        </mtx-select>
+      </mat-form-field>
+
+    </div>
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Area</mat-label>
+        <input formControlName="area" matInput>
+        <mat-error *ngIf="submitted && f.area.hasError('required')">Area is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto" style="margin-top: 2rem;">
+        <mat-label>Size</mat-label>
+        <input formControlName="size" matInput>
+        <mat-error *ngIf="submitted && f.size.hasError('required')">Size is required</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto" color="primary">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput></textarea>
+      <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button color="primary" mat-flat-button type="submit">Submit</button>
+  </mat-dialog-actions>
+</form>
