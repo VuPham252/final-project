@@ -1,5 +1,13 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormArray, FormBuilder, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormArray,
+  FormBuilder,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { Booking } from 'src/app/core/model/booking';
@@ -16,7 +24,7 @@ export class HotelBookingComponent implements OnInit {
   public selectedRoomTypes: any[] = [];
 
   public isAvailable: boolean = false;
-  public availableRoom: any[] = [];
+  public availableRoom: number = 0;
   public isHidden: boolean = false;
 
   constructor(
@@ -47,23 +55,28 @@ export class HotelBookingComponent implements OnInit {
       customerName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required]],
-      bookingRequestList: this.fb.array([
-        this.fb.group({
-          inputCheckinDate: [null, [Validators.required]],
-          inputCheckoutDate: [null, [Validators.required]],
-          amount: ['', [Validators.required, Validators.max, Validators.min]],
-          roomTypeId: ['', [Validators.required]],
-        }),
-      ], [Validators.required]),
+      bookingRequestList: this.fb.array(
+        [
+          this.fb.group({
+            inputCheckinDate: ['', [Validators.required]],
+            inputCheckoutDate: ['', [Validators.required]],
+            amount: ['', [Validators.required, Validators.max, Validators.min]],
+            roomTypeId: ['', [Validators.required]],
+            isAvailable: [false,[]],
+            availableRoom: [0, []],
+          }),
+        ],
+        [Validators.required]
+      ),
     });
     this.getRoomType();
-
   }
 
   onChangeAva(index: number) {
     let checkin = this.element.nativeElement.querySelectorAll('.checkIn');
     let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
-    let roomtype = this.element.nativeElement.querySelectorAll('select.roomType');
+    let roomtype =
+      this.element.nativeElement.querySelectorAll('select.roomType');
     if (
       checkin[index].value.length > 0 &&
       checkout[index].value.length > 0 &&
@@ -77,26 +90,15 @@ export class HotelBookingComponent implements OnInit {
       this.bookingData.checkAva(item).subscribe({
         next: (res) => {
           console.log(res);
-          // debugger;
           if (res > 0) {
-            this.isAvailable = true;
-            if(this.availableRoom.length == index)
-              this.availableRoom.push(res);
-            if(this.availableRoom.length > index)
-              this.availableRoom[index] = res;
+            this.bookingRequestList.controls[index].get('isAvailable').setValue(true);
+            this.bookingRequestList.controls[index].get('availableRoom').setValue(res);
           }
         },
         error: (err) => {
           console.log(err);
         },
       });
-    }
-  }
-
-  onSelect(index: number) {
-    if(!this.selectedRoomTypes.includes(index)) {
-      debugger;
-      this.selectedRoomTypes.push(index);
     }
   }
 
@@ -109,7 +111,6 @@ export class HotelBookingComponent implements OnInit {
       next: (res) => {
         this.roomTypeList = res;
         this.roomTypeListEdit = res;
-
       },
       error: (err) => {
         console.log(err);
@@ -123,12 +124,52 @@ export class HotelBookingComponent implements OnInit {
       inputCheckoutDate: ['', [Validators.required]],
       amount: ['', [Validators.required]],
       roomTypeId: ['', [Validators.required]],
+      isAvailable: [false,[]],
+      availableRoom: [0, []],
     });
     this.bookingRequestList.push(newForm);
   }
 
   onSubmit() {
     let item: Booking = this.bookingForm.value;
+    let arr = item.bookingRequestList;
+    for (let i = 0; i < arr.length; i++) {
+      let monthCheckIn = '';
+      let dayCheckIn = '';
+      let monthCheckOut = '';
+      let dayCheckOut = '';
+
+      if (parseInt(Object.values(arr[i].inputCheckinDate)[1]) < 10)
+        monthCheckIn =
+          '0' + parseInt(Object.values(arr[i].inputCheckinDate)[1]);
+      else monthCheckIn = Object.values(arr[i].inputCheckinDate)[1];
+      if (parseInt(Object.values(arr[i].inputCheckinDate)[2]) < 10)
+        dayCheckIn = '0' + parseInt(Object.values(arr[i].inputCheckinDate)[2]);
+      else dayCheckIn = Object.values(arr[i].inputCheckinDate)[2];
+
+      if (parseInt(Object.values(arr[i].inputCheckoutDate)[1]) < 10)
+        monthCheckOut =
+          '0' + parseInt(Object.values(arr[i].inputCheckoutDate)[1]);
+      else monthCheckOut = Object.values(arr[i].inputCheckoutDate)[1];
+      if (parseInt(Object.values(arr[i].inputCheckoutDate)[2]) < 10)
+        dayCheckOut =
+          '0' + parseInt(Object.values(arr[i].inputCheckoutDate)[2]);
+      else dayCheckOut = Object.values(arr[i].inputCheckoutDate)[2];
+
+      arr[i].inputCheckinDate =
+        parseInt(Object.values(arr[i].inputCheckinDate)[0]) +
+        '-' +
+        monthCheckIn +
+        '-' +
+        dayCheckIn;
+      arr[i].inputCheckoutDate =
+        parseInt(Object.values(arr[i].inputCheckoutDate)[0]) +
+        '-' +
+        monthCheckOut +
+        '-' +
+        dayCheckOut;
+    }
+    item.bookingRequestList = arr;
     this.bookingData.booking(item).subscribe({
       next: (res) => {
         console.log(res);

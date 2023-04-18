@@ -283,7 +283,6 @@
                             : ''
                         "
                         (change)="onChangeAva(idx)"
-                        (change)="onSelect(idx)"
                       >
                         <option
                           *ngFor="let room of roomTypeList; let i = index"
@@ -322,8 +321,8 @@
                     <input
                       type="number"
                       min="1"
-                      [max]="availableRoom[idx]"
-                      [value]="availableRoom[idx]"
+                      [max]="item.get('availableRoom').value"
+                      [value]="item.get('availableRoom').value"
                       formControlName="amount"
                       name="amount"
                       class="Quantity form-control form-control-custom"
@@ -376,9 +375,9 @@
                     </ng-container>
                   </div>
                 </div>
-                <!-- <div class="col-md-12" *ngIf="isAvailable">
-                  {{ availableRoom[idx] }}
-                </div> -->
+                <div class="col-md-12" *ngIf="item.get('isAvailable').value">
+                  <span style="font-size: 20px;">Available Room: {{ item.get('availableRoom').value }}</span>
+                </div>
               </ng-container>
               <div class="col-12">
                 <hr />
