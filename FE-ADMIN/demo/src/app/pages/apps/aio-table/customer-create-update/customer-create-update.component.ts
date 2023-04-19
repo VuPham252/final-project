@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -62,16 +62,25 @@ export class CustomerCreateUpdateComponent implements OnInit {
   ngOnInit() {
     if (this.defaults) {
       this.mode = 'update';
+      this.form = this.fb.group({
+        id: null,
+        typeName: this.defaults.typeName,
+        price: this.defaults.price
+        //this.defaults.typeName
+      });
     } else {
       this.defaults = {} as Customer;
+      this.form = this.fb.group({
+        id: null,
+        typeName: [null, [Validators.required]],
+        price: [null, [Validators.required]]
+        //this.defaults.typeName
+      });
     }
 
-    this.form = this.fb.group({
-      id: null,
-      typeName: this.defaults.typeName,
-      price: this.defaults.price
-    });
+
   }
+
 
   save() {
     this.submitted = true;
@@ -84,6 +93,9 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   createCustomer() {
     const customer = this.form.value;
+    this.submitted = true;
+    if (this.form.invalid)
+      return;
 
     this.roomType.save(customer).subscribe({
       next: () => {
@@ -100,6 +112,10 @@ export class CustomerCreateUpdateComponent implements OnInit {
   updateCustomer() {
     const customer = this.form.value;
     customer.id = this.defaults.id;
+    this.submitted = true;
+    if (this.form.invalid)
+      return;
+
     this.roomType.update(customer.id, customer).subscribe({
       next: () => {
         this.aleart.success("Update success");

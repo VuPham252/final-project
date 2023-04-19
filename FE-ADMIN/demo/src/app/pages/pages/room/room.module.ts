@@ -20,7 +20,7 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { RoomCreateUpdateComponent } from './room-create-update/room-create-update.component';
 import { RoomCreateUpdateModule } from './room-create-update/room-create-update.module';
-
+import { MatDialogModule } from '@angular/material/dialog';
 const routes: VexRoutes = [
   {
     path: '',
@@ -55,6 +55,7 @@ const routes: VexRoutes = [
     MatProgressBarModule,
     PageLayoutModule,
     BreadcrumbsModule,
+    MatDialogModule,
 
     RouterModule.forChild(routes)
   ],
