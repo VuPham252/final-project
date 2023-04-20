@@ -1,13 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  Validators,
-  FormArray,
-  FormBuilder,
-  AbstractControl,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
+import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { Booking } from 'src/app/core/model/booking';
@@ -20,12 +12,9 @@ import { Booking } from 'src/app/core/model/booking';
 export class HotelBookingComponent implements OnInit {
   public bookingForm!: FormGroup;
   public roomTypeList: any[] = [];
-  public roomTypeListEdit: any[] = [];
-  public selectedRoomTypes: any[] = [];
 
   public isAvailable: boolean = false;
   public availableRoom: number = 0;
-  public isHidden: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +51,7 @@ export class HotelBookingComponent implements OnInit {
             inputCheckoutDate: ['', [Validators.required]],
             amount: ['', [Validators.required, Validators.max, Validators.min]],
             roomTypeId: ['', [Validators.required]],
-            isAvailable: [false,[]],
+            isAvailable: [false, []],
             availableRoom: [0, []],
           }),
         ],
@@ -77,6 +66,17 @@ export class HotelBookingComponent implements OnInit {
     let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
     let roomtype =
       this.element.nativeElement.querySelectorAll('select.roomType');
+
+    this.roomTypeList.forEach((element) => {
+      if (element.formId == index) {
+        element.used = false;
+        element.formId = null;
+      }
+      if (element.id == roomtype[index].value) {
+        element.used = true;
+        element.formId = index;
+      }
+    });
     if (
       checkin[index].value.length > 0 &&
       checkout[index].value.length > 0 &&
@@ -91,8 +91,12 @@ export class HotelBookingComponent implements OnInit {
         next: (res) => {
           console.log(res);
           if (res > 0) {
-            this.bookingRequestList.controls[index].get('isAvailable').setValue(true);
-            this.bookingRequestList.controls[index].get('availableRoom').setValue(res);
+            this.bookingRequestList.controls[index]
+              .get('isAvailable')
+              .setValue(true);
+            this.bookingRequestList.controls[index]
+              .get('availableRoom')
+              .setValue(res);
           }
         },
         error: (err) => {
@@ -100,6 +104,15 @@ export class HotelBookingComponent implements OnInit {
         },
       });
     }
+  }
+
+  test(index: number) {
+    this.roomTypeList.forEach((element) => {
+      if (element.formId == index) {
+        element.used = false;
+        element.formId = null;
+      }
+    });
   }
 
   deleteFormGroup(index: number) {
@@ -110,7 +123,10 @@ export class HotelBookingComponent implements OnInit {
     this.roomTypeData.search().subscribe({
       next: (res) => {
         this.roomTypeList = res;
-        this.roomTypeListEdit = res;
+        this.roomTypeList.forEach((element) => {
+          element.used = false;
+          element.formId = null;
+        });
       },
       error: (err) => {
         console.log(err);
@@ -124,7 +140,7 @@ export class HotelBookingComponent implements OnInit {
       inputCheckoutDate: ['', [Validators.required]],
       amount: ['', [Validators.required]],
       roomTypeId: ['', [Validators.required]],
-      isAvailable: [false,[]],
+      isAvailable: [false, []],
       availableRoom: [0, []],
     });
     this.bookingRequestList.push(newForm);

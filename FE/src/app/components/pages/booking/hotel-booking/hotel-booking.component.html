@@ -152,6 +152,7 @@
                       class="danger-button"
                       type="button"
                       (click)="deleteFormGroup(idx)"
+                      (click)="test(idx)"
                     >
                       OK
                     </button>
@@ -284,12 +285,19 @@
                         "
                         (change)="onChangeAva(idx)"
                       >
-                        <option
+                        <ng-container
                           *ngFor="let room of roomTypeList; let i = index"
-                          [value]="room.id"
                         >
-                          {{ room.typeName }}
-                        </option>
+                          <option
+                            [value]="room.id"
+                            *ngIf="
+                              room.used == false ||
+                              (room.used == true && room.formId == idx)
+                            "
+                          >
+                            {{ room.typeName }}
+                          </option>
+                        </ng-container>
                       </select>
                       <ng-container
                         *ngIf="
@@ -352,9 +360,7 @@
                           Quantity is required
                         </div>
                       </ng-container>
-                      <ng-container
-                        *ngIf="item.get('amount').errors?.['max']"
-                      >
+                      <ng-container *ngIf="item.get('amount').errors?.['max']">
                         <div
                           class="mt-2 ml-1"
                           style="color: red; margin-bottom: -10px"
@@ -362,9 +368,7 @@
                           Quantity is capped to maximum
                         </div>
                       </ng-container>
-                      <ng-container
-                        *ngIf="item.get('amount').errors?.['min']"
-                      >
+                      <ng-container *ngIf="item.get('amount').errors?.['min']">
                         <div
                           class="mt-2 ml-1"
                           style="color: red; margin-bottom: -10px"
@@ -376,7 +380,9 @@
                   </div>
                 </div>
                 <div class="col-md-12" *ngIf="item.get('isAvailable').value">
-                  <span style="font-size: 20px;">Available Room: {{ item.get('availableRoom').value }}</span>
+                  <span style="font-size: 20px"
+                    >Available Room: {{ item.get("availableRoom").value }}</span
+                  >
                 </div>
               </ng-container>
               <div class="col-12">

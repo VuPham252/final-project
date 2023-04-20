@@ -24,16 +24,16 @@ const SERVICES = [
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
   { provide: BookingData, useClass: BookingService },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptorService,
-    multi: true,
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true,
-  },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: JwtInterceptorService,
+  //   multi: true,
+  // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: AuthInterceptorService,
+  //   multi: true,
+  // },
 ];
 
 @NgModule({
