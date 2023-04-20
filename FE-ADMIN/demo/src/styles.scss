@@ -1,8 +1,16 @@
-@import "~simplebar/dist/simplebar.css";
-@import "~highlight.js/styles/androidstudio.css";
-// Vex Core
-@import "./@vex/styles/core";
-
+@use '@angular/material' as mat;
+@use '@ng-matero/extensions' as mtx;
+$my-primary: mat.define-palette(mat.$cyan-palette);
+$my-accent: mat.define-palette(mat.$pink-palette);
+$my-warn: mat.define-palette(mat.$red-palette);
+$my-theme: mat.define-light-theme((color: (primary: $my-primary,
+        accent: $my-accent,
+        warn: $my-warn,
+      ),
+      typography: mat.define-typography-config(),
+      density: 0,
+    ));
+@include mtx.all-component-themes($my-theme);
 /*
   You can override any CSS Variable or style here
   Example:
@@ -18,6 +26,10 @@
 /**
   Uncomment the below code and adjust the values to fit your colors, the application will automatically adjust
  */
+ @import "~simplebar/dist/simplebar.css";
+@import "~highlight.js/styles/androidstudio.css";
+// Vex Core
+@import "./@vex/styles/core";
 :root {
   .style-success {
     color: white;
