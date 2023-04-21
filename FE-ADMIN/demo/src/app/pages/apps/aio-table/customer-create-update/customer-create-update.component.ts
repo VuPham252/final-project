@@ -64,8 +64,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.mode = 'update';
       this.form = this.fb.group({
         id: null,
-        typeName: this.defaults.typeName,
-        price: this.defaults.price
+        typeName: [this.defaults.typeName, [Validators.required]],
+        price: [this.defaults.price, [Validators.required]]
         //this.defaults.typeName
       });
     } else {

@@ -56,8 +56,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   @Input()
   columns: TableColumn<roomType>[] = [
-    { label: 'Id', property: 'id', type: 'image', visible: true },
-    { label: 'Name', property: 'typeName', type: 'image', visible: true },
+    { label: 'NO.', property: 'numbers', type: 'text', visible: true },
+    { label: 'Name', property: 'typeName', type: 'text', visible: true },
     { label: 'Price', property: 'price', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
@@ -146,12 +146,16 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   onFilterChange(value: string) {
+    debugger;
     if (!this.dataSource) {
       return;
     }
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+    this.dataSource.filterPredicate = (data: roomType, filter: string) => {
+      return data.typeName.toLocaleLowerCase().includes(filter);
+     };
   }
 
   toggleColumnVisibility(column, event) {
@@ -173,8 +177,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
       disableClose: false,
       width: '400px',
       data: {
-        title: "Are you sure want to remove this Occupation",
-        text: "You will not be able to recover this Occupation!",
+        title: "Are you sure want to remove this Room Type?",
+        text: "You will not be able to recover this Room Type!",
         onYesClick: () => { this.delete(id) }
       }
     });

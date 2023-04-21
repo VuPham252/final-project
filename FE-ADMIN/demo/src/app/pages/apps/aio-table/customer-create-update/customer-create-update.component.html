@@ -1,7 +1,7 @@
 <form (ngSubmit)="save()" [formGroup]="form">
   <div class="flex items-center" mat-dialog-title>
 
-    <h2 class="title m-0">{{isCreateMode ? 'Create' : 'Update'}} Occupation</h2>
+    <h2 class="title m-0">{{isCreateMode ? 'Create' : 'Update'}} Room Type</h2>
     <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon svgIcon="mat:more_vert"></mat-icon>
     </button> -->
@@ -27,8 +27,8 @@
 
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">Cancel</button>
-    <button *ngIf="isCreateMode()" color="primary" mat-flat-button type="submit">Create Customer</button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-flat-button type="submit">Update Customer</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-flat-button type="submit">Create Room Type</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-flat-button type="submit">Update Room Type</button>
   </mat-dialog-actions>
 </form>
 
