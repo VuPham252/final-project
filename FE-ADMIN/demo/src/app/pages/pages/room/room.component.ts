@@ -5,13 +5,17 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { Room } from 'src/app/core/model/room';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoomData } from 'src/app/core/api/room/room-data';
 import { RoomCreateUpdateComponent } from './room-create-update/room-create-update.component';
 import { roomType } from 'src/app/core/model/room-type';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { config } from 'process';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+
+@UntilDestroy()
 @Component({
   selector: 'vex-room',
   templateUrl: './room.component.html',
@@ -23,6 +27,7 @@ export class RoomComponent implements OnInit {
   searchForm: any;
   isLoading = false;
   listRoomType: roomType[] = [];
+  searchCtrl = new UntypedFormControl();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,7 +41,7 @@ export class RoomComponent implements OnInit {
 
   @Input()
   columns: TableColumn<Room>[] = [
-    { label: 'Id', property: 'id', type: 'text', visible: true },
+    { label: 'NO.', property: 'numbers', type: 'text', visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },
     { label: 'Room Type', property: 'roomTypeId', type: 'text', visible: true, },
     { label: 'Area', property: 'area', type: 'text', visible: true },
@@ -45,8 +50,16 @@ export class RoomComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.searchForm = this.formBuilder.group({
+      keyword: null,
+      pageIndex: 1,
+      pageSize: 10
+    })
     this.dataSource = new MatTableDataSource();
     this.roomType.search().subscribe((x: Array<roomType>) => this.listRoomType = x || []);
+    this.searchCtrl.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.onFilterChange(value));
     this.reloadTable();
   }
 
@@ -68,10 +81,14 @@ export class RoomComponent implements OnInit {
   }
 
   update(occupation: Room) {
+     const dialogConfig = new MatDialogConfig();
+
+    // // Set the size of the dialog
+     dialogConfig.width = '900px';
     this.roomData.getById(occupation.id)
       .subscribe({
         next: (response) => {
-          this.dialog.open(RoomCreateUpdateComponent, {
+          this.dialog.open(RoomCreateUpdateComponent , {
             data: response
           }).afterClosed().subscribe(result => {
             this.reloadTable();
@@ -81,6 +98,40 @@ export class RoomComponent implements OnInit {
           this.isLoading = false;
         }
       })
+  }
+  view(occupation: Room) {
+    const dialogConfig = new MatDialogConfig();
+
+   // // Set the size of the dialog
+    dialogConfig.width = '900px';
+   this.roomData.getById(occupation.id)
+     .subscribe({
+       next: (response) => {
+         this.dialog.open(RoomCreateUpdateComponent , {
+           data: {
+            roomData: response,
+            isView: "view"
+           }
+         }).afterClosed().subscribe(result => {
+
+           this.reloadTable();
+         });
+       }, error: (error) => {
+         console.log(error);
+         this.isLoading = false;
+       }
+     })
+ }
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
+    }
+    value = value.trim();
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
+    this.dataSource.filterPredicate = (data: Room, filter: string) => {
+      return data.name.toLocaleLowerCase().includes(filter);
+     };
   }
 
 

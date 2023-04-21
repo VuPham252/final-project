@@ -11,7 +11,7 @@
 
       <mat-form-field appearance="outline"  class="sm:mt-6 sm:ml-6 flex-auto">
         <mat-label>Name</mat-label>
-        <input formControlName="name" matInput>
+        <input [readonly]="isView == 'view'" formControlName="name" matInput>
         <mat-error *ngIf="submitted && f.name.hasError('required')">Name is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
@@ -20,7 +20,7 @@
         <mat-error *ngIf="submitted && f.roomTypeId.hasError('required')">Room Type is required</mat-error>
        -->
         <mat-label>Room Type</mat-label>
-        <mtx-select [items]="listRoomType" bindLabel="typeName" formControlName="roomTypeId" appendTo="body"
+        <mtx-select [readonly]="isView == 'view'" [items]="listRoomType" bindLabel="typeName" formControlName="roomTypeId" appendTo="body"
                     bindValue="id" notFoundText="Không tìm thấy dữ liệu" [clearable]="false">
         </mtx-select>
       </mat-form-field>
@@ -29,24 +29,24 @@
     <div class="flex flex-col sm:flex-row">
       <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
         <mat-label>Area</mat-label>
-        <input formControlName="area" matInput>
+        <input [readonly]="isView == 'view'" formControlName="area" matInput>
         <mat-error *ngIf="submitted && f.area.hasError('required')">Area is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
         <mat-label>Size</mat-label>
-        <input formControlName="size" matInput>
+        <input [readonly]="isView == 'view'" formControlName="size" matInput>
         <mat-error *ngIf="submitted && f.size.hasError('required')">Size is required</mat-error>
       </mat-form-field>
     </div>
     <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto" color="primary">
       <mat-label>Description</mat-label>
-      <textarea formControlName="description" matInput></textarea>
+      <textarea [readonly]="isView == 'view'" formControlName="description" matInput></textarea>
       <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
     </mat-form-field>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">Cancel</button>
-    <button color="primary" mat-flat-button type="submit">Submit</button>
+    <button *ngIf="isView != 'view'"  color="primary" mat-flat-button type="submit">Submit</button>
   </mat-dialog-actions>
 </form>

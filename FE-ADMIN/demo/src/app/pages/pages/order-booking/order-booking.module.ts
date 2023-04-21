@@ -15,31 +15,29 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RoomComponent } from './room.component';
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
-import { RoomCreateUpdateComponent } from './room-create-update/room-create-update.component';
-import { RoomCreateUpdateModule } from './room-create-update/room-create-update.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { OrderBookingComponent } from './order-booking.component';
+
 const routes: VexRoutes = [
   {
     path: '',
     children: [
-      { path: '', component: RoomComponent },
-      { path: 'create', component: RoomCreateUpdateComponent },
-      { path: 'edit/:id', component: RoomCreateUpdateComponent },
-      { path: 'view/:id', component: RoomCreateUpdateComponent,  data: { isView: true}},
+      // { path: '', component: RoomComponent },
+      // { path: 'create', component: RoomCreateUpdateComponent },
+      // { path: 'edit/:id', component: RoomCreateUpdateComponent },
     ]
   }
 ];
+
 @NgModule({
   declarations: [
-    RoomComponent,
+    OrderBookingComponent,
     ],
 
   imports: [
     CommonModule,
-    RoomCreateUpdateModule,
     //theme]
     MatPaginatorModule,
     MatTableModule,
@@ -63,4 +61,4 @@ const routes: VexRoutes = [
   exports: [RouterModule, QuicklinkModule]
 })
 
-export class RoomModule { }
+export class OrderBookingModule { }

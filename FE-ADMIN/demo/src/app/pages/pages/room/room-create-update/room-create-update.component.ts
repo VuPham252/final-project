@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +22,7 @@ export class RoomCreateUpdateComponent implements OnInit {
   confirmButtonText: string;
   cancelButtonText: string;
   listRoomType: roomType[] = [];
+  @Input() isView: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
     private fb: UntypedFormBuilder,
@@ -35,27 +36,38 @@ export class RoomCreateUpdateComponent implements OnInit {
 
     get f() { return this.form.controls; }
     ngOnInit(): void {
+      debugger
+      this.form = this.fb.group({
+        id: '',
+        name: [ '', [Validators.required]],
+        roomTypeId: [ '', [Validators.required]],
+        area: ['', [Validators.required]],
+        size: ['', [Validators.required]],
+        description: ['', [Validators.required]],
+      })
+      // this.route.data.subscribe(e => {
+      //   this.isView = e?.isView;
+      // })
       // this.id = this.route.snapshot.params['id'];
       // this.isCreateMode = !this.id;
       this.roomType.search().subscribe((x: Array<roomType>) => this.listRoomType = x || []);
+      if (this.defaults && this.defaults.isView == 'view'){
+        this.isView = this.defaults.isView;
+        this.form.setValue ( this.defaults.roomData);
+      }
 
+      console.log(this.defaults);
+      console.log(this.isView);
       if (this.defaults) {
         this.isCreateMode = false;
-
+        this.form.setValue(
+          this.defaults
+        ) ;
       } else {
         this.isCreateMode = true;
         this.defaults = {} as Room;
 
       }
-      this.form = this.fb.group({
-        id: this.defaults.id || '',
-        name: [this.defaults.name || '', [Validators.required]],
-        roomTypeId: [this.defaults.roomTypeId || '', [Validators.required]],
-        area: [this.defaults.area || '', [Validators.required]],
-        size: [this.defaults.size || '', [Validators.required]],
-        description: [this.defaults.description || '', [Validators.required]],
-      })
-
     }
 
 
