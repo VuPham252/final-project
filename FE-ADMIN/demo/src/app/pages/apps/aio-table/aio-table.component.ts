@@ -146,7 +146,6 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   onFilterChange(value: string) {
-    debugger;
     if (!this.dataSource) {
       return;
     }

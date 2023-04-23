@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { NgbActiveModal, NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { Booking } from 'src/app/core/model/booking';
@@ -16,11 +17,18 @@ export class HotelBookingComponent implements OnInit {
   public isAvailable: boolean = false;
   public availableRoom: number = 0;
 
+  public successAlertClosed = false;
+  public errorAlertClosed = false;
+
+  @ViewChild('successAlert', { static: false }) successAlert: NgbAlert;
+  @ViewChild('errorAlert', { static: false }) errorAlert: NgbAlert;
+
   constructor(
     private fb: FormBuilder,
     private roomTypeData: RoomTypeData,
     private bookingData: BookingData,
-    private element: ElementRef
+    private element: ElementRef,
+    private modalService: NgbModal,
   ) {}
 
   get customerName() {
@@ -146,6 +154,10 @@ export class HotelBookingComponent implements OnInit {
     this.bookingRequestList.push(newForm);
   }
 
+  openVerticallyCentered(content) {
+		this.modalService.open(content, { centered: true });
+	}
+
   onSubmit() {
     let item: Booking = this.bookingForm.value;
     let arr = item.bookingRequestList;
@@ -190,9 +202,14 @@ export class HotelBookingComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.bookingForm.reset();
+        this.modalService.dismissAll();
+        this.successAlertClosed = true;
+        setTimeout(() => this.successAlert.close(), 2000);
       },
       error: (err) => {
         console.log(err);
+        this.errorAlertClosed = true;
+        setTimeout(() => this.errorAlert.close(), 2000);
       },
     });
   }
