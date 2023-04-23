@@ -99,6 +99,10 @@ const routes: VexRoutes = [
             loadChildren: () => import('./pages/pages/room/room.module').then(m => m.RoomModule)
           },
           {
+            path: 'order-booking',
+            loadChildren: () => import('./pages/pages/order-booking/order-booking.module').then(m => m.OrderBookingModule)
+          },
+          {
             path: 'faq',
             loadChildren: () => import('./pages/pages/faq/faq.module').then(m => m.FaqModule)
           },
