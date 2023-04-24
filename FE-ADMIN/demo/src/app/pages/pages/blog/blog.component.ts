@@ -4,60 +4,56 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
-import { Room } from 'src/app/core/model/room';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { roomType } from 'src/app/core/model/room-type';
-import { Booking } from 'src/app/core/model/booking';
-import { RoomData } from 'src/app/core/api/room/room-data';
-import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { Blog } from 'src/app/core/model/blog';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'vex-order-booking',
-  templateUrl: './order-booking.component.html',
-  styleUrls: ['./order-booking.component.scss']
+  selector: 'vex-blog',
+  templateUrl: './blog.component.html',
+  styleUrls: ['./blog.component.scss']
 })
-export class OrderBookingComponent implements OnInit {
-  rows: Booking[] = [];
+export class BlogComponent implements OnInit {
+  // rows: Blog[] = [];
+  rows: Blog[] = [
+    {id : 1, title : "Test", image : " ", description: "test", shortDescription: "test", author: "test"},
+    {id : 2, title : "Test 2", image : " ", description: "test 2", shortDescription: "test 2", author: "test 2"},
+    {id : 3, title : "Test 3", image : " ", description: "test 3", shortDescription: "test 3", author: "test 3 "},
+
+];
   searchForm: any;
   isLoading = false;
-  listRoomType: roomType[] = [];
-  listRoom: Room[] = [];
-
   constructor(
-    private formBuilder: FormBuilder,
+     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,
-    private roomData : RoomData,
-    private roomType :RoomTypeData
-  ) { }
+    private router: Router,) { }
 
-  dataSource: MatTableDataSource<Booking> = new MatTableDataSource();
+    dataSource: MatTableDataSource<Blog> = new MatTableDataSource();
 
   @Input()
-  columns: TableColumn<Booking>[] = [
+  columns: TableColumn<Blog>[] = [
     { label: 'Id', property: 'id', type: 'text', visible: true },
-    { label: 'Order', property: 'orderId', type: 'text', visible: true },
-    { label: 'Room Type', property: 'roomTypeId', type: 'text', visible: true, },
-    { label: 'Room', property: 'roomId', type: 'text', visible: true },
-    { label: 'Amount', property: 'amount', type: 'text', visible: true },
-    { label: 'Check in date', property: 'checkInDate', type: 'text', visible: true },
-    { label: 'Check out date', property: 'checkOutDate', type: 'text', visible: true },
-    { label: 'Actions', property: 'actions', type: 'button', visible: true }
+    { label: 'Title', property: 'title', type: 'text', visible: true },
+    { label: 'Image', property: 'image', type: 'text', visible: true, },
+    { label: 'Description', property: 'description', type: 'text', visible: true },
+    { label: 'Short Description', property: 'shortDescription', type: 'text', visible: true },
+    { label: 'Author', property: 'author', type: 'text', visible: true, },
+    { label: 'Actions', property: 'actions', type: 'text', visible: true },
   ];
 
+
   ngOnInit(): void {
+    debugger
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
       pageSize: 10
     })
     this.dataSource = new MatTableDataSource();
-    this.roomType.search().subscribe((x: Array<roomType>) => this.listRoomType = x || []);
-    this.roomData.search().subscribe((x : Array<Room> ) => this.listRoom = x || []);
+
+    this.dataSource.data = this.rows;
     // this.reloadTable();
   }
-
   submitSearch() {
     // this.searchObject.keyword = this.searchForm.value.keyword;
     // this.searchObject.pageIndex = 1;
@@ -70,7 +66,10 @@ export class OrderBookingComponent implements OnInit {
   }
 
   reloadTable() {
+    debugger
     this.isLoading = true;
+    console.log(this.rows);
+    this.dataSource.data = this.rows;
     // this.roomData.search()
     //   .subscribe({
     //     next: (response) => {
