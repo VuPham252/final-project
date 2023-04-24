@@ -60,7 +60,7 @@ export class HotelBookingComponent implements OnInit {
             amount: ['', [Validators.required, Validators.max, Validators.min]],
             roomTypeId: ['', [Validators.required]],
             isAvailable: [false, []],
-            availableRoom: [0, []],
+            availableRoom: [99, []],
           }),
         ],
         [Validators.required]
@@ -149,7 +149,7 @@ export class HotelBookingComponent implements OnInit {
       amount: ['', [Validators.required]],
       roomTypeId: ['', [Validators.required]],
       isAvailable: [false, []],
-      availableRoom: [0, []],
+      availableRoom: [99, []],
     });
     this.bookingRequestList.push(newForm);
   }

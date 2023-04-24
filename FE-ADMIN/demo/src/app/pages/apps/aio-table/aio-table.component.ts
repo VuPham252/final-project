@@ -128,11 +128,28 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
   updateCustomer(customer: roomType) {
     this.dialog.open(CustomerCreateUpdateComponent, {
       data: customer
+    }).afterClosed().subscribe(updatedCustomer => {
+      /**
+       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
+       */
+      if (updatedCustomer) {
+
+
+        this.getDataRoom();
+      }
+    });
+  }
+
+  view(customer: roomType) {
+    this.dialog.open(CustomerCreateUpdateComponent, {
+      data: {
+        title: "View Room Type",
+        customer,
+        isView: "view"
+      }
     }).afterClosed().subscribe(updatedCustomer => {
       /**
        * Customer is the updated customer (if the user pressed Save - otherwise it's null)
@@ -176,8 +193,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
       disableClose: false,
       width: '400px',
       data: {
-        title: "Are you sure want to remove this Room Type?",
-        text: "You will not be able to recover this Room Type!",
+        title: "Delete Room Type",
+        text: "Are you sure want to remove this Room Type? You will not be able to recover this Room Type!",
         onYesClick: () => { this.delete(id) }
       }
     });

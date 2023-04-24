@@ -1,7 +1,8 @@
 <form (ngSubmit)="save()" [formGroup]="form">
   <div class="flex items-center" mat-dialog-title>
 
-    <h2 class="title m-0">{{isCreateMode ? 'Create' : 'Update'}} Room Type</h2>
+    <h2 class="title m-0" *ngIf="isView != 'view'">{{isCreateMode ? 'Create' : 'Update'}} Room Type</h2>
+    <h2 class="title m-0" *ngIf="isView == 'view'">View Room Type</h2>
     <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon svgIcon="mat:more_vert"></mat-icon>
     </button> -->
@@ -13,13 +14,13 @@
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="mt-6 flex-auto">
         <mat-label>Room Type Name</mat-label>
-        <input  formControlName="typeName" matInput>
+        <input [ngClass]="isView == 'view' ? 'ban' : ''" [readonly]="isView == 'view'" formControlName="typeName" matInput>
         <mat-error *ngIf="submitted && f.typeName.hasError('required')">Type Name is required</mat-error>
       </mat-form-field>
 
       <mat-form-field class="sm:mt-6 sm:ml-6 flex-auto">
         <mat-label>Price</mat-label>
-        <input formControlName="price" matInput>
+        <input [ngClass]="isView == 'view' ? 'ban' : ''" [readonly]="isView == 'view'" formControlName="price" matInput>
         <mat-error *ngIf="submitted && f.price.hasError('required')">Price is required</mat-error>
       </mat-form-field>
     </div>
@@ -27,8 +28,8 @@
 
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">Cancel</button>
-    <button *ngIf="isCreateMode()" color="primary" mat-flat-button type="submit">Create Room Type</button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-flat-button type="submit">Update Room Type</button>
+    <button *ngIf="isCreateMode() && isView != 'view'" color="primary" mat-flat-button type="submit">Create Room Type</button>
+    <button *ngIf="isUpdateMode() && isView != 'view'" color="primary" mat-flat-button type="submit">Update Room Type</button>
   </mat-dialog-actions>
 </form>
 

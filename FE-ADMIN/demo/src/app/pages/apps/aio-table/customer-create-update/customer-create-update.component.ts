@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
@@ -17,6 +17,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
   // form: UntypedFormGroup;
   // isCreateMode!: boolean;
   submitted = false;
+
+  @Input() isView: string;
 
   // constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
   //             private fb: UntypedFormBuilder,
@@ -61,7 +63,16 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   ngOnInit() {
     // debugger;
-    if (this.defaults) {
+    if (this.defaults && this.defaults.isView == 'view'){
+      this.isView = this.defaults.isView;
+      this.form = this.fb.group({
+        id: this.defaults.customer.id,
+        typeName: [this.defaults.customer.typeName, [Validators.required]],
+        price: [this.defaults.customer.price, [Validators.required]]
+        //this.defaults.typeName
+      });
+    }
+    else if (this.defaults && this.defaults.isView != 'view') {
       this.mode = 'update';
       this.form = this.fb.group({
         id: null,

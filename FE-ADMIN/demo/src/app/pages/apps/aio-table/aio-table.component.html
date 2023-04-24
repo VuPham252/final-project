@@ -102,6 +102,9 @@
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell>Action</th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+            <button (click)="view(row)" mat-icon-button type="button">
+              <mat-icon svgIcon="mat:remove_red_eye"></mat-icon>
+            </button>
             <button (click)="updateCustomer(row)" mat-icon-button type="button">
               <mat-icon svgIcon="mat:edit"></mat-icon>
             </button>
