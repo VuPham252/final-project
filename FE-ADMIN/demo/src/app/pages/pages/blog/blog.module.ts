@@ -18,22 +18,23 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { OrderBookingComponent } from './order-booking.component';
+import { BlogComponent } from './blog.component';
 
 const routes: VexRoutes = [
   {
     path: '',
     children: [
-      { path: '', component: OrderBookingComponent },
+      { path: '', component: BlogComponent },
       // { path: 'create', component: RoomCreateUpdateComponent },
       // { path: 'edit/:id', component: RoomCreateUpdateComponent },
     ]
   }
 ];
 
+
 @NgModule({
   declarations: [
-    OrderBookingComponent,
+    BlogComponent,
     ],
 
   imports: [
@@ -61,4 +62,4 @@ const routes: VexRoutes = [
   exports: [RouterModule, QuicklinkModule]
 })
 
-export class OrderBookingModule { }
+export class BlogModule { }

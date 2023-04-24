@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { AlertService } from './_services/alert.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BlogComponent } from './pages/pages/blog/blog.component';
 
 @NgModule({
   declarations: [AppComponent],

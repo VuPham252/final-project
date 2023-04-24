@@ -162,6 +162,12 @@ export class AppComponent {
             route: '/pages/order-booking',
             icon: 'mat:assignment'
           },
+          {
+            type: 'link',
+            label: 'Blog',
+            route: '/pages/blog',
+            icon: 'mat:assignment'
+          },
           // {
           //   type: 'dropdown',
           //   label: 'Help Center',
