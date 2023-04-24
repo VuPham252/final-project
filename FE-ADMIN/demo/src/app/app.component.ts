@@ -168,6 +168,12 @@ export class AppComponent {
             route: '/pages/blog',
             icon: 'mat:assignment'
           },
+          {
+            type: 'link',
+            label: 'Contact',
+            route: '/pages/contact',
+            icon: 'mat:assignment'
+          },
           // {
           //   type: 'dropdown',
           //   label: 'Help Center',
