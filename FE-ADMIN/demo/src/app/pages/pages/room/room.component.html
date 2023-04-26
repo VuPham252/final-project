@@ -40,7 +40,7 @@
       <table [dataSource]="dataSource" class="w-full" mat-table matSort>
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>Action</th>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>ACTION</th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
             <button (click)="view(row)" mat-icon-button type="button">
               <mat-icon svgIcon="mat:remove_red_eye"></mat-icon>

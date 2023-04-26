@@ -13,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { AlertService } from './_services/alert.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BlogComponent } from './pages/pages/blog/blog.component';
+import { ContactComponent } from './pages/pages/contact/contact.component';
 
 @NgModule({
   declarations: [AppComponent],
