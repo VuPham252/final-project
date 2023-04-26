@@ -59,6 +59,8 @@ export class HotelBookingComponent implements OnInit {
             inputCheckoutDate: ['', [Validators.required]],
             amount: ['', [Validators.required, Validators.max, Validators.min]],
             roomTypeId: ['', [Validators.required]],
+            roomTypeName: ['', []],
+            roomTypePrice: ['', []],
             isAvailable: [false, []],
             availableRoom: [99, []],
           }),
@@ -70,6 +72,7 @@ export class HotelBookingComponent implements OnInit {
   }
 
   onChangeAva(index: number) {
+    this.bookingRequestList;
     let checkin = this.element.nativeElement.querySelectorAll('.checkIn');
     let checkout = this.element.nativeElement.querySelectorAll('.checkOut');
     let roomtype =
@@ -148,6 +151,8 @@ export class HotelBookingComponent implements OnInit {
       inputCheckoutDate: ['', [Validators.required]],
       amount: ['', [Validators.required]],
       roomTypeId: ['', [Validators.required]],
+      roomTypeName: ['', []],
+      roomTypePrice: ['', []],
       isAvailable: [false, []],
       availableRoom: [99, []],
     });
@@ -162,6 +167,13 @@ export class HotelBookingComponent implements OnInit {
     let item: Booking = this.bookingForm.value;
     let arr = item.bookingRequestList;
     for (let i = 0; i < arr.length; i++) {
+
+      let obj = this.roomTypeList.find(o => o.id == arr[i].roomTypeId);
+      if(obj != null && obj != undefined) {
+        arr[i].roomTypeName = obj.typeName;
+        arr[i].roomTypePrice = obj.price;
+      }
+
       let monthCheckIn = '';
       let dayCheckIn = '';
       let monthCheckOut = '';
@@ -198,6 +210,8 @@ export class HotelBookingComponent implements OnInit {
         dayCheckOut;
     }
     item.bookingRequestList = arr;
+    debugger;
+
     this.bookingData.booking(item).subscribe({
       next: (res) => {
         console.log(res);

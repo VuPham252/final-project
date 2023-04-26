@@ -2,6 +2,8 @@ export interface checkAva {
   inputCheckinDate: string,
   inputCheckoutDate: string,
   roomTypeId: number,
+  roomTypeName?: string,
+  roomTypePrice?: number,
   amount?: number,
   isDisabled?: boolean,
   isAvailable?: boolean,
