@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { defaultChartOptions } from '../../../../@vex/utils/default-chart-options';
 import { Order, tableSalesData } from '../../../../static-data/table-sales-data';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
+import { RoomData } from 'src/app/core/api/room/room-data';
+import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { Room } from 'src/app/core/model/room';
+import { roomType } from 'src/app/core/model/room-type';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'vex-dashboard-analytics',
@@ -9,16 +14,18 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
   styleUrls: ['./dashboard-analytics.component.scss']
 })
 export class DashboardAnalyticsComponent {
+  dataSource: MatTableDataSource<roomType> | null;
+  numberRoom: number;
+  constructor(
+    private roomData : RoomData,
+    private roomType :RoomTypeData
+  ){}
 
-  tableColumns: TableColumn<Order>[] = [
+  tableColumns: TableColumn<roomType>[] = [
+
     {
-      label: '',
-      property: 'status',
-      type: 'badge'
-    },
-    {
-      label: 'PRODUCT',
-      property: 'name',
+      label: 'NAME',
+      property: 'typeName',
       type: 'text'
     },
     {
@@ -27,13 +34,42 @@ export class DashboardAnalyticsComponent {
       type: 'text',
       cssClasses: ['font-medium']
     },
-    {
-      label: 'DATE',
-      property: 'timestamp',
-      type: 'text',
-      cssClasses: ['text-secondary']
-    }
   ];
+  ngOnInit() {
+    this.getDataRoom();
+    this.getNumberRoom();
+    this.dataSource = new MatTableDataSource();
+
+  }
+  getDataRoom(){
+    this.roomType.search().subscribe({
+      next: (res) => {
+
+        this.dataSource.data = res;
+        this.tableData = this.dataSource.data;
+        console.log(res);
+      },
+      error: (err) =>{
+
+      }
+    })
+  }
+
+  getNumberRoom(){
+    this.roomData.search()
+      .subscribe({
+        next: (response) => {
+          this.dataSource.data = response;
+          this.numberRoom = response.length;
+
+        },
+        error: (error) => {
+          console.log(error);
+
+        }
+      })
+  }
+
   tableData = tableSalesData;
 
   series: ApexAxisChartSeries = [{

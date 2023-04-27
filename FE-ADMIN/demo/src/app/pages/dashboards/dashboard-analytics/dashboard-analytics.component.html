@@ -12,14 +12,14 @@
   <vex-widget-quick-line-chart icon="mat:pageview"
                                [series]="pageViewsSeries"
                                iconClass="text-primary bg-primary/10"
-                               label="Page Views"
-                               value="92.4k"></vex-widget-quick-line-chart>
+                               label="Number of room"
+                               value="{{numberRoom}}"></vex-widget-quick-line-chart>
 
   <vex-widget-quick-line-chart icon="mat:group"
                                [options]="uniqueUsersOptions"
                                [series]="uniqueUsersSeries"
                                iconClass="text-orange bg-orange-light"
-                               label="Unique Users"
+                               label="Number of order booking"
                                value="67.2k"></vex-widget-quick-line-chart>
 
   <vex-widget-large-chart [series]="userSessionsSeries"
