@@ -1,15 +1,14 @@
 package com.example.hotel.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="room_type")
 public class RoomType {
 
     @Id
@@ -26,6 +26,10 @@ public class RoomType {
     private String typeName;
 
     private BigDecimal price;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType")
+    private List<Image> imageList;
 
     @CreationTimestamp
     private LocalDateTime createdTime;

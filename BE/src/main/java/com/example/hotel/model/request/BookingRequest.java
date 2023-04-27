@@ -29,6 +29,9 @@ public class BookingRequest {
     private Long roomTypeId;
 
     @NotNull
+    private String roomTypeName;
+
+    @NotNull
     private Long amount;
 
 }

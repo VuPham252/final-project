@@ -7,6 +7,7 @@ import com.example.hotel.model.entity.RoomType;
 import com.example.hotel.model.enums.BookingStatus;
 import com.example.hotel.model.request.BookingCheckRequest;
 import com.example.hotel.model.request.BookingRequest;
+import com.example.hotel.model.request.GeneralRequest;
 import com.example.hotel.model.request.OrderRequest;
 import com.example.hotel.model.response.SuccessResponseObj;
 import com.example.hotel.repository.BookingRepository;
@@ -14,12 +15,15 @@ import com.example.hotel.repository.OrderBookingRepository;
 import com.example.hotel.repository.RoomRepository;
 import com.example.hotel.repository.RoomTypeRepository;
 import com.example.hotel.service.BookingService;
+import com.example.hotel.service.mail.MailService;
 import com.example.hotel.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,6 +38,9 @@ public class BookingServiceBean implements BookingService {
     final RoomTypeRepository roomTypeRepository;
 
     final OrderBookingRepository orderBookingRepository;
+
+    @Autowired
+    MailService mailService;
 
     public BookingServiceBean(BookingRepository bookingRepository,
                               RoomRepository roomRepository,
@@ -92,7 +99,7 @@ public class BookingServiceBean implements BookingService {
 
     @Override
     @Transactional
-    public ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException {
+    public ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException, MessagingException {
         List<RoomType> roomTypeList = roomTypeRepository.findAll();
 
         for (BookingRequest bookingRequest : orderRequest.getBookingRequestList()) {
@@ -124,6 +131,10 @@ public class BookingServiceBean implements BookingService {
                 .statusCode(HttpStatus.OK.value())
                 .message("Booking Successfully").build();
 
+        GeneralRequest request = new GeneralRequest();
+        request.setType("order");
+        request.setData(orderRequest);
+        mailService.sendSimpleEmail(request);
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
