@@ -20,7 +20,7 @@ export class BlogComponent implements OnInit {
     {id : 2, title : "Test 2", image : " ", description: "test 2", shortDescription: "test 2", author: "test 2"},
     {id : 3, title : "Test 3", image : " ", description: "test 3", shortDescription: "test 3", author: "test 3 "},
 
-];
+    ];
   searchForm: any;
   isLoading = false;
   constructor(

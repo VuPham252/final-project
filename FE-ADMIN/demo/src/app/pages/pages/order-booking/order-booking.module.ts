@@ -19,6 +19,8 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { OrderBookingComponent } from './order-booking.component';
+import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
+import { OrderBookingCreateUpdateModule } from './order-booking-create-update/order-booking-create-update.module';
 
 const routes: VexRoutes = [
   {
@@ -38,6 +40,7 @@ const routes: VexRoutes = [
 
   imports: [
     CommonModule,
+    OrderBookingCreateUpdateModule,
     //theme]
     MatPaginatorModule,
     MatTableModule,
