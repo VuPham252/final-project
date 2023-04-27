@@ -1,35 +1,35 @@
 package com.example.hotel.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Builder
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="room_type")
-public class RoomType {
-
+@Getter
+@Setter
+@Builder
+public class Contact {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private String typeName;
+    private String name;
 
-    private BigDecimal price;
+    private String email;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType")
-    private List<Image> imageList;
+    private String phone;
+
+    private String subject;
+
+    private String message;
 
     @CreationTimestamp
     private LocalDateTime createdTime;

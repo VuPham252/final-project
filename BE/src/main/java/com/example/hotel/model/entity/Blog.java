@@ -1,35 +1,39 @@
 package com.example.hotel.model.entity;
 
+import com.example.hotel.model.enums.BookingStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Builder
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="room_type")
-public class RoomType {
-
+@Getter
+@Setter
+@Builder
+public class Blog {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private String typeName;
+    private String title;
 
-    private BigDecimal price;
+    private String description;
+
+    private String shortDescription;
+
+    private Boolean display;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType")
-    private List<Image> imageList;
+    @OneToOne(mappedBy = "blog")
+    private Image image;
+
+    private String author;
 
     @CreationTimestamp
     private LocalDateTime createdTime;

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderRequest {
+public class OrderRequest extends GeneralRequest {
 
     @NotNull
     @NotEmpty

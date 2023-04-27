@@ -7,10 +7,12 @@ import com.example.hotel.model.request.OrderRequest;
 import com.example.hotel.model.response.SuccessResponseObj;
 import org.springframework.http.ResponseEntity;
 
+import javax.mail.MessagingException;
+
 
 public interface BookingService {
 
     int getNumberOfAvailableRooms(BookingCheckRequest bookingCheckRequest) throws BookingBusinessException;
 
-    ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException;
+    ResponseEntity<SuccessResponseObj> bookingRooms(OrderRequest orderRequest) throws BookingBusinessException, MessagingException;
 }
