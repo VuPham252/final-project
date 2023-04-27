@@ -6,5 +6,6 @@ import lombok.Data;
 public class FileUploadResponse {
     private String fileName;
     private String downloadUri;
+    private String fileCode;
     private long size;
 }

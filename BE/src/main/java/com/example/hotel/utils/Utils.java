@@ -1,6 +1,10 @@
 package com.example.hotel.utils;
 
+import com.example.hotel.model.entity.Image;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +29,14 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<String> createImgEncodeString(List<Image> imageList) throws IOException {
+        List<String> encodedStringList = new ArrayList<>();
+        for (Image image : imageList) {
+            String encodeString = FileDownloadUtil.encodeImg(Paths.get(image.getFilePath()));
+            encodedStringList.add(encodeString);
+        }
+        return  encodedStringList;
     }
 }

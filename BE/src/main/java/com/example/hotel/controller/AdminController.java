@@ -1,7 +1,7 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.exception.BookingBusinessException;
-import com.example.hotel.exception.RoomTypeException;
+import com.example.hotel.exception.SystemErrorException;
 import com.example.hotel.model.request.*;
 import com.example.hotel.model.response.*;
 import com.example.hotel.service.AdminService;
@@ -9,12 +9,14 @@ import com.example.hotel.service.OrderBookingService;
 import com.example.hotel.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -48,22 +50,26 @@ public class AdminController {
         return adminService.checkOut(checkOutRequest);
     }
 
-    @PostMapping("/uploadFile")
-    public ResponseEntity<FileUploadResponse> uploadFile(
-            @RequestParam("file") MultipartFile multipartFile)
+    @PostMapping("/uploadFiles")
+    public ResponseEntity<List<FileUploadResponse>> uploadFile(
+            @RequestParam("file") List<MultipartFile> multipartFileList)
             throws IOException {
 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        long size = multipartFile.getSize();
+        List<FileUploadResponse> fileUploadResponseList = new ArrayList<>();
+        for (MultipartFile multipartFile : multipartFileList) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            long size = multipartFile.getSize();
 
-        String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
+            String fileCode = FileUploadUtil.saveFile(fileName, multipartFile);
+            FileUploadResponse response = new FileUploadResponse();
+            response.setFileName(fileName);
+            response.setSize(size);
+            response.setFileCode(fileCode);
+            response.setDownloadUri("/downloadFile/" + fileCode);
+            fileUploadResponseList.add(response);
+        }
 
-        FileUploadResponse response = new FileUploadResponse();
-        response.setFileName(fileName);
-        response.setSize(size);
-        response.setDownloadUri("/downloadFile/" + filecode);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(fileUploadResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/room/all-rooms")
@@ -72,7 +78,7 @@ public class AdminController {
     }
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<RoomResponse> getRoomById(@PathVariable("id") Long id) throws RoomTypeException {
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable("id") Long id) throws SystemErrorException {
         RoomResponse roomResponse = adminService.getRoomById(id);
         return new ResponseEntity<>(roomResponse, HttpStatus.OK);
     }
@@ -83,7 +89,7 @@ public class AdminController {
     }
 
     @PutMapping("/room/{id}")
-    public ResponseEntity<SuccessResponseObj>updateRoom(@PathVariable Long id, @RequestBody RoomRequest roomRequest) throws BookingBusinessException, RoomTypeException {
+    public ResponseEntity<SuccessResponseObj>updateRoom(@PathVariable Long id, @RequestBody RoomRequest roomRequest) throws BookingBusinessException, SystemErrorException {
         return adminService.updateRoom(roomRequest, id);
     }
 
@@ -94,8 +100,8 @@ public class AdminController {
 
     //room type
 
-    @PostMapping("/room-type/save")
-    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest){
+    @PostMapping(value = "/room-type/save")
+    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest) throws SystemErrorException {
         return adminService.saveRoomType(roomTypeRequest);
     }
 
@@ -107,5 +113,16 @@ public class AdminController {
     @DeleteMapping("/room-type/{id}")
     public  ResponseEntity<SuccessResponseObj>deleteRoomType(@PathVariable ("id")Long id){
         return adminService.deleteRoomType(id);
+    }
+
+    //contact
+    @GetMapping("/contact/all")
+    public List<ContactResponse> getAllContact() {
+        return adminService.getAllContact();
+    }
+
+    @GetMapping("/contact/{id}")
+    public ContactResponse getAllContact(@PathVariable ("id")Long id) {
+        return adminService.getContactById(id);
     }
 }

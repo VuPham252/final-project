@@ -55,4 +55,19 @@ public class BookingExceptionHandler {
                 .errors(errors).build();
         return new ResponseEntity<>(errObj, HttpStatus.BAD_REQUEST);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SystemErrorException.class)
+    public ResponseEntity<ErrorResponseObj> handleSystemErrorException(SystemErrorException ex) {
+        // This map store the error fields and corresponding error messages
+        Map<String, String> errors = new HashMap<String, String>();
+
+        // Add error message to the stored map
+        errors.put(AppConstant._LABEL._ERROR_MESSAGE, ex.getMessage());
+
+        ErrorResponseObj errObj = ErrorResponseObj.builder()
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .errors(errors).build();
+        return new ResponseEntity<>(errObj, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

@@ -1,26 +1,27 @@
 package com.example.hotel.service.serviceImp;
 
 import com.example.hotel.exception.BookingBusinessException;
-import com.example.hotel.exception.RoomTypeException;
-import com.example.hotel.model.entity.Booking;
-import com.example.hotel.model.entity.Room;
-import com.example.hotel.model.entity.RoomType;
+import com.example.hotel.exception.SystemErrorException;
+import com.example.hotel.model.entity.*;
 import com.example.hotel.model.enums.BookingStatus;
 import com.example.hotel.model.request.*;
-import com.example.hotel.model.response.RoomResponse;
-import com.example.hotel.model.response.RoomTypeResponse;
-import com.example.hotel.model.response.SuccessResponseObj;
-import com.example.hotel.repository.BookingRepository;
-import com.example.hotel.repository.RoomRepository;
-import com.example.hotel.repository.RoomTypeRepository;
+import com.example.hotel.model.response.*;
+import com.example.hotel.repository.*;
 import com.example.hotel.service.AdminService;
+import com.example.hotel.utils.FileDownloadUtil;
+import com.example.hotel.utils.FileUploadUtil;
+import com.example.hotel.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +37,22 @@ public class AdminServiceBean implements AdminService {
     @Autowired
     BookingRepository bookingRepository;
 
+    @Autowired
+    ImageRepository imageRepository;
+
+    @Autowired
+    ContactRepository contactRepository;
+
     @Override
-    public List<RoomTypeResponse> getAllRoomTypes() {
+    @Transactional
+    public List<RoomTypeResponse> getAllRoomTypes() throws IOException {
         List<RoomType> roomTypeList = roomTypeRepository.findAll();
         List<RoomTypeResponse> roomTypeResponseList = new ArrayList<>();
 
         for (RoomType roomType : roomTypeList) {
             RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
             BeanUtils.copyProperties(roomType, roomTypeResponse);
+            roomTypeResponse.setImgEncodeStringList(Utils.createImgEncodeString(roomType.getImageList()));
             roomTypeResponseList.add(roomTypeResponse);
         }
         return  roomTypeResponseList;
@@ -126,19 +135,34 @@ public class AdminServiceBean implements AdminService {
 
     //CRUD roomtype
 
-    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest){
+    @Transactional(rollbackFor = SystemErrorException.class)
+    public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest) throws SystemErrorException {
         RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
-        roomTypeRepository.save(roomType);
+        try{
+            RoomType savedRoomType = roomTypeRepository.save(roomType);
+            List<Image> imgList = new ArrayList<>();
+            for (String imgCode : roomTypeRequest.getImgCodeList()) {
+                Image image = Image.builder()
+                        .roomType(savedRoomType)
+                        .fileCode(imgCode)
+                        .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
+                imgList.add(image);
+            }
+            imageRepository.saveAll(imgList);
+        }catch (Exception e) {
+            throw new SystemErrorException("System error: Can not create room type");
+        }
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.CREATED.value())
-                .message("Add Roomtype Successfully").build();
+                .message("Add room type Successfully").build();
         return new ResponseEntity<>(successResponseObj, HttpStatus.CREATED);
     }
     @Override
-    public RoomTypeResponse getRoomTypeById(Long id) throws BookingBusinessException {
+    public RoomTypeResponse getRoomTypeById(Long id) throws BookingBusinessException, IOException {
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room type with id: " + id));
         RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
         BeanUtils.copyProperties(roomType, roomTypeResponse);
+        roomTypeResponse.setImgEncodeStringList(Utils.createImgEncodeString(roomType.getImageList()));
         return  roomTypeResponse;
     }
 
@@ -182,7 +206,7 @@ public class AdminServiceBean implements AdminService {
     }
 
     @Override
-    public RoomResponse getRoomById(Long id) throws RoomTypeException {
+    public RoomResponse getRoomById(Long id) {
         Room room = roomRepository.findById(id).orElseThrow();
         RoomResponse roomResponse = new RoomResponse();
         BeanUtils.copyProperties(room, roomResponse);
@@ -211,6 +235,26 @@ public class AdminServiceBean implements AdminService {
                 .statusCode(HttpStatus.OK.value())
                 .message("Delete Room Successfully").build();
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
+
+    @Override
+    public List<ContactResponse> getAllContact() {
+        List<Contact> contactList = contactRepository.findAll();
+        List<ContactResponse> contactResponseList = new ArrayList<>();
+        for (Contact contact : contactList) {
+            ContactResponse contactResponse = new ContactResponse();
+            BeanUtils.copyProperties(contact, contactResponse);
+            contactResponseList.add(contactResponse);
+        }
+        return contactResponseList;
+    }
+
+    @Override
+    public ContactResponse getContactById(Long id) {
+        Contact contact = contactRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Contact not found."));
+        ContactResponse contactResponse = new ContactResponse();
+        BeanUtils.copyProperties(contact, contactResponse);
+        return contactResponse;
     }
 
 }

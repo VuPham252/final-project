@@ -1,5 +1,7 @@
 package com.example.hotel.model.response;
 
+import com.example.hotel.model.entity.Image;
+import com.example.hotel.utils.FileDownloadUtil;
 import com.example.hotel.utils.LocalDateTimeDeserializer;
 import com.example.hotel.utils.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -9,8 +11,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,4 +38,6 @@ public class RoomTypeResponse {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updatedTime;
+
+    private List<String> imgEncodeStringList;
 }
