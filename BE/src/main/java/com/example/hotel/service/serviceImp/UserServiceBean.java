@@ -34,12 +34,12 @@ public class UserServiceBean implements UserService {
                 .build();
         contactRepository.save(contact);
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
-                .statusCode(HttpStatus.CREATED.value())
-                .message("Add Room Successfully").build();
+                .statusCode(HttpStatus.OK.value())
+                .message("Send contact Successfully").build();
         GeneralRequest request = new GeneralRequest();
         request.setType("contact");
         request.setData(contactRequest);
         mailService.sendSimpleEmail(request);
-        return new ResponseEntity<>(successResponseObj, HttpStatus.CREATED);
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 }

@@ -257,4 +257,24 @@ public class AdminServiceBean implements AdminService {
         return contactResponse;
     }
 
+    @Override
+    public ResponseEntity<SuccessResponseObj> saveBlog(RoomRequest roomRequest) {
+        return null;
+    }
+
+    @Override
+    public RoomResponse getBlogById(Long id) throws SystemErrorException {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponseObj> updateBlog(RoomRequest roomRequest, Long id) throws SystemErrorException, BookingBusinessException {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponseObj> deleteBlog(Long id) {
+        return null;
+    }
+
 }
