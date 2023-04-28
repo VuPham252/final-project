@@ -5,6 +5,7 @@ import { Customer } from '../interfaces/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/_services/alert.service';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { UploadData } from 'src/app/core/api/upload/upload-data';
 @Component({
   selector: 'vex-customer-create-update',
   templateUrl: './customer-create-update.component.html',
@@ -58,7 +59,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
               private dialogRef: MatDialogRef<CustomerCreateUpdateComponent>,
               private fb: UntypedFormBuilder, private roomType :RoomTypeData,
-              private aleart :AlertService) {
+              private aleart :AlertService, private uploadData: UploadData) {
   }
 
   ngOnInit() {
@@ -89,10 +90,21 @@ export class CustomerCreateUpdateComponent implements OnInit {
         //this.defaults.typeName
       });
     }
-
-
   }
 
+  uploadFile(event: any) {
+    let item = event.files[0];
+    const formData = new FormData();
+    formData.append("file", item);
+    this.uploadData.save(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 
   save() {
     this.submitted = true;

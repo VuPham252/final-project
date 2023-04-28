@@ -15,7 +15,7 @@ export class RoomTypeApi {
 
   search(): Observable<any> {
     // let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
-    return this.http.get(this.apiControllerAll + "/roomtypes");
+    return this.http.get(this.apiControllerAll + "/all");
   }
 
   save(data: roomType): Observable<any> {

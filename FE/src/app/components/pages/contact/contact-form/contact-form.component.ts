@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ContactData } from 'src/app/core/api/contact/contact-data';
 
 @Component({
   selector: 'app-contact-form',
@@ -8,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ContactFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private contactData: ContactData) { }
   contactForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
@@ -23,7 +24,19 @@ export class ContactFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
+  }
+
+  submit() {
+    const item = this.contactForm.value;
+    this.contactData.post(item).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
 }
