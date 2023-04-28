@@ -16,18 +16,20 @@ import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.ser
 import { RoomService } from './api/room/room.service';
 import { RoomData } from './api/room/room-data';
 import { RoomApi } from './api/room/room.api';
+import { ContactData } from './api/contact/contact-data';
+import { ContactService } from './api/contact/contact.service';
+import { ContactApi } from './api/contact/contact.api';
 import { UploadApi } from './api/upload/upload.api';
 import { UploadData } from './api/upload/upload-data';
 import { UploadService } from './api/upload/upload.service';
 
-const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, UploadApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RoomData, useClass: RoomService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
-  { provide: UploadData, useClass: UploadService },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,

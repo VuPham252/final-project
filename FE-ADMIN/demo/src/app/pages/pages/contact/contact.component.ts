@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Blog } from 'src/app/core/model/blog';
 import { FormBuilder } from '@angular/forms';
 import { Contact } from 'src/app/core/model/contact';
+import { ContactData } from 'src/app/core/api/contact/contact-data';
 
 @Component({
   selector: 'vex-contact',
@@ -26,7 +27,8 @@ export class ContactComponent implements OnInit {
   constructor(
      private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,) { }
+    private router: Router,
+    private contactData :ContactData) { }
 
     dataSource: MatTableDataSource<Contact> = new MatTableDataSource();
 
@@ -43,7 +45,7 @@ export class ContactComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger
+    // debugger
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
@@ -51,8 +53,8 @@ export class ContactComponent implements OnInit {
     })
     this.dataSource = new MatTableDataSource();
 
-    this.dataSource.data = this.rows;
-    // this.reloadTable();
+    // this.dataSource.data = this.rows;
+    this.reloadTable();
   }
   submitSearch() {
     // this.searchObject.keyword = this.searchForm.value.keyword;
@@ -66,25 +68,22 @@ export class ContactComponent implements OnInit {
   }
 
   reloadTable() {
-    debugger
+    // debugger
     this.isLoading = true;
     console.log(this.rows);
-    this.dataSource.data = this.rows;
-    // this.roomData.search()
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.dataSource.data = response;
-    //       console.log(response);
-    //       // this.paginator.pageIndex = this.searchObject.pageIndex;
-    //       // this.paginator.pageSize = this.searchObject.pageSize;
-    //       // this.paginator.length = response.totalElements;
-    //       this.isLoading = false;
-    //     },
-    //     error: (error) => {
-    //       console.log(error);
-    //       this.isLoading = false;
-    //     }
+    this.contactData.search()
+      .subscribe({
+        next: (response) => {
+          this.dataSource.data = response;
+          console.log(response);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
     //   })
+    })
   }
 
   get visibleColumns() {

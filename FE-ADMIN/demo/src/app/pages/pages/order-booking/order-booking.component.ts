@@ -11,6 +11,7 @@ import { roomType } from 'src/app/core/model/room-type';
 import { Booking } from 'src/app/core/model/booking';
 import { RoomData } from 'src/app/core/api/room/room-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
 
 @Component({
   selector: 'vex-order-booking',
@@ -68,7 +69,16 @@ export class OrderBookingComponent implements OnInit {
     // this.searchObject.pageSize = event.pageSize;
     this.reloadTable();
   }
+  create() {
+    const dialogConfig = new MatDialogConfig();
 
+    // // Set the size of the dialog
+     dialogConfig.width = '900px';
+    // dialogConfig.height = '356px';
+    this.dialog.open(OrderBookingCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });
+  }
   reloadTable() {
     this.isLoading = true;
     // this.roomData.search()

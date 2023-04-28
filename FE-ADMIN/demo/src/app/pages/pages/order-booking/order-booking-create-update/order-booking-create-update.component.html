@@ -1,0 +1,68 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">{{isCreateMode ? 'Order Booking Create' : 'Order Booking Update'}}</h2>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="flex flex-col">
+    <div class="flex flex-col sm:flex-row">
+
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Customer Name</mat-label>
+        <input [readonly]="isView == 'view'" [ngClass]="isView == 'view' ? 'ban':''" formControlName="customerName"
+          matInput>
+        <mat-error *ngIf="submitted && f.customerName.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Email</mat-label>
+        <input [readonly]="isView == 'view'" [ngClass]="isView == 'view' ? 'ban':''" formControlName="email" matInput>
+        <mat-error *ngIf="submitted && f.email.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Number Phone</mat-label>
+        <input [readonly]="isView == 'view'" [ngClass]="isView == 'view' ? 'ban':''" formControlName="phoneNumber" matInput>
+        <mat-error *ngIf="submitted && f.phoneNumber.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Room Type</mat-label>
+        <mtx-select [ngClass]="isView == 'view' ? 'ban':''" [readonly]="isView == 'view'" [items]="listRoomType"
+          bindLabel="typeName" formControlName="roomTypeId" appendTo="body" bindValue="id"
+          notFoundText="Không tìm thấy dữ liệu" [clearable]="false">
+        </mtx-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Amout</mat-label>
+        <input [readonly]="isView == 'view'" [ngClass]="isView == 'view' ? 'ban':''" formControlName="amount" matInput>
+        <mat-error *ngIf="submitted && f.amount.hasError('required')">Amount is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Check In Date</mat-label>
+        <input [matDatepicker]="datepickerRef" formControlName="checkInDate" matInput>
+        <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #datepickerRef></mat-datepicker>
+        <!-- <mat-error *ngIf="submitted && f.checkInDate.hasError('required')">Check in date is required</mat-error> -->
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Check Out Date</mat-label>
+        <input [matDatepicker]="datepickerRef2" formControlName="checkOutDate" matInput>
+        <mat-datepicker-toggle [for]="datepickerRef2" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #datepickerRef2></mat-datepicker>
+        <mat-error *ngIf="submitted && f.email.hasError('required')">Check out date is required</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button *ngIf="isView != 'view'" color="primary" mat-flat-button type="submit">Submit</button>
+  </mat-dialog-actions>
+</form>
