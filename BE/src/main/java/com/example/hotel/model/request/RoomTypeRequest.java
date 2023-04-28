@@ -15,4 +15,7 @@ public class RoomTypeRequest {
     private BigDecimal price;
 
     private List<String> imgCodeList;
+
+    private List<String> deleteImgCodeList;
+
 }

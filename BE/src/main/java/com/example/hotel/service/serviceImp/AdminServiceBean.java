@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceBean implements AdminService {
@@ -42,6 +42,9 @@ public class AdminServiceBean implements AdminService {
 
     @Autowired
     ContactRepository contactRepository;
+
+    @Autowired
+    BlogRepository blogRepository;
 
     @Override
     @Transactional
@@ -140,15 +143,16 @@ public class AdminServiceBean implements AdminService {
         RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
         try{
             RoomType savedRoomType = roomTypeRepository.save(roomType);
-            List<Image> imgList = new ArrayList<>();
-            for (String imgCode : roomTypeRequest.getImgCodeList()) {
-                Image image = Image.builder()
-                        .roomType(savedRoomType)
-                        .fileCode(imgCode)
-                        .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
-                imgList.add(image);
-            }
-            imageRepository.saveAll(imgList);
+//            List<Image> imgList = new ArrayList<>();
+//            for (String imgCode : roomTypeRequest.getImgCodeList()) {
+//                Image image = Image.builder()
+//                        .roomType(savedRoomType)
+//                        .fileCode(imgCode)
+//                        .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
+//                imgList.add(image);
+//            }
+//            imageRepository.saveAll(imgList);
+            saveImage(roomTypeRequest.getImgCodeList(), savedRoomType);
         }catch (Exception e) {
             throw new SystemErrorException("System error: Can not create room type");
         }
@@ -168,15 +172,37 @@ public class AdminServiceBean implements AdminService {
 
 
     @Override
-    public ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException {
+    @Transactional
+    public ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException, IOException {
         RoomType existRoomType = roomTypeRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room type with id: " + id));
+        List<String> existedImgCodeList = existRoomType.getImageList().stream().map(Image::getFileCode).collect(Collectors.toList());
         existRoomType.setTypeName(roomTypeRequest.getTypeName());
         existRoomType.setPrice(roomTypeRequest.getPrice());
         roomTypeRepository.save(existRoomType);
+        if(!Objects.isNull(roomTypeRequest.getImgCodeList())){
+            roomTypeRequest.getImgCodeList().removeAll(existedImgCodeList);
+            saveImage(roomTypeRequest.getImgCodeList(), existRoomType);
+        }
+
+        if(!Objects.isNull(roomTypeRequest.getDeleteImgCodeList())) {
+            imageRepository.deleteByFileCodeIn(roomTypeRequest.getDeleteImgCodeList());
+        }
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Update Roomtype Successfully").build();
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
+
+    private void saveImage (List<String> imgCodeList, RoomType roomType) throws IOException {
+        List<Image> imgList = new ArrayList<>();
+        for (String imgCode : imgCodeList) {
+            Image image = Image.builder()
+                    .roomType(roomType)
+                    .fileCode(imgCode)
+                    .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
+            imgList.add(image);
+        }
+        imageRepository.saveAll(imgList);
     }
 
     @Override
@@ -258,23 +284,48 @@ public class AdminServiceBean implements AdminService {
     }
 
     @Override
-    public ResponseEntity<SuccessResponseObj> saveBlog(RoomRequest roomRequest) {
-        return null;
+    public ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest.NewRequest blogRequest) {
+        Blog blog = Blog.builder()
+                .title(blogRequest.getTitle())
+                .shortDescription(blogRequest.getShortDescription())
+                .description(blogRequest.getDescription())
+                .display(blogRequest.getDisplay()).build();
+        blogRepository.save(blog);
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.CREATED.value())
+                .message("Add Blog Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.CREATED);
     }
 
     @Override
-    public RoomResponse getBlogById(Long id) throws SystemErrorException {
-        return null;
+    public BlogResponse getBlogById(Long id) throws SystemErrorException, IOException {
+        Blog blog = blogRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Blog not found."));
+        BlogResponse blogResponse = new BlogResponse();
+        BeanUtils.copyProperties(blog, blogResponse);
+        blogResponse.setImageEncodedStringList(Utils.createImgEncodeString(Collections.singletonList(blog.getImage())));
+        return blogResponse;
     }
 
     @Override
-    public ResponseEntity<SuccessResponseObj> updateBlog(RoomRequest roomRequest, Long id) throws SystemErrorException, BookingBusinessException {
-        return null;
+    public ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest.UpdateRequest updateRequest, Long id) throws SystemErrorException, BookingBusinessException {
+        Blog existBlog = blogRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Blog not found."));
+        existBlog.setTitle(updateRequest.getTitle());
+        existBlog.setDescription(updateRequest.getDescription());
+        existBlog.setShortDescription(updateRequest.getShortDescription());
+        blogRepository.save(existBlog);
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Update Blog Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<SuccessResponseObj> deleteBlog(Long id) {
-        return null;
+        blogRepository.deleteById(id);
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Delete Blog Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
 }

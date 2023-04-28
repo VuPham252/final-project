@@ -12,15 +12,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoomTypeRepository extends JpaRepository<RoomType, Long> {
-
-//    @Query(value = "select * from booking where " +
-//            "(check_in_date <= :inputCheckinDate and check_out_date >= :inputCheckinDate" +
-//            " or " +
-//            "check_in_date <= :inputCheckoutDate and check_out_date >= :inputCheckoutDate) " +
-//            " and " +
-//            "room_type_id = :roomTypeId",
-//            nativeQuery = true)
-//    List<Optional> getListRoomTypeWithImage(@Param("inputCheckinDate") LocalDate inputCheckinDate,
-//                                        @Param("inputCheckoutDate") LocalDate inputCheckoutDate,
-//                                        @Param("roomTypeId") long roomTypeId);
 }

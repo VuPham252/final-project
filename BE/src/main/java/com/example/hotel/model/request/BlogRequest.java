@@ -11,9 +11,18 @@ public class BlogRequest {
 
     private String shortDescription;
 
-    private Boolean display;
+    @Data
+    public static class NewRequest extends BlogRequest {
 
-    private String imageCode;
+        private Boolean display;
 
-    private String author;
+        private String imageCode;
+
+        private String author;
+    }
+
+    @Data
+    public static class UpdateRequest extends BlogRequest {
+
+    }
 }
