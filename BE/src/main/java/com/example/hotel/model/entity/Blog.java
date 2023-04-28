@@ -30,7 +30,7 @@ public class Blog {
     private Boolean display;
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "blog")
+    @OneToOne(mappedBy = "blog", cascade = CascadeType.ALL)
     private Image image;
 
     private String author;

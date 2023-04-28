@@ -106,7 +106,7 @@ public class AdminController {
     }
 
     @PutMapping("/room-type/{id}")
-    public ResponseEntity<SuccessResponseObj>updateRoomType(@PathVariable Long id, @RequestBody RoomTypeRequest roomTypeRequest) throws BookingBusinessException {
+    public ResponseEntity<SuccessResponseObj>updateRoomType(@PathVariable Long id, @RequestBody RoomTypeRequest roomTypeRequest) throws BookingBusinessException, IOException {
         return adminService.updateRoomType(roomTypeRequest, id);
     }
 

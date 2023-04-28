@@ -3,10 +3,7 @@ package com.example.hotel.service;
 import com.example.hotel.exception.BookingBusinessException;
 import com.example.hotel.exception.SystemErrorException;
 import com.example.hotel.model.request.*;
-import com.example.hotel.model.response.ContactResponse;
-import com.example.hotel.model.response.RoomResponse;
-import com.example.hotel.model.response.RoomTypeResponse;
-import com.example.hotel.model.response.SuccessResponseObj;
+import com.example.hotel.model.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +27,7 @@ public interface AdminService {
 
     RoomTypeResponse getRoomTypeById(Long id) throws SystemErrorException, BookingBusinessException, IOException;
 
-    ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException;
+    ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException, IOException;
 
     ResponseEntity<SuccessResponseObj>deleteRoomType(Long id);
 
@@ -50,11 +47,11 @@ public interface AdminService {
     ContactResponse getContactById(Long id);
 
     //CRUD BLOG
-    ResponseEntity<SuccessResponseObj> saveBlog(RoomRequest roomRequest);
+    ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest.NewRequest newRequest);
 
-    RoomResponse getBlogById(Long id)throws SystemErrorException;
+    BlogResponse getBlogById(Long id) throws SystemErrorException, IOException;
 
-    ResponseEntity<SuccessResponseObj> updateBlog(RoomRequest roomRequest, Long id) throws SystemErrorException, BookingBusinessException;
+    ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest.UpdateRequest updateRequest, Long id) throws SystemErrorException, BookingBusinessException;
 
     ResponseEntity<SuccessResponseObj>deleteBlog(Long id);
 }

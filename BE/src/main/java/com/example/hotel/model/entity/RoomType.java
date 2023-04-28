@@ -28,7 +28,7 @@ public class RoomType {
     private BigDecimal price;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<Image> imageList;
 
     @CreationTimestamp
