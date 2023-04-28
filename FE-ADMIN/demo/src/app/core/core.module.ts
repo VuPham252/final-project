@@ -30,6 +30,8 @@ const SERVICES = [
   { provide: RoomData, useClass: RoomService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
+  { provide: ContactData, useClass: ContactService },
+  { provide: UploadData, useClass: UploadService },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,

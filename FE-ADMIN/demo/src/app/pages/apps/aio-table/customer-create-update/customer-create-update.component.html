@@ -27,7 +27,7 @@
 
     <div class="flex flex-col sm:flex-row">
       <div class="mt-6 flex-auto">
-        <input type="file" multiple class="file-upload" (change)="uploadFile($event.target)">
+        <input *ngIf="isView != 'view'" type="file" multiple class="file-upload" (change)="uploadFile($event.target)">
       </div>
     </div>
   </mat-dialog-content>

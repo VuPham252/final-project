@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -69,7 +69,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.form = this.fb.group({
         id: this.defaults.customer.id,
         typeName: [this.defaults.customer.typeName, [Validators.required]],
-        price: [this.defaults.customer.price, [Validators.required]]
+        price: [this.defaults.customer.price, [Validators.required]],
+        imgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
     }
@@ -78,7 +79,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.form = this.fb.group({
         id: null,
         typeName: [this.defaults.typeName, [Validators.required]],
-        price: [this.defaults.price, [Validators.required]]
+        price: [this.defaults.price, [Validators.required]],
+        imgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
     } else {
@@ -86,19 +88,26 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.form = this.fb.group({
         id: null,
         typeName: [null, [Validators.required]],
-        price: [null, [Validators.required]]
+        price: [null, [Validators.required]],
+        imgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
     }
   }
 
   uploadFile(event: any) {
-    let item = event.files[0];
+    let item = event.files;
     const formData = new FormData();
-    formData.append("file", item);
+    for(let i = 0; i < item.length; i++) {
+      formData.append("file", item[i]);
+    }
     this.uploadData.save(formData).subscribe({
       next: (res) => {
-        console.log(res);
+        for(let i = 0; i < item.length; i++) {
+          debugger;
+          const file = this.form.get('imgCodeList') as FormArray;
+          file.push(this.fb.control(res[i]));
+        }
       },
       error: (err) => {
         console.log(err);
