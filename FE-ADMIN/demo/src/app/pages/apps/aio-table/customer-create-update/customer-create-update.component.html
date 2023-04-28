@@ -28,13 +28,18 @@
     <div class="flex flex-col sm:flex-row">
       <div class="mt-6 flex-auto">
         <input *ngIf="isView != 'view'" type="file" multiple class="file-upload" (change)="uploadFile($event.target)">
+        <div formArrayName="imgCodeList" style="display: flex; width: 100%; gap: 10px;">
+          <div *ngFor="let item of imgCodeList.value, let idx = index">
+            <img *ngIf="item" src="data:image/jpeg;base64,{{item}}" alt="">
+          </div>
+        </div>
       </div>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">Cancel</button>
-    <button *ngIf="isCreateMode() && isView != 'view'" color="primary" mat-flat-button type="submit">Create Room Type</button>
+    <button [ngClass]="uploadState == true ? '' : 'submit'" *ngIf="isCreateMode() && isView != 'view'" color="primary" mat-flat-button type="submit">Create Room Type</button>
     <button *ngIf="isUpdateMode() && isView != 'view'" color="primary" mat-flat-button type="submit">Update Room Type</button>
   </mat-dialog-actions>
 </form>

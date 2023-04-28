@@ -19,6 +19,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
   // isCreateMode!: boolean;
   submitted = false;
 
+  uploadState: boolean = true;
+
   @Input() isView: string;
 
   // constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -70,49 +72,65 @@ export class CustomerCreateUpdateComponent implements OnInit {
         id: this.defaults.customer.id,
         typeName: [this.defaults.customer.typeName, [Validators.required]],
         price: [this.defaults.customer.price, [Validators.required]],
-        imgCodeList: this.fb.array([]),
+        imgCodeList: this.fb.array(this.defaults.customer.imgEncodeStringList),
+        deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
+      console.log(this.form);
+
     }
     else if (this.defaults && this.defaults.isView != 'view') {
       this.mode = 'update';
       this.form = this.fb.group({
-        id: null,
+        id: 0,
         typeName: [this.defaults.typeName, [Validators.required]],
         price: [this.defaults.price, [Validators.required]],
         imgCodeList: this.fb.array([]),
+        deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
     } else {
       this.defaults = {} as Customer;
       this.form = this.fb.group({
-        id: null,
+        id: 0,
         typeName: [null, [Validators.required]],
         price: [null, [Validators.required]],
         imgCodeList: this.fb.array([]),
+        deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
     }
   }
 
+  get imgCodeList() {
+    return this.form.get('imgCodeList') as FormArray;
+  }
+
+  get deleteImgCodeList() {
+    return this.form.get('deleteImgCodeList') as FormArray;
+  }
+
   uploadFile(event: any) {
+    this.uploadState = false;
     let item = event.files;
     const formData = new FormData();
     for(let i = 0; i < item.length; i++) {
       formData.append("file", item[i]);
     }
-    this.uploadData.save(formData).subscribe({
-      next: (res) => {
-        for(let i = 0; i < item.length; i++) {
-          debugger;
-          const file = this.form.get('imgCodeList') as FormArray;
-          file.push(this.fb.control(res[i]));
+    if(item.length > 0) {
+      this.uploadData.save(formData).subscribe({
+        next: (res) => {
+          this.uploadState = true;
+          for(let i = 0; i < item.length; i++) {
+            const file = this.form.get('imgCodeList') as FormArray;
+            file.push(this.fb.control(res[i].fileCode));
+          }
+        },
+        error: (err) => {
+          console.log(err);
         }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      })
+    }
   }
 
   save() {
@@ -129,7 +147,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.submitted = true;
     if (this.form.invalid)
       return;
-
+    debugger
     this.roomType.save(customer).subscribe({
       next: () => {
         this.aleart.success("Add new success");
