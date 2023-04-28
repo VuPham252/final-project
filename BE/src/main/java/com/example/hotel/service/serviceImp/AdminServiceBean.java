@@ -51,9 +51,7 @@ public class AdminServiceBean implements AdminService {
         List<RoomTypeResponse> roomTypeResponseList = new ArrayList<>();
 
         for (RoomType roomType : roomTypeList) {
-            RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
-            BeanUtils.copyProperties(roomType, roomTypeResponse);
-            roomTypeResponse.setImgEncodeStringList(Utils.createImgEncodeString(roomType.getImageList()));
+            RoomTypeResponse roomTypeResponse = prepareRoomTypeResponse(roomType);
             roomTypeResponseList.add(roomTypeResponse);
         }
         return  roomTypeResponseList;
@@ -153,12 +151,28 @@ public class AdminServiceBean implements AdminService {
     @Override
     public RoomTypeResponse getRoomTypeById(Long id) throws BookingBusinessException, IOException {
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(() -> new BookingBusinessException("Error: There is no room type with id: " + id));
-        RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
-        BeanUtils.copyProperties(roomType, roomTypeResponse);
-        roomTypeResponse.setImgEncodeStringList(Utils.createImgEncodeString(roomType.getImageList()));
-        return  roomTypeResponse;
+        return  prepareRoomTypeResponse(roomType);
     }
 
+    private RoomTypeResponse prepareRoomTypeResponse (RoomType roomType) throws IOException {
+        RoomTypeResponse roomTypeResponse = new RoomTypeResponse();
+        BeanUtils.copyProperties(roomType, roomTypeResponse);
+        List<ImgResponse> imgResponseList = new ArrayList<>();
+        for (Image image : roomType.getImageList()) {
+            ImgResponse imgResponse = new ImgResponse();
+            List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(image));
+            List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(image));
+            if(imgEncodeStringList.size() != 0) {
+                imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
+            }
+            if(imgFileCodeStringList.size() != 0){
+                imgResponse.setFileCode(imgFileCodeStringList.get(0));
+            }
+            imgResponseList.add(imgResponse);
+        }
+        roomTypeResponse.setImgResponseList(imgResponseList);
+        return roomTypeResponse;
+    }
 
     @Override
     @Transactional
