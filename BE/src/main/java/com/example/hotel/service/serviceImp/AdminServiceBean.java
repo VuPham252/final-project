@@ -9,7 +9,7 @@ import com.example.hotel.model.response.*;
 import com.example.hotel.repository.*;
 import com.example.hotel.service.AdminService;
 import com.example.hotel.utils.FileDownloadUtil;
-import com.example.hotel.utils.FileUploadUtil;
+import com.example.hotel.utils.FileUtil;
 import com.example.hotel.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
@@ -143,15 +141,6 @@ public class AdminServiceBean implements AdminService {
         RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
         try{
             RoomType savedRoomType = roomTypeRepository.save(roomType);
-//            List<Image> imgList = new ArrayList<>();
-//            for (String imgCode : roomTypeRequest.getImgCodeList()) {
-//                Image image = Image.builder()
-//                        .roomType(savedRoomType)
-//                        .fileCode(imgCode)
-//                        .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
-//                imgList.add(image);
-//            }
-//            imageRepository.saveAll(imgList);
             saveImage(roomTypeRequest.getImgCodeList(), savedRoomType);
         }catch (Exception e) {
             throw new SystemErrorException("System error: Can not create room type");
@@ -179,6 +168,7 @@ public class AdminServiceBean implements AdminService {
         existRoomType.setTypeName(roomTypeRequest.getTypeName());
         existRoomType.setPrice(roomTypeRequest.getPrice());
         roomTypeRepository.save(existRoomType);
+
         if(!Objects.isNull(roomTypeRequest.getImgCodeList())){
             roomTypeRequest.getImgCodeList().removeAll(existedImgCodeList);
             saveImage(roomTypeRequest.getImgCodeList(), existRoomType);
@@ -186,7 +176,9 @@ public class AdminServiceBean implements AdminService {
 
         if(!Objects.isNull(roomTypeRequest.getDeleteImgCodeList())) {
             imageRepository.deleteByFileCodeIn(roomTypeRequest.getDeleteImgCodeList());
+            FileUtil.deleteFile(roomTypeRequest.getDeleteImgCodeList());
         }
+
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Update Roomtype Successfully").build();

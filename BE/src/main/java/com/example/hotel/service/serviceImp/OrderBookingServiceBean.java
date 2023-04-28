@@ -20,8 +20,13 @@ public class OrderBookingServiceBean implements OrderBookingService {
     }
 
     @Override
-    public List<OrderBookingResponse> getOrderBookingByPhone(String phoneNumber) {
-        List<OrderBooking> orderBookingList = orderBookingRepository.findAllByPhoneNumber(phoneNumber);
+    public List<OrderBookingResponse> getOrderBooking(String phoneNumber) {
+        List<OrderBooking> orderBookingList;
+        if(phoneNumber.isEmpty() || phoneNumber.isBlank()) {
+            orderBookingList = orderBookingRepository.findAll();
+        } else {
+            orderBookingList = orderBookingRepository.findAllByPhoneNumber(phoneNumber);
+        }
         List<OrderBookingResponse> orderBookingResponseList = new ArrayList<>();
         for (OrderBooking orderBooking : orderBookingList) {
             OrderBookingResponse orderBookingResponse = new OrderBookingResponse();
