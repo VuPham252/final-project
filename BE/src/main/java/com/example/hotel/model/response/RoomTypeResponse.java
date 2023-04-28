@@ -6,10 +6,7 @@ import com.example.hotel.utils.LocalDateTimeDeserializer;
 import com.example.hotel.utils.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -39,5 +36,6 @@ public class RoomTypeResponse {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updatedTime;
 
-    private List<String> imgEncodeStringList;
+    private List<ImgResponse> imgResponseList;
+
 }

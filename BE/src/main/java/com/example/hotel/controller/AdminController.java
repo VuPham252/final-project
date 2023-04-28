@@ -29,10 +29,9 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-
     @GetMapping("/orders")
-    public List<OrderBookingResponse> getOrderBookingByPhone(@RequestParam(name = "phone") String phoneNumber){
-        return orderBookingService.getOrderBookingByPhone(phoneNumber);
+    public List<OrderBookingResponse> getOrderBooking(@RequestParam(name = "phone") String phoneNumber){
+        return orderBookingService.getOrderBooking(phoneNumber);
     }
 
     @PostMapping("/availableRooms")

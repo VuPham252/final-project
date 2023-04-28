@@ -39,4 +39,12 @@ public class Utils {
         }
         return  encodedStringList;
     }
+
+    public static List<String> getImgFileCode(List<Image> imageList) throws IOException {
+        List<String> imgFileCodeList = new ArrayList<>();
+        for (Image image : imageList) {
+            imgFileCodeList.add(image.getFileCode());
+        }
+        return  imgFileCodeList;
+    }
 }
