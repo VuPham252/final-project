@@ -28,6 +28,10 @@ public class RoomTypeResponse {
 
     private BigDecimal price;
 
+    private String shortDescription;
+
+    private String description;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdTime;

@@ -34,6 +34,11 @@ public class AdminController {
         return orderBookingService.getOrderBooking(phoneNumber);
     }
 
+    @GetMapping("/orders/{id}")
+    public List<BookingResponse> getBookings(@PathVariable ("id")Long id){
+        return orderBookingService.getBookings(id);
+    }
+
     @PostMapping("/availableRooms")
     public List<RoomResponse> getAvailableRooms(@RequestBody BookingCheckRequest bookingCheckRequest) {
         return adminService.getAvailableRooms(bookingCheckRequest);

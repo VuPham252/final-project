@@ -35,4 +35,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Long> getBookedRooms(@Param("inputCheckinDate") LocalDate inputCheckinDate,
                                   @Param("inputCheckoutDate") LocalDate inputCheckoutDate,
                                   @Param("roomTypeId") long roomTypeId);
+
+    List<Booking> getBookingsByOrderId(Long id);
 }
