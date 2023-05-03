@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,8 +25,6 @@ public class Blog {
     private String description;
 
     private String shortDescription;
-
-    private Boolean display;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "blog", cascade = CascadeType.ALL)

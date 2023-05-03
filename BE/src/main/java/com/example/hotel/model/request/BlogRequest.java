@@ -2,6 +2,8 @@ package com.example.hotel.model.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BlogRequest {
 
@@ -11,18 +13,9 @@ public class BlogRequest {
 
     private String shortDescription;
 
-    @Data
-    public static class NewRequest extends BlogRequest {
+    private List<String> imgCodeList;
 
-        private Boolean display;
+    private String author;
 
-        private String imageCode;
-
-        private String author;
-    }
-
-    @Data
-    public static class UpdateRequest extends BlogRequest {
-
-    }
+    private List<String> deleteImgCodeList;
 }

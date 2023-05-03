@@ -47,11 +47,13 @@ public interface AdminService {
     ContactResponse getContactById(Long id);
 
     //CRUD BLOG
-    ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest.NewRequest newRequest);
+    ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest newRequest) throws SystemErrorException;
 
     BlogResponse getBlogById(Long id) throws SystemErrorException, IOException;
 
-    ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest.UpdateRequest updateRequest, Long id) throws SystemErrorException, BookingBusinessException;
+    ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest updateRequest, Long id) throws SystemErrorException, BookingBusinessException, IOException;
 
     ResponseEntity<SuccessResponseObj>deleteBlog(Long id);
+
+    List<BlogResponse> getAllBlog() throws IOException;
 }

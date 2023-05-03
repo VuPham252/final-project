@@ -47,4 +47,9 @@ public class Utils {
         }
         return  imgFileCodeList;
     }
+
+    static <T> T getObject(T object)
+    {
+        return object;
+    }
 }

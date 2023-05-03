@@ -2,8 +2,6 @@ package com.example.hotel.model.response;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class BlogResponse {
     private Long id;
@@ -16,7 +14,7 @@ public class BlogResponse {
 
     private Boolean display;
 
-    private List<String> imageEncodedStringList;
+    private ImgResponse imgResponse;
 
     private String author;
 }
