@@ -31,6 +31,10 @@ public class RoomType {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<Image> imageList;
 
+    private String shortDescription;
+
+    private String description;
+
     @CreationTimestamp
     private LocalDateTime createdTime;
 
