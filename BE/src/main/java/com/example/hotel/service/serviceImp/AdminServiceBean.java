@@ -174,6 +174,24 @@ public class AdminServiceBean implements AdminService {
         return roomTypeResponse;
     }
 
+//    private BlogResponse prepareBlogResponse (Blog blog) throws IOException {
+//        BlogResponse blogResponse = new BlogResponse();
+//        BeanUtils.copyProperties(blog, blogResponse);
+//        List<ImgResponse> imgResponseList = new ArrayList<>();
+//        ImgResponse imgResponse = new ImgResponse();
+//        List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
+//        List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
+//        if(imgEncodeStringList.size() != 0) {
+//            imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
+//        }
+//        if(imgFileCodeStringList.size() != 0){
+//            imgResponse.setFileCode(imgFileCodeStringList.get(0));
+//        }
+//        imgResponseList.add(imgResponse);
+//        blogResponse.setImgResponseList(imgResponseList);
+//        return blogResponse;
+//    }
+
     @Override
     @Transactional
     public ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException, IOException {
@@ -199,14 +217,27 @@ public class AdminServiceBean implements AdminService {
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
-    private void saveImage (List<String> imgCodeList, RoomType roomType) throws IOException {
+    private <T> void saveImage (List<String> imgCodeList, T requestObject) throws IOException {
         List<Image> imgList = new ArrayList<>();
         for (String imgCode : imgCodeList) {
-            Image image = Image.builder()
-                    .roomType(roomType)
-                    .fileCode(imgCode)
-                    .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
-            imgList.add(image);
+            try {
+                if(requestObject instanceof RoomType) {
+                    Image image = Image.builder()
+                            .roomType((RoomType) requestObject)
+                            .fileCode(imgCode)
+                            .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
+                    imgList.add(image);
+                } else if(requestObject instanceof Blog) {
+                    Image image = Image.builder()
+                            .blog((Blog) requestObject)
+                            .fileCode(imgCode)
+                            .filePath(FileDownloadUtil.getFilePath(imgCode)).build();
+                    imgList.add(image);
+                }
+            }catch (Exception e) {
+                throw e;
+            }
+
         }
         imageRepository.saveAll(imgList);
     }
@@ -289,14 +320,26 @@ public class AdminServiceBean implements AdminService {
         return contactResponse;
     }
 
+
+    //CRUD Blog
     @Override
-    public ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest.NewRequest blogRequest) {
+    @Transactional
+    public ResponseEntity<SuccessResponseObj> saveBlog(BlogRequest blogRequest) throws SystemErrorException {
         Blog blog = Blog.builder()
                 .title(blogRequest.getTitle())
                 .shortDescription(blogRequest.getShortDescription())
                 .description(blogRequest.getDescription())
-                .display(blogRequest.getDisplay()).build();
-        blogRepository.save(blog);
+                .author(blogRequest.getAuthor())
+                .build();
+
+        try{
+            Blog savedBlog = blogRepository.save(blog);
+            saveImage(blogRequest.getImgCodeList(), savedBlog);
+        }catch (Exception e) {
+            throw new SystemErrorException("System error: Can not create room type");
+        }
+
+
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.CREATED.value())
                 .message("Add Blog Successfully").build();
@@ -304,21 +347,31 @@ public class AdminServiceBean implements AdminService {
     }
 
     @Override
-    public BlogResponse getBlogById(Long id) throws SystemErrorException, IOException {
+    public BlogResponse getBlogById(Long id) throws IOException {
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Blog not found."));
-        BlogResponse blogResponse = new BlogResponse();
-        BeanUtils.copyProperties(blog, blogResponse);
-        blogResponse.setImageEncodedStringList(Utils.createImgEncodeString(Collections.singletonList(blog.getImage())));
+        BlogResponse blogResponse = prepareBlogResponse(blog);
         return blogResponse;
     }
 
     @Override
-    public ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest.UpdateRequest updateRequest, Long id) throws SystemErrorException, BookingBusinessException {
+    @Transactional
+    public ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest updateRequest, Long id) throws BookingBusinessException, IOException {
         Blog existBlog = blogRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Blog not found."));
+        String existedImgCode = existBlog.getImage().getFileCode();
         existBlog.setTitle(updateRequest.getTitle());
         existBlog.setDescription(updateRequest.getDescription());
         existBlog.setShortDescription(updateRequest.getShortDescription());
         blogRepository.save(existBlog);
+
+        if(!Objects.isNull(updateRequest.getImgCodeList())) {
+            updateRequest.getImgCodeList().removeAll(Collections.singletonList(existedImgCode));
+            saveImage(updateRequest.getImgCodeList(), existBlog);
+        }
+
+        if(!Objects.isNull(updateRequest.getDeleteImgCodeList())) {
+            imageRepository.deleteByFileCodeIn(updateRequest.getDeleteImgCodeList());
+            FileUtil.deleteFile(updateRequest.getDeleteImgCodeList());
+        }
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Update Blog Successfully").build();
@@ -332,6 +385,34 @@ public class AdminServiceBean implements AdminService {
                 .statusCode(HttpStatus.OK.value())
                 .message("Delete Blog Successfully").build();
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
+
+    @Override
+    public List<BlogResponse> getAllBlog() throws IOException {
+        List<Blog> blogList = blogRepository.findAll();
+        List<BlogResponse> blogResponseList = new ArrayList<>();
+        for (Blog blog : blogList) {
+            BlogResponse blogResponse = prepareBlogResponse(blog);
+            blogResponseList.add(blogResponse);
+        }
+        return  blogResponseList;
+
+    }
+
+    private BlogResponse prepareBlogResponse (Blog blog) throws IOException {
+        BlogResponse blogResponse = new BlogResponse();
+        BeanUtils.copyProperties(blog, blogResponse);
+        ImgResponse imgResponse = new ImgResponse();
+        List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
+        List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
+        if(imgEncodeStringList.size() != 0) {
+            imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
+        }
+        if(imgFileCodeStringList.size() != 0){
+            imgResponse.setFileCode(imgFileCodeStringList.get(0));
+        }
+        blogResponse.setImgResponse(imgResponse);
+        return blogResponse;
     }
 
 }

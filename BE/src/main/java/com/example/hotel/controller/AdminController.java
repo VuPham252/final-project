@@ -129,4 +129,20 @@ public class AdminController {
     public ContactResponse getAllContact(@PathVariable ("id")Long id) {
         return adminService.getContactById(id);
     }
+
+    //blog
+    @PostMapping(value = "/blog/save")
+    public ResponseEntity<SuccessResponseObj> saveBlog(@RequestBody BlogRequest newBlogRequest) throws SystemErrorException {
+        return adminService.saveBlog(newBlogRequest);
+    }
+
+    @PutMapping("/blog/{id}")
+    public ResponseEntity<SuccessResponseObj>updateBlog(@PathVariable Long id, @RequestBody BlogRequest blogRequest) throws BookingBusinessException, SystemErrorException, IOException {
+        return adminService.updateBlog(blogRequest, id);
+    }
+
+    @DeleteMapping("/blog/{id}")
+    public  ResponseEntity<SuccessResponseObj>deleteBlog(@PathVariable ("id")Long id){
+        return adminService.deleteBlog(id);
+    }
 }
