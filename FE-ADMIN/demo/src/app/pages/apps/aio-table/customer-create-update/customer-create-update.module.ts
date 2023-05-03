@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CustomerCreateUpdateComponent } from './customer-create-update.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MtxPopoverModule } from '@ng-matero/extensions/popover';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatRadioModule,
     MatSelectModule,
     MatMenuModule,
-
+    MtxPopoverModule,
     MatDividerModule
   ],
   declarations: [CustomerCreateUpdateComponent],

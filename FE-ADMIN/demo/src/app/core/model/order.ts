@@ -3,13 +3,14 @@ export class Order {
   customerName: string;
   email: string;
   phoneNumber: string;
-
+  createdTime?: string;
 
   constructor() {
-    this.id = null
+    this.id = 0
     this.customerName = "";
     this.email = "";
     this.phoneNumber=  "";
+    this.createdTime = new Date().toISOString();
   }
 
 }

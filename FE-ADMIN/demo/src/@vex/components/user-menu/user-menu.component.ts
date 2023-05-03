@@ -15,6 +15,9 @@ export class UserMenuComponent implements OnInit {
 
   close(): void {
     /** Wait for animation to complete and then close */
-    setTimeout(() => this.popoverRef.close(), 250);
+    setTimeout(() => {
+      this.popoverRef.close();
+      localStorage.clear();
+    }, 250);
   }
 }

@@ -121,7 +121,7 @@ export class RoomComponent implements OnInit {
          this.isLoading = false;
        }
      })
- }
+  }
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;

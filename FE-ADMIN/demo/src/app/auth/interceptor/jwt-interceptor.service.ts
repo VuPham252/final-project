@@ -12,7 +12,7 @@ export class JwtInterceptorService implements HttpInterceptor {
     const token = localStorage.getItem('token');
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       }
     });
     console.log(req);

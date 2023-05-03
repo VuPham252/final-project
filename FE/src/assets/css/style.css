@@ -44,6 +44,10 @@ Version: 1.0.0
 12.FAQs
 13.Gallery
 */
+
+/* ng zorro */
+/* @import "../../../node_modules/ng-zorro-antd/ng-zorro-antd.min.css"; */
+
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
@@ -661,8 +665,8 @@ label.submit{
     height: 40px;
     display: block;
     position: absolute;
-    right: 0;
-    top: -2px;
+    right: -3px;
+    top: -1.8px;
     border-radius: 0px 50px 50px 0px;
     margin-top: 0;
 }
@@ -936,7 +940,7 @@ label.custom-checkbox .checkmark:after {
 }
 /*Navigation*/
 .header .navigation.sticky{
-    animation-name: fadeHeaderInDown;
+    /* animation-name: fadeHeaderInDown; */
     position: fixed;
     top: 0;
     left: 0;
@@ -1257,7 +1261,7 @@ label.custom-checkbox .checkmark:after {
     position: relative;
     overflow: hidden;
 }
-.cruise-grid .cruise-grid-wrapper .image-sec>a:after,
+/* .cruise-grid .cruise-grid-wrapper .image-sec>a:after,
 .flights-grid .flights-grid-wrapper .image-sec>a:after,
 .hotel-grid .hotel-grid-wrapper .image-sec>a:after{
     position: absolute;
@@ -1291,7 +1295,7 @@ label.custom-checkbox .checkmark:after {
     right: 0;
     text-align: center;
     line-height: 0.5;
-}
+} */
 .cruise-grid .cruise-grid-wrapper:hover .image-sec>a:after,
 .cruise-grid .cruise-grid-wrapper:hover .image-sec>a:before,
 .flights-grid .flights-grid-wrapper:hover .image-sec>a:after,
@@ -2459,11 +2463,4 @@ label.custom-checkbox .checkmark:after {
 .gallery .gallery-item:hover .popup:after{
     opacity: 1;
     transform: translateX(0%);
-}
-
-app-header {
-  position: sticky;
-  top: 0;
-  right: auto;
-  position: -webkit-sticky;
 }

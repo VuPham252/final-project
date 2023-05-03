@@ -660,8 +660,8 @@ label.submit{
     height: 40px;
     display: block;
     position: absolute;
-    right: 0;
-    top: -2px;
+    right: -3px;
+    top: -1.8px;
     border-radius: 0px 50px 50px 0px;
     margin-top: 0;
 }
@@ -1256,7 +1256,7 @@ label.custom-checkbox .checkmark:after {
     position: relative;
     overflow: hidden;
 }
-.cruise-grid .cruise-grid-wrapper .image-sec>a:after,
+/* .cruise-grid .cruise-grid-wrapper .image-sec>a:after,
 .flights-grid .flights-grid-wrapper .image-sec>a:after,
 .hotel-grid .hotel-grid-wrapper .image-sec>a:after{
     position: absolute;
@@ -1290,7 +1290,7 @@ label.custom-checkbox .checkmark:after {
     right: 0;
     text-align: center;
     line-height: 0.5;
-}
+} */
 .cruise-grid .cruise-grid-wrapper:hover .image-sec>a:after,
 .cruise-grid .cruise-grid-wrapper:hover .image-sec>a:before,
 .flights-grid .flights-grid-wrapper:hover .image-sec>a:after,

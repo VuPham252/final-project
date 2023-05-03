@@ -43,7 +43,7 @@ export class BlogComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger
+    // debugger
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
@@ -66,7 +66,7 @@ export class BlogComponent implements OnInit {
   }
 
   reloadTable() {
-    debugger
+    // debugger
     this.isLoading = true;
     console.log(this.rows);
     this.dataSource.data = this.rows;

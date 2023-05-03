@@ -13,24 +13,31 @@ import { LoginService } from './api/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../auth/interceptor/jwt-interceptor.service';
 import { AuthInterceptorService } from '../auth/interceptor/auth-interceptor.service';
-import { ShareService } from '../share/share.service';
+import { BookingApi } from './api/ava-room/booking.api';
+import { BookingData } from './api/ava-room/booking-data';
+import { BookingService } from './api/ava-room/booking.service';
+import { ContactApi } from './api/contact/contact.api';
+import { ContactData } from './api/contact/contact-data';
+import { ContactService } from './api/contact/contact.service';
 
-const API = [RoomTypeApi, RegisterApi, LoginApi];
+const API = [RoomTypeApi, RegisterApi, LoginApi, BookingApi, ContactApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RegisterData, useClass: RegisterService },
   { provide: LoginData, useClass: LoginService },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptorService,
-    multi: true,
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true,
-  },
+  { provide: BookingData, useClass: BookingService },
+  { provide: ContactData, useClass: ContactService },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: JwtInterceptorService,
+  //   multi: true,
+  // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: AuthInterceptorService,
+  //   multi: true,
+  // },
 ];
 
 @NgModule({

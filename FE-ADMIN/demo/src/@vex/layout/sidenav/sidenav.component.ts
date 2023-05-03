@@ -17,6 +17,8 @@ import { SearchModalComponent } from '../../components/search-modal/search-modal
 })
 export class SidenavComponent implements OnInit {
 
+  public username: string = '';
+
   @Input() collapsed: boolean;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(map(config => config.sidenav.title));
@@ -36,6 +38,11 @@ export class SidenavComponent implements OnInit {
               private readonly dialog: MatDialog) { }
 
   ngOnInit() {
+    this.getUsername();
+  }
+
+  getUsername() {
+    return this.username = localStorage.getItem('user');
   }
 
   collapseOpenSidenav() {

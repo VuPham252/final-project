@@ -11,10 +11,6 @@ export class HeaderComponent extends HelperService implements OnInit {
   public getUser: boolean = false;
   public userName: string = '';
 
-  constructor(private router: Router,) {
-    super();
-  }
-
   ngOnInit(): void {
     this.User();
   }

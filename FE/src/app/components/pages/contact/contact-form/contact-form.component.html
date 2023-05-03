@@ -1,58 +1,179 @@
 <div class="section-padding contact-form-map">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="section-header">
-                    <div class="section-heading">
-                        <h3 class="text-custom-black">Get In Touch</h3>
-                        <div class="section-description">
-                            <p class="text-light-dark">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                        </div>
-                    </div>
-                </div>
-                <form class="mb-md-80" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" formControlName="name" class="form-control form-control-custom" placeholder="Name"
-                                    required="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" formControlName="email" class="form-control form-control-custom"
-                                    placeholder="Email I'd" required="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" formControlName="subject" class="form-control form-control-custom"
-                                    placeholder="Subject" required="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" formControlName="phone" class="form-control form-control-custom"
-                                    placeholder="Phone No." required="">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <textarea formControlName="message" rows="5" class="form-control form-control-custom"
-                                    placeholder="Message" required=""></textarea>
-                            </div>
-                            <button type="submit" class="btn-first btn-submit" [disabled]="!contactForm.valid">Submit</button>
-                        </div>
-                    </div>
-                </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="section-header">
+          <div class="section-heading">
+            <h3 class="text-custom-black">Get In Touch</h3>
+            <div class="section-description">
+              <p class="text-light-dark">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text.
+              </p>
             </div>
-            <div class="col-lg-5">
-                <div class="contact-map full-height">
-                    <iframe title="contactmap" class="full-height"
-                        src="https://maps.google.com/maps?q=university%20of%20san%20francisco&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
-                </div>
-            </div>
+          </div>
         </div>
+        <form
+          class="mb-md-80"
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control form-control-custom"
+                  placeholder="Name"
+                  [ngClass]="
+                    name.invalid && (name.dirty || name.touched) ? 'error' : ''
+                  "
+                  required
+                />
+                <ng-container
+                  *ngIf="name.invalid && (name.dirty || name.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="name.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Name is required
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="form-control form-control-custom"
+                  placeholder="example@gmail.com"
+                  [ngClass]="
+                    email.invalid && (email.dirty || email.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
+                />
+                <ng-container
+                  *ngIf="email.invalid && (email.dirty || email.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="email.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Email is required
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="email.errors?.['email']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Email is invalid
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="subject"
+                  class="form-control form-control-custom"
+                  placeholder="Subject"
+                  [ngClass]="
+                    subject.invalid && (subject.dirty || subject.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
+                />
+                <ng-container
+                  *ngIf="subject.invalid && (subject.dirty || subject.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="subject.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Subject is required
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  formControlName="phone"
+                  class="form-control form-control-custom"
+                  placeholder="Phone No."
+                  [ngClass]="
+                    phone.invalid && (phone.dirty || phone.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
+                />
+                <ng-container
+                  *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="phone.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Phone is required
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea
+                  formControlName="message"
+                  rows="5"
+                  class="form-control form-control-custom"
+                  placeholder="Message"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="btn-first btn-submit"
+                style="cursor: pointer"
+                [disabled]="!contactForm.valid"
+                [ngClass]="!contactForm.valid ? 'disabled' : ''"
+                (click)="submit()"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-5">
+        <div class="contact-map full-height">
+          <iframe
+            title="contactmap"
+            class="full-height"
+            src="https://maps.google.com/maps?q=university%20of%20san%20francisco&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+          ></iframe>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

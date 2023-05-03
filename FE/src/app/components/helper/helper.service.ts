@@ -8,12 +8,17 @@ import 'magnific-popup';
 })
 export class HelperService implements AfterViewInit, OnInit {
   public navigation = data;
-  windowScrolled : boolean | undefined;
+  public windowScrolled : boolean | undefined;
   constructor() { }
   // Sticky Nav
   @HostListener("window:scroll", [])
   onWindowScroll() {
-    this.windowScrolled = window.scrollY > 100;
+    // console.log(this.windowScrolled);
+    if(this.windowScrolled = window.scrollY > 60)
+      document.documentElement.querySelector('.navigation').classList.add('sticky');
+    else {
+      document.documentElement.querySelector('.navigation').classList.remove('sticky');
+    }
   }
   scrollToTop() {
     (function smoothscroll() {
@@ -29,12 +34,13 @@ export class HelperService implements AfterViewInit, OnInit {
   toggleNav() {
     this.navMethod = !this.navMethod;
   }
-  //Mobile 
+  //Mobile
   open: boolean = false;
   trigger(item: { open: boolean; }) {
     item.open = !item.open;
   }
   ngOnInit(): void {
+    window.addEventListener('scroll', this.onWindowScroll, true);
   }
   ngAfterViewInit(): void {
     ($('.popup-youtube') as any).magnificPopup({

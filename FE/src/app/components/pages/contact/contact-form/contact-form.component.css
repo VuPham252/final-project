@@ -1,0 +1,14 @@
+.error {
+  border: 2px solid #efefef;
+  border-bottom: 2px solid red;
+  box-shadow: none;
+}
+
+.disabled {
+  border: 1px solid gray;
+  outline: 1px solid gray;
+  color: gray;
+  background: white;
+  cursor: not-allowed;
+  pointer-events: none;
+}

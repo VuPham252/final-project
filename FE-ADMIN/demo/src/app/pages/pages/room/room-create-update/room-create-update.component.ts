@@ -36,7 +36,7 @@ export class RoomCreateUpdateComponent implements OnInit {
 
     get f() { return this.form.controls; }
     ngOnInit(): void {
-      debugger
+      // debugger
       this.form = this.fb.group({
         id: '',
         name: [ '', [Validators.required]],
@@ -55,10 +55,7 @@ export class RoomCreateUpdateComponent implements OnInit {
         this.isView = this.defaults.isView;
         this.form.setValue ( this.defaults.roomData);
       }
-
-      console.log(this.defaults);
-      console.log(this.isView);
-      if (this.defaults) {
+      else if (this.defaults) {
         this.isCreateMode = false;
         this.form.setValue(
           this.defaults

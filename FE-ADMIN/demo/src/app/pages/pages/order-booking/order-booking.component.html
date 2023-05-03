@@ -34,37 +34,36 @@
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
-      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+      <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
       <table [dataSource]="dataSource" class="w-full" mat-table matSort>
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header>ACTION</th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-            <button  mat-icon-button type="button">
-              <mat-icon svgIcon="mat:edit"></mat-icon>
+            <button (click)="redirectDetail(row)" mat-icon-button type="button">
+              <mat-icon svgIcon="mat:remove_red_eye"></mat-icon>
             </button>
-            <button mat-icon-button type="button">
+            <!-- <button mat-icon-button type="button">
               <mat-icon svgIcon="mat:delete"></mat-icon>
-            </button>
+            </button> -->
           </td>
         </ng-container>
-        <ng-container matColumnDef="roomTypeId">
+        <!-- <ng-container matColumnDef="roomTypeId">
           <th mat-header-cell *matHeaderCellDef> Order Booking </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngFor="let item of listRoomType">
+            <ng-container *ngFor="let item of listOrder">
               <ng-container *ngIf="element.roomTypeId === item.id">
-                <!-- Render the HTML with id property based on the element's gender value -->
                 <ng-template #genderTemplate>
-                  <span>{{item.typeName}}</span>
+                  <span>{{item.customerName}}</span>
                 </ng-template>
                 <ng-container *ngTemplateOutlet="genderTemplate"></ng-container>
               </ng-container>
             </ng-container>
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container *ngFor="let column of columns">
 
-          <ng-container *ngIf="column.property != 'actions' && column.property !='roomTypeId'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
           </ng-container>

@@ -12,6 +12,8 @@ import { Booking } from 'src/app/core/model/booking';
 import { RoomData } from 'src/app/core/api/room/room-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
+import { Order } from 'src/app/core/model/order';
+import { OrderData } from 'src/app/core/api/order/order-data';
 
 @Component({
   selector: 'vex-order-booking',
@@ -19,31 +21,27 @@ import { OrderBookingCreateUpdateComponent } from './order-booking-create-update
   styleUrls: ['./order-booking.component.scss']
 })
 export class OrderBookingComponent implements OnInit {
-  rows: Booking[] = [];
+  rows: Order[] = [];
   searchForm: any;
   isLoading = false;
-  listRoomType: roomType[] = [];
-  listRoom: Room[] = [];
+  listOrder: Order[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
-    private roomData : RoomData,
-    private roomType :RoomTypeData
+    private orderData: OrderData
   ) { }
 
-  dataSource: MatTableDataSource<Booking> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Order> = new MatTableDataSource();
 
   @Input()
-  columns: TableColumn<Booking>[] = [
+  columns: TableColumn<Order>[] = [
     { label: 'Id', property: 'id', type: 'text', visible: true },
-    { label: 'Order', property: 'orderId', type: 'text', visible: true },
-    { label: 'Room Type', property: 'roomTypeId', type: 'text', visible: true, },
-    { label: 'Room', property: 'roomId', type: 'text', visible: true },
-    { label: 'Amount', property: 'amount', type: 'text', visible: true },
-    { label: 'Check in date', property: 'checkInDate', type: 'text', visible: true },
-    { label: 'Check out date', property: 'checkOutDate', type: 'text', visible: true },
+    { label: 'Customer Name', property: 'customerName', type: 'text', visible: true },
+    { label: 'Email', property: 'email', type: 'text', visible: true, },
+    { label: 'Phone Number', property: 'phoneNumber', type: 'text', visible: true },
+    { label: 'Create Time', property: 'createdTime', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -54,9 +52,13 @@ export class OrderBookingComponent implements OnInit {
       pageSize: 10
     })
     this.dataSource = new MatTableDataSource();
-    this.roomType.search().subscribe((x: Array<roomType>) => this.listRoomType = x || []);
-    this.roomData.search().subscribe((x : Array<Room> ) => this.listRoom = x || []);
-    // this.reloadTable();
+    this.orderData.search().subscribe((x: Array<Order>) => this.listOrder = x || []);
+
+    this.reloadTable();
+  }
+
+  redirectDetail(item: any) {
+    this.router.navigate(['/pages/order-detail', item.id]);
   }
 
   submitSearch() {
@@ -81,6 +83,17 @@ export class OrderBookingComponent implements OnInit {
   }
   reloadTable() {
     this.isLoading = true;
+    this.orderData.search().subscribe({
+      next: (res) => {
+        this.dataSource.data = res;
+        console.log(res);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    })
     // this.roomData.search()
     //   .subscribe({
     //     next: (response) => {
