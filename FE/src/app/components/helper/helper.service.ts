@@ -13,7 +13,7 @@ export class HelperService implements AfterViewInit, OnInit {
   // Sticky Nav
   @HostListener("window:scroll", [])
   onWindowScroll() {
-    console.log(this.windowScrolled);
+    // console.log(this.windowScrolled);
     if(this.windowScrolled = window.scrollY > 60)
       document.documentElement.querySelector('.navigation').classList.add('sticky');
     else {

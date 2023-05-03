@@ -210,7 +210,6 @@ export class HotelBookingComponent implements OnInit {
         dayCheckOut;
     }
     item.bookingRequestList = arr;
-    debugger;
 
     this.bookingData.booking(item).subscribe({
       next: (res) => {

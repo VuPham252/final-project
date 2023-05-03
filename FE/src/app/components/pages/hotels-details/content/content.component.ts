@@ -1,12 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HotelHelperService } from 'src/app/components/helper/hotel/hotel-helper.service';
+import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
+import { roomType } from 'src/app/core/model/room-type';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
-export class ContentComponent extends HotelHelperService {
+export class ContentComponent implements OnInit {
+
+  fake: any;
+  roomTypeDetail: roomType = {
+    id: 0,
+    typeName: '',
+    price: 0
+  };
+
+  constructor(private roomTypeData: RoomTypeData, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.getById();
+  }
+
+  getById() {
+    let id = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.roomTypeData.getById(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.roomTypeDetail = res;
+      }
+    })
+  }
+
   settings = {
     infinite: true,
     slidesToShow: 1,

@@ -1,8 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/_services/alert.service';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { UploadData } from 'src/app/core/api/upload/upload-data';
@@ -72,7 +71,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
         id: this.defaults.customer.id,
         typeName: [this.defaults.customer.typeName, [Validators.required]],
         price: [this.defaults.customer.price, [Validators.required]],
-        imgCodeList: this.fb.array(this.defaults.customer.imgEncodeStringList),
+        imgCodeList: this.fb.array([]),
+        imgResponseList: this.fb.array(this.defaults.customer.imgResponseList),
         deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
@@ -82,20 +82,23 @@ export class CustomerCreateUpdateComponent implements OnInit {
     else if (this.defaults && this.defaults.isView != 'view') {
       this.mode = 'update';
       this.form = this.fb.group({
-        id: 0,
+        id: this.defaults.id,
         typeName: [this.defaults.typeName, [Validators.required]],
         price: [this.defaults.price, [Validators.required]],
         imgCodeList: this.fb.array([]),
+        imgResponseList: this.fb.array(this.defaults.imgResponseList),
         deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
+      console.log(this.form);
     } else {
       this.defaults = {} as Customer;
       this.form = this.fb.group({
         id: 0,
-        typeName: [null, [Validators.required]],
-        price: [null, [Validators.required]],
+        typeName: ['', [Validators.required]],
+        price: [, [Validators.required]],
         imgCodeList: this.fb.array([]),
+        imgResponseList: this.fb.array([]),
         deleteImgCodeList: this.fb.array([]),
         //this.defaults.typeName
       });
@@ -104,6 +107,10 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   get imgCodeList() {
     return this.form.get('imgCodeList') as FormArray;
+  }
+
+  get imgResponseList() {
+    return this.form.get('imgResponseList') as FormArray;
   }
 
   get deleteImgCodeList() {
@@ -147,7 +154,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.submitted = true;
     if (this.form.invalid)
       return;
-    debugger
+    // debugger
     this.roomType.save(customer).subscribe({
       next: () => {
         this.aleart.success("Add new success");

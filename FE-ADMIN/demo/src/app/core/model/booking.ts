@@ -1,20 +1,17 @@
-export class Booking {
-  id: number;
-  orderId: number;
-  roomTypeId: number;
-  roomId: number;
-  amount: number
-  checkInDate: string;
-  checkOutDate: string;
+export interface checkAva {
+  inputCheckinDate: string,
+  inputCheckoutDate: string,
+  roomTypeId: number,
+  roomTypeName?: string,
+  roomTypePrice?: number,
+  amount?: number,
+  isDisabled?: boolean,
+  isAvailable?: boolean,
+}
 
-  constructor() {
-    this.id = null
-    this.orderId = null;
-    this.roomTypeId = null;
-    this.roomId=  null;
-    this.amount= null;
-    this.checkInDate=  "";
-    this.checkOutDate = "";
-  }
-
+export interface Booking {
+  bookingRequestList: [checkAva],
+  customerName: string,
+  email: string,
+  phoneNumber: string
 }

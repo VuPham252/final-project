@@ -129,6 +129,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   updateCustomer(customer: roomType) {
+    // debugger
     this.dialog.open(CustomerCreateUpdateComponent, {
       data: customer
     }).afterClosed().subscribe(updatedCustomer => {
@@ -144,7 +145,6 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   view(customer: roomType) {
-    debugger
     this.dialog.open(CustomerCreateUpdateComponent, {
       data: {
         title: "View Room Type",

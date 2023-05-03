@@ -1,98 +1,80 @@
-<section class="section-padding bg-light-white listing-details" *ngFor="let item of hoteldetails">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="listing-details-inner bx-wrapper bg-custom-white padding-20">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <ngx-slick-carousel [config]="settings" class="detail-slider-for mb-xl-20 magnific-gallery">
-                                <!-- Data -->
-                                <div ngxSlickItem class="slide-item" *ngFor="let image of item.image">
-                                    <a [href]="image" class="popup">
-                                        <img [src]="image" class="image-fit" [alt]="item.title">
-                                    </a>
-                                </div>
-                                <!-- Data -->
-                            </ngx-slick-carousel>
-                            <ngx-slick-carousel [config]="settingsThumb" class="detail-slider-nav row">
-                                <!-- Data -->
-                                <div ngxSlickItem class="slide-item col-12" *ngFor="let image of item.image">
-                                    <img [src]="image" class="image-fit" [alt]="item.title">
-                                </div>
-                                <!-- Data -->
-                            </ngx-slick-carousel>
-                            <hr>
-                            <div class="listing-meta-sec mb-md-80">
-                                <div class="tabs">
-                                    <ul ngbNav #nav="ngbNav" class="custom-flex nav nav-tabs mb-xl-20">
-                                        <li [ngbNavItem]="1">
-                                            <a ngbNavLink>Overview</a>
-                                            <ng-template ngbNavContent>
-                                                <div class="tab-inner">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <div class="hotel-type mb-xl-20 bg-light-white padding-10">
-                                                                <ul class="custom">
-                                                                    <li class="text-light-dark"><label
-                                                                            class="no-margin text-custom-blue">hotel
-                                                                            type:</label>{{item.rating}} star</li>
-                                                                    <li class="text-light-dark"
-                                                                        *ngFor="let hotelinfo of item.overview.hotelinfo">
-                                                                        <label
-                                                                            class="no-margin text-custom-blue">{{hotelinfo.title}}:</label>{{hotelinfo.text}}
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-7">
-                                                            <div
-                                                                class="listing-testimonial padding-20 bg-light-white mb-xl-20">
-                                                                <ngx-slick-carousel [config]="settingsTesti"
-                                                                    class="testimonial-inner detail-testimonial">
-                                                                    <!-- Data -->
-                                                                    <div ngxSlickItem class="tesimonial-item"
-                                                                        *ngFor="let testimonials of getTestimonials(item.overview.testimonials)">
-                                                                        <cite
-                                                                            class="text-custom-blue fs-16">{{testimonials.text
-                                                                            | slice:0:135}}</cite>
-                                                                        <div class="testimonial-author"
-                                                                            *ngFor="let author of getAuthor(testimonials.author)">
-                                                                            <div class="author-img">
-                                                                                <img [src]="author.image"
-                                                                                    class="rounded-circle"
-                                                                                    [alt]="author.name">
-                                                                            </div>
-                                                                            <div class="author-name ml-2">
-                                                                                <h6
-                                                                                    class="text-custom-black no-margin fs-14 fw-500">
-                                                                                    {{author.name}}</h6>
-                                                                                <p class="no-margin text-light-dark">
-                                                                                    {{author.post}}</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Data -->
-                                                                </ngx-slick-carousel>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="information">
-                                                                <h4 class="text-custom-black">About {{item.title}}</h4>
-                                                                <div class="htmltext" [innerHtml]="item.overview.text"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                        </li>
-                                    </ul>
-                                    <div [ngbNavOutlet]="nav"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section
+  class="section-padding bg-light-white listing-details"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="listing-details-inner bx-wrapper bg-custom-white padding-20"
+        >
+          <div class="row">
+            <div class="col-lg-12">
+              <ngx-slick-carousel
+                [config]="settings"
+                class="detail-slider-for mb-xl-20 magnific-gallery"
+              >
+                <!-- Data -->
+                <div
+                  ngxSlickItem
+                  class="slide-item"
+                  *ngFor="let image of roomTypeDetail.imgResponseList"
+                >
+                  <a href="data:image/jpeg;base64,{{image.imgEncodeString}}" class="popup">
+                    <img src="data:image/jpeg;base64,{{image.imgEncodeString}}" class="image-fit" alt="" />
+                  </a>
                 </div>
+                <!-- Data -->
+              </ngx-slick-carousel>
+              <ngx-slick-carousel
+                [config]="settingsThumb"
+                class="detail-slider-nav row"
+              >
+                <!-- Data -->
+                <div
+                  ngxSlickItem
+                  class="slide-item col-12"
+                  *ngFor="let image of roomTypeDetail.imgResponseList"
+                >
+                  <img src="data:image/jpeg;base64,{{image.imgEncodeString}}" class="image-fit" alt="" />
+                </div>
+                <!-- Data -->
+              </ngx-slick-carousel>
+              <hr />
+              <div class="listing-meta-sec mb-md-80">
+                <div class="tabs">
+                  <ul
+                    ngbNav
+                    #nav="ngbNav"
+                    class="custom-flex nav nav-tabs mb-xl-20"
+                  >
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>Overview</a>
+                      <ng-template ngbNavContent>
+                        <div class="tab-inner">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="information">
+                                <h4 class="text-custom-black">
+                                  About {{ roomTypeDetail.typeName }}
+                                </h4>
+                                <div
+                                  class="htmltext"
+                                  [innerHtml]=""
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </li>
+                  </ul>
+                  <div [ngbNavOutlet]="nav"></div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>

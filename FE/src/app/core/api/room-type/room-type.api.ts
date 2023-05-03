@@ -13,7 +13,7 @@ export class RoomTypeApi {
 
   search(): Observable<any> {
     // let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
-    return this.http.get(this.apiController + '/roomtypes');
+    return this.http.get(this.apiController + '/all');
   }
 
   save(data: roomType): Observable<any> {
@@ -25,7 +25,7 @@ export class RoomTypeApi {
   }
 
   getById(id: number): Observable<any> {
-    return this.http.get(`${this.apiController}` + "/room-type/" + id);
+    return this.http.get(`${this.apiController}` + "/" + id);
   }
 
   deleteById(id: number): Observable<any> {

@@ -27,22 +27,25 @@
                   formControlName="name"
                   class="form-control form-control-custom"
                   placeholder="Name"
+                  [ngClass]="
+                    name.invalid && (name.dirty || name.touched) ? 'error' : ''
+                  "
                   required
                 />
-              </div>
-              <ng-container
-                *ngIf="name.invalid && (name.dirty || name.touched)"
-                class="d-flex flex-column"
-              >
-                <ng-container *ngIf="name.errors?.['required']">
-                  <div
-                    class="mt-2 ml-1"
-                    style="color: red; margin-bottom: -10px"
-                  >
-                    Name is required
-                  </div>
+                <ng-container
+                  *ngIf="name.invalid && (name.dirty || name.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="name.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Name is required
+                    </div>
+                  </ng-container>
                 </ng-container>
-              </ng-container>
+              </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
@@ -50,9 +53,35 @@
                   type="email"
                   formControlName="email"
                   class="form-control form-control-custom"
-                  placeholder="Email I'd"
-                  required=""
+                  placeholder="example@gmail.com"
+                  [ngClass]="
+                    email.invalid && (email.dirty || email.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
                 />
+                <ng-container
+                  *ngIf="email.invalid && (email.dirty || email.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="email.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Email is required
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="email.errors?.['email']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Email is invalid
+                    </div>
+                  </ng-container>
+                </ng-container>
               </div>
             </div>
             <div class="col-md-6">
@@ -62,8 +91,26 @@
                   formControlName="subject"
                   class="form-control form-control-custom"
                   placeholder="Subject"
-                  required=""
+                  [ngClass]="
+                    subject.invalid && (subject.dirty || subject.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
                 />
+                <ng-container
+                  *ngIf="subject.invalid && (subject.dirty || subject.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="subject.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Subject is required
+                    </div>
+                  </ng-container>
+                </ng-container>
               </div>
             </div>
             <div class="col-md-6">
@@ -73,8 +120,26 @@
                   formControlName="phone"
                   class="form-control form-control-custom"
                   placeholder="Phone No."
-                  required=""
+                  [ngClass]="
+                    phone.invalid && (phone.dirty || phone.touched)
+                      ? 'error'
+                      : ''
+                  "
+                  required
                 />
+                <ng-container
+                  *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                  class="d-flex flex-column"
+                >
+                  <ng-container *ngIf="phone.errors?.['required']">
+                    <div
+                      class="mt-1 ml-1"
+                      style="color: red; margin-bottom: -10px"
+                    >
+                      Phone is required
+                    </div>
+                  </ng-container>
+                </ng-container>
               </div>
             </div>
             <div class="col-md-12">
@@ -84,7 +149,6 @@
                   rows="5"
                   class="form-control form-control-custom"
                   placeholder="Message"
-                  required=""
                 ></textarea>
               </div>
               <button
@@ -92,6 +156,7 @@
                 class="btn-first btn-submit"
                 style="cursor: pointer"
                 [disabled]="!contactForm.valid"
+                [ngClass]="!contactForm.valid ? 'disabled' : ''"
                 (click)="submit()"
               >
                 Submit
