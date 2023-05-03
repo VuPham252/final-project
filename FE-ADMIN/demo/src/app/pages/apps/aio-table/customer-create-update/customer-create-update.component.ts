@@ -140,6 +140,12 @@ export class CustomerCreateUpdateComponent implements OnInit {
     }
   }
 
+  deleteImg(index: number) {
+    let img = this.imgResponseList.value[index];
+    this.imgResponseList.removeAt(index);
+    this.deleteImgCodeList.push(this.fb.control(img.fileCode));
+  }
+
   save() {
     this.submitted = true;
     if (this.mode === 'create') {
@@ -168,8 +174,10 @@ export class CustomerCreateUpdateComponent implements OnInit {
   }
 
   updateCustomer() {
+    debugger
     const customer = this.form.value;
     customer.id = this.defaults.id;
+    delete customer.imgResponseList;
     this.submitted = true;
     if (this.form.invalid)
       return;

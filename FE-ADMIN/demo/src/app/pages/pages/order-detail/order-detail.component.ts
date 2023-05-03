@@ -4,23 +4,18 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
-import { Room } from 'src/app/core/model/room';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { roomType } from 'src/app/core/model/room-type';
 import { Booking } from 'src/app/core/model/booking';
-import { RoomData } from 'src/app/core/api/room/room-data';
-import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
-import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
 import { Order } from 'src/app/core/model/order';
 import { OrderData } from 'src/app/core/api/order/order-data';
 
 @Component({
   selector: 'vex-order-booking',
-  templateUrl: './order-booking.component.html',
-  styleUrls: ['./order-booking.component.scss']
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.scss']
 })
-export class OrderBookingComponent implements OnInit {
+export class OrderDetailComponent implements OnInit {
   rows: Order[] = [];
   searchForm: any;
   isLoading = false;
@@ -53,12 +48,7 @@ export class OrderBookingComponent implements OnInit {
     })
     this.dataSource = new MatTableDataSource();
     this.orderData.search().subscribe((x: Array<Order>) => this.listOrder = x || []);
-
-    this.reloadTable();
-  }
-
-  redirectDetail(item: any) {
-    this.router.navigate(['/pages/order-detail', item.id]);
+    // this.reloadTable();
   }
 
   submitSearch() {
@@ -71,29 +61,8 @@ export class OrderBookingComponent implements OnInit {
     // this.searchObject.pageSize = event.pageSize;
     this.reloadTable();
   }
-  create() {
-    const dialogConfig = new MatDialogConfig();
-
-    // // Set the size of the dialog
-     dialogConfig.width = '900px';
-    // dialogConfig.height = '356px';
-    this.dialog.open(OrderBookingCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
-      this.reloadTable();
-    });
-  }
   reloadTable() {
     this.isLoading = true;
-    this.orderData.search().subscribe({
-      next: (res) => {
-        this.dataSource.data = res;
-        console.log(res);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.log(err);
-        this.isLoading = false;
-      }
-    })
     // this.roomData.search()
     //   .subscribe({
     //     next: (response) => {

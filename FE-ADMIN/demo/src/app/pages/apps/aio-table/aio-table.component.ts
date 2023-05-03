@@ -131,7 +131,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   updateCustomer(customer: roomType) {
     // debugger
     this.dialog.open(CustomerCreateUpdateComponent, {
-      data: customer
+      data: customer,
     }).afterClosed().subscribe(updatedCustomer => {
       /**
        * Customer is the updated customer (if the user pressed Save - otherwise it's null)

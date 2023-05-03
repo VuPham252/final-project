@@ -86,8 +86,9 @@
                 appendTo="body"
                 bindValue="id"
                 notFoundText="Không tìm thấy dữ liệu"
-                (selectionChange)="onChangeAva(idx)"
+                (change)="onChangeAva(idx)"
               >
+                <option value="" hidden="true"></option>
                 <ng-container *ngFor="let room of listRoomType; let i = index">
                   <option
                     [value]="room.id"

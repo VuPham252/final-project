@@ -133,6 +133,7 @@ export class OrderBookingCreateUpdateComponent implements OnInit {
     let checkout = this.element.nativeElement.querySelectorAll(".checkOut");
     let roomtype =
       this.element.nativeElement.querySelectorAll("select.roomType");
+    debugger
     this.listRoomType.forEach((element) => {
       if (element.formId == index) {
         element.used = false;

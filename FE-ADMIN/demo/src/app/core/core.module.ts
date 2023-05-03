@@ -25,8 +25,11 @@ import { UploadService } from './api/upload/upload.service';
 import { BookingData } from './api/booking/booking-data';
 import { BookingService } from './api/booking/booking.service';
 import { BookingApi } from './api/booking/booking.api';
+import { OrderApi } from './api/order/order.api';
+import { OrderData } from './api/order/order-data';
+import { OrderService } from './api/order/order.service';
 
-const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
@@ -36,6 +39,7 @@ const SERVICES = [
   { provide: ContactData, useClass: ContactService },
   { provide: UploadData, useClass: UploadService },
   { provide: BookingData, useClass: BookingService },
+  { provide: OrderData, useClass: OrderService },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,

@@ -3,8 +3,8 @@
   <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center" >
     <div [class.px-gutter]="'fullwidth'" class="w-full flex flex-col sm:flex-row justify-between">
       <div >
-        <h1 class="title mt-0 mb-1">Order Booking</h1>
-        <vex-breadcrumbs [crumbs]="['Order Booking']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Order Detail</h1>
+        <vex-breadcrumbs [crumbs]="['Order Detail']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
@@ -13,7 +13,7 @@
     <div class="card overflow-auto -mt-16">
       <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
         <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
-          <span>Order Booking</span>
+          <span>Order Detail</span>
         </h2>
 
         <form [formGroup]="searchForm" (ngSubmit)="submitSearch()"
@@ -29,30 +29,31 @@
           matTooltip="Filter Columns" type="button">
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
         </button> -->
-        <button (click)="create()" class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Room"
+        <button class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Room"
           type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
-      <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
       <table [dataSource]="dataSource" class="w-full" mat-table matSort>
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header>ACTION</th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-            <button (click)="redirectDetail(row)" mat-icon-button type="button">
-              <mat-icon svgIcon="mat:remove_red_eye"></mat-icon>
+            <button  mat-icon-button type="button">
+              <mat-icon svgIcon="mat:edit"></mat-icon>
             </button>
-            <!-- <button mat-icon-button type="button">
+            <button mat-icon-button type="button">
               <mat-icon svgIcon="mat:delete"></mat-icon>
-            </button> -->
+            </button>
           </td>
         </ng-container>
-        <!-- <ng-container matColumnDef="roomTypeId">
-          <th mat-header-cell *matHeaderCellDef> Order Booking </th>
+        <ng-container matColumnDef="roomTypeId">
+          <th mat-header-cell *matHeaderCellDef> Order Detail </th>
           <td mat-cell *matCellDef="let element">
             <ng-container *ngFor="let item of listOrder">
               <ng-container *ngIf="element.roomTypeId === item.id">
+                <!-- Render the HTML with id property based on the element's gender value -->
                 <ng-template #genderTemplate>
                   <span>{{item.customerName}}</span>
                 </ng-template>
@@ -60,10 +61,10 @@
               </ng-container>
             </ng-container>
           </td>
-        </ng-container> -->
+        </ng-container>
         <ng-container *ngFor="let column of columns">
 
-          <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property != 'actions' && column.property !='roomTypeId'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
           </ng-container>
