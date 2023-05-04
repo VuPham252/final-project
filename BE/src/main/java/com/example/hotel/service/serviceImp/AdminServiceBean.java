@@ -131,6 +131,22 @@ public class AdminServiceBean implements AdminService {
         return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
     }
 
+    public ResponseEntity<SuccessResponseObj> cancelBooking(CheckOutRequest checkOutRequest) throws BookingBusinessException {
+        Booking currentBooking = bookingRepository.findById(checkOutRequest.getOrderId())
+                .orElseThrow(() -> new BookingBusinessException("There is no booking with id: " + checkOutRequest.getOrderId()));
+
+        if(currentBooking.getStatus().equals(BookingStatus.CHECKED_OUT)) {
+            throw new BookingBusinessException("This booking is already canceled!");
+        }
+
+        currentBooking.setStatus(BookingStatus.CANCELED);
+        bookingRepository.save(currentBooking);
+
+        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Cancel Successfully").build();
+        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+    }
 
     //CRUD roomtype
 

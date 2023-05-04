@@ -50,6 +50,11 @@ public class AdminController {
     }
 
     @PostMapping("/check-out")
+    public ResponseEntity<SuccessResponseObj> cancel(@RequestBody CheckOutRequest checkOutRequest) throws BookingBusinessException {
+        return adminService.cancelBooking(checkOutRequest);
+    }
+
+    @PostMapping("/booking/cancel")
     public ResponseEntity<SuccessResponseObj> checkOut(@RequestBody CheckOutRequest checkOutRequest) throws BookingBusinessException {
         return adminService.checkOut(checkOutRequest);
     }
