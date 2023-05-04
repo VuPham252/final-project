@@ -29,6 +29,10 @@
           matTooltip="Filter Columns" type="button">
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
         </button> -->
+        <button (click)="create()" class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Room"
+          type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
       </div>
       <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
       <table [dataSource]="dataSource" class="w-full" mat-table matSort>

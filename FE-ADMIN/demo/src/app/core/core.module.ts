@@ -28,13 +28,17 @@ import { BookingApi } from './api/booking/booking.api';
 import { OrderApi } from './api/order/order.api';
 import { OrderData } from './api/order/order-data';
 import { OrderService } from './api/order/order.service';
+import { BlogApi } from './api/blog/blog.api';
+import { BlogData } from './api/blog/blog-data';
+import { BlogService } from './api/blog/blog.service';
 
-const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi, BlogApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RoomData, useClass: RoomService },
   { provide: RegisterData, useClass: RegisterService },
+  { provide: BlogData, useClass: BlogService },
   { provide: LoginData, useClass: LoginService },
   { provide: ContactData, useClass: ContactService },
   { provide: UploadData, useClass: UploadService },

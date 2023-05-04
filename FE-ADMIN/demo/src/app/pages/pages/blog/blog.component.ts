@@ -7,6 +7,8 @@ import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-d
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/core/model/blog';
 import { FormBuilder } from '@angular/forms';
+import { BlogData } from 'src/app/core/api/blog/blog-data';
+import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
 
 @Component({
   selector: 'vex-blog',
@@ -16,17 +18,14 @@ import { FormBuilder } from '@angular/forms';
 export class BlogComponent implements OnInit {
   // rows: Blog[] = [];
   rows: Blog[] = [
-    {id : 1, title : "Test", image : " ", description: "test", shortDescription: "test", author: "test"},
-    {id : 2, title : "Test 2", image : " ", description: "test 2", shortDescription: "test 2", author: "test 2"},
-    {id : 3, title : "Test 3", image : " ", description: "test 3", shortDescription: "test 3", author: "test 3 "},
-
     ];
   searchForm: any;
   isLoading = false;
   constructor(
      private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,) { }
+    private router: Router,
+    private blogData: BlogData) { }
 
     dataSource: MatTableDataSource<Blog> = new MatTableDataSource();
 
@@ -52,7 +51,7 @@ export class BlogComponent implements OnInit {
     this.dataSource = new MatTableDataSource();
 
     this.dataSource.data = this.rows;
-    // this.reloadTable();
+    this.reloadTable();
   }
   submitSearch() {
     // this.searchObject.keyword = this.searchForm.value.keyword;
@@ -66,25 +65,36 @@ export class BlogComponent implements OnInit {
   }
 
   reloadTable() {
-    // debugger
+    debugger
     this.isLoading = true;
     console.log(this.rows);
     this.dataSource.data = this.rows;
-    // this.roomData.search()
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.dataSource.data = response;
-    //       console.log(response);
-    //       // this.paginator.pageIndex = this.searchObject.pageIndex;
-    //       // this.paginator.pageSize = this.searchObject.pageSize;
-    //       // this.paginator.length = response.totalElements;
-    //       this.isLoading = false;
-    //     },
-    //     error: (error) => {
-    //       console.log(error);
-    //       this.isLoading = false;
-    //     }
-    //   })
+    this.blogData.search()
+      .subscribe({
+        next: (response) => {
+          this.dataSource.data = response;
+          console.log(response);
+          // this.paginator.pageIndex = this.searchObject.pageIndex;
+          // this.paginator.pageSize = this.searchObject.pageSize;
+          // this.paginator.length = response.totalElements;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
+      })
+  }
+
+  create() {
+    const dialogConfig = new MatDialogConfig();
+
+    // // Set the size of the dialog
+     dialogConfig.width = '900px';
+    // dialogConfig.height = '356px';
+    this.dialog.open(BlogCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });
   }
 
   get visibleColumns() {
