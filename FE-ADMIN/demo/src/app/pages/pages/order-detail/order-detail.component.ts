@@ -39,7 +39,6 @@ export class OrderDetailComponent implements OnInit {
   @Input()
   columns: TableColumn<OrderDetail>[] = [
     { label: 'Id', property: 'id', type: 'text', visible: false },
-    { label: 'Amount', property: 'amount', type: 'text', visible: true },
     { label: 'Check In', property: 'checkInDate', type: 'text', visible: true, },
     { label: 'Check Out', property: 'checkOutDate', type: 'text', visible: true },
     { label: 'Status', property: 'status', type: 'text', visible: true },
