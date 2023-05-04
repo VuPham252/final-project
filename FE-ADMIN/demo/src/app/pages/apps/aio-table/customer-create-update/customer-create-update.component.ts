@@ -174,7 +174,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
   }
 
   updateCustomer() {
-    debugger
+    // debugger
     const customer = this.form.value;
     customer.id = this.defaults.id;
     delete customer.imgResponseList;
