@@ -77,11 +77,39 @@ export class OrderDetailComponent implements OnInit {
         onYesClick: () => { this.checkOutData.checkOut(item).subscribe({
           next: (res) => {
             console.log(res);
-            this.a.success("Delete success");
+            this.a.success("Check Out success");
             this.dialog.closeAll();
           },
           error: (err) => {
             console.log(err);
+            this.a.success("Check Out failed");
+            this.dialog.closeAll();
+          }
+        }) }
+      }
+    }).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });;
+  }
+
+  Cancel(id: number) {
+    let item: CheckOut = { orderId: id }
+    this.dialog.open(ConfirmDialogComponent, {
+      disableClose: false,
+      width: '400px',
+      data: {
+        title: "Cancel",
+        text: "Are you sure want to cancel order?",
+        onYesClick: () => { this.checkOutData.Cancel(item).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.a.success("Cancel success");
+            this.dialog.closeAll();
+          },
+          error: (err) => {
+            console.log(err);
+            this.a.success("Cancel failed");
+            this.dialog.closeAll();
           }
         }) }
       }

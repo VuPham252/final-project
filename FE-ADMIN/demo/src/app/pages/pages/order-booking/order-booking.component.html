@@ -65,7 +65,7 @@
 
           <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ column.property === 'createdTime' ? (row[column.property] | date : "MM-dd-yyyy") : row[column.property] }}</td>
           </ng-container>
         </ng-container>
 

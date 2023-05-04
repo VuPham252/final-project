@@ -13,4 +13,8 @@ export class CheckOutService implements CheckOutData {
     return this.api.checkOut(data);
   }
 
+  Cancel(data: CheckOut): Observable<any> {
+    return this.api.Cancel(data);
+  }
+
 }
