@@ -17,7 +17,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             " or " +
             "check_in_date <= :inputCheckoutDate and check_out_date >= :inputCheckoutDate) " +
             " and " +
-            "room_type_id = :roomTypeId",
+            "room_type_id = :roomTypeId and status NOT IN ('CHECKED_OUT', 'CANCELED')",
             nativeQuery = true)
     List<Booking> getListBookingByDate(@Param("inputCheckinDate") LocalDate inputCheckinDate,
                                               @Param("inputCheckoutDate") LocalDate inputCheckoutDate,
