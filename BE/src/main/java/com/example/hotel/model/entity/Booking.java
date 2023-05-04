@@ -33,8 +33,6 @@ public class Booking {
 
     private Long roomId;
 
-    private Long amount;
-
     @CreationTimestamp
     private LocalDateTime createdTime;
 
