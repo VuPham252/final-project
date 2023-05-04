@@ -21,6 +21,8 @@ public interface AdminService {
 
     ResponseEntity<SuccessResponseObj> checkOut(CheckOutRequest checkOutRequest) throws BookingBusinessException;
 
+    ResponseEntity<SuccessResponseObj> cancelBooking(CheckOutRequest checkOutRequest) throws BookingBusinessException;
+
 
     //CRUD RoomType
     ResponseEntity<SuccessResponseObj> saveRoomType(RoomTypeRequest roomTypeRequest) throws SystemErrorException;

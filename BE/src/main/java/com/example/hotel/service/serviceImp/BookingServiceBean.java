@@ -117,14 +117,16 @@ public class BookingServiceBean implements BookingService {
         OrderBooking createdOrderBooking = orderBookingRepository.save(orderBooking);
 
         for (BookingRequest bookingRequest : orderRequest.getBookingRequestList()) {
-            Booking booking = Booking.builder()
-                    .orderId(createdOrderBooking.getId())
-                    .checkInDate(bookingRequest.getInputCheckinDate())
-                    .checkOutDate(bookingRequest.getInputCheckoutDate())
-                    .roomTypeId(bookingRequest.getRoomTypeId())
-                    .amount(bookingRequest.getAmount())
-                    .status(BookingStatus.ORDERED).build();
-            bookingRepository.save(booking);
+            Long bookingAmount = bookingRequest.getAmount();
+            for(int i = 0; i < bookingAmount; i++) {
+                Booking booking = Booking.builder()
+                        .orderId(createdOrderBooking.getId())
+                        .checkInDate(bookingRequest.getInputCheckinDate())
+                        .checkOutDate(bookingRequest.getInputCheckoutDate())
+                        .roomTypeId(bookingRequest.getRoomTypeId())
+                        .status(BookingStatus.ORDERED).build();
+                bookingRepository.save(booking);
+            }
         }
 
         SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
