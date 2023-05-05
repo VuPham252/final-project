@@ -379,7 +379,10 @@ public class AdminServiceBean implements AdminService {
     @Transactional
     public ResponseEntity<SuccessResponseObj> updateBlog(BlogRequest updateRequest, Long id) throws BookingBusinessException, IOException {
         Blog existBlog = blogRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: Blog not found."));
-        String existedImgCode = existBlog.getImage().getFileCode();
+        String existedImgCode = "";
+        if(existBlog.getImage() != null) {
+            existedImgCode = existBlog.getImage().getFileCode();
+        }
         existBlog.setTitle(updateRequest.getTitle());
         existBlog.setDescription(updateRequest.getDescription());
         existBlog.setShortDescription(updateRequest.getShortDescription());
