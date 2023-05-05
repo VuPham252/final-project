@@ -152,7 +152,11 @@ public class AdminServiceBean implements AdminService {
 
     @Transactional(rollbackFor = SystemErrorException.class)
     public ResponseEntity<SuccessResponseObj> saveRoomType(@RequestBody RoomTypeRequest roomTypeRequest) throws SystemErrorException {
-        RoomType roomType = RoomType.builder().typeName(roomTypeRequest.getTypeName()).price(roomTypeRequest.getPrice()).build();
+        RoomType roomType = RoomType.builder()
+                .typeName(roomTypeRequest.getTypeName())
+                .price(roomTypeRequest.getPrice())
+                .description(roomTypeRequest.getDescription())
+                .shortDescription(roomTypeRequest.getShortDescription()).build();
         try{
             RoomType savedRoomType = roomTypeRepository.save(roomType);
             saveImage(roomTypeRequest.getImgCodeList(), savedRoomType);
@@ -215,6 +219,8 @@ public class AdminServiceBean implements AdminService {
         List<String> existedImgCodeList = existRoomType.getImageList().stream().map(Image::getFileCode).collect(Collectors.toList());
         existRoomType.setTypeName(roomTypeRequest.getTypeName());
         existRoomType.setPrice(roomTypeRequest.getPrice());
+        existRoomType.setDescription(roomTypeRequest.getDescription());
+        existRoomType.setShortDescription(roomTypeRequest.getShortDescription());
         roomTypeRepository.save(existRoomType);
 
         if(!Objects.isNull(roomTypeRequest.getImgCodeList())){
@@ -419,13 +425,15 @@ public class AdminServiceBean implements AdminService {
         BlogResponse blogResponse = new BlogResponse();
         BeanUtils.copyProperties(blog, blogResponse);
         ImgResponse imgResponse = new ImgResponse();
-        List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
-        List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
-        if(imgEncodeStringList.size() != 0) {
-            imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
-        }
-        if(imgFileCodeStringList.size() != 0){
-            imgResponse.setFileCode(imgFileCodeStringList.get(0));
+        if(null != blog.getImage()) {
+            List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
+            List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
+            if(imgEncodeStringList.size() != 0) {
+                imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
+            }
+            if(imgFileCodeStringList.size() != 0){
+                imgResponse.setFileCode(imgFileCodeStringList.get(0));
+            }
         }
         blogResponse.setImgResponse(imgResponse);
         return blogResponse;
