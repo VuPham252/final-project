@@ -141,6 +141,9 @@ export class BlogCreateUpdateComponent implements OnInit {
       formData.append("file", item[i]);
     }
     if(item.length > 0) {
+      debugger
+      let a = this.imgResponse.value[0].fileCode;
+      this.deleteImgCodeList.push(this.fb.control(a));
       this.uploadData.save(formData).subscribe({
         next: (res) => {
           this.uploadState = true;
@@ -156,11 +159,11 @@ export class BlogCreateUpdateComponent implements OnInit {
     }
   }
 
-  deleteImg(index: number) {
-    let img = this.imgResponse.value[index];
-    this.imgResponse.removeAt(index);
-    this.deleteImgCodeList.push(this.fb.control(img.fileCode));
-  }
+  // deleteImg(index: number) {
+  //   let img = this.imgResponse.value[index];
+  //   this.imgResponse.removeAt(index);
+  //   this.deleteImgCodeList.push(this.fb.control(img.fileCode));
+  // }
 
   onNoClick() {
     this.dialog.closeAll();

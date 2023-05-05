@@ -1,4 +1,4 @@
-<section
+<section *ngIf="roomTypeDetail"
   class="section-padding bg-light-white listing-details"
 >
   <div class="container">
@@ -20,7 +20,7 @@
                   *ngFor="let image of roomTypeDetail.imgResponseList"
                 >
                   <a href="data:image/jpeg;base64,{{image.imgEncodeString}}" class="popup">
-                    <img src="data:image/jpeg;base64,{{image.imgEncodeString}}" class="image-fit" alt="" />
+                    <img src="data:image/jpeg;base64,{{image.imgEncodeString}}" class="image-fit" [alt]="image.typeName" />
                   </a>
                 </div>
                 <!-- Data -->

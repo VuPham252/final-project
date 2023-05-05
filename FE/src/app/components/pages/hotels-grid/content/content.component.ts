@@ -8,6 +8,7 @@ import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
+
 export class ContentComponent implements OnInit {
 
   public roomTypeList: any[] = [];

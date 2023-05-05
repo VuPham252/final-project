@@ -29,7 +29,7 @@
           matTooltip="Filter Columns" type="button">
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
         </button> -->
-        <button (click)="create()" class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Room"
+        <button (click)="create()" class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Blog"
           type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
@@ -40,6 +40,9 @@
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header>ACTION</th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+            <button (click)="view(row)" mat-icon-button type="button">
+              <mat-icon svgIcon="mat:remove_red_eye"></mat-icon>
+            </button>
             <button (click)="update(row)" mat-icon-button type="button">
               <mat-icon svgIcon="mat:edit"></mat-icon>
             </button>

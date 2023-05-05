@@ -1,10 +1,12 @@
 <section class="section-padding bg-light-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="listing-top-heading mb-xl-20">
-                    <h6 class="no-margin text-custom-black">Showing {{roomTypeList.length}} Results</h6>
-                    <!-- <div class="sort-by">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="listing-top-heading mb-xl-20">
+          <h6 class="no-margin text-custom-black">
+            Showing {{ roomTypeList.length }} Results
+          </h6>
+          <!-- <div class="sort-by">
                         <span class="text-custom-black fs-14 fw-600">Sort by</span>
                         <div class="group-form">
                             <select class="form-control form-control-custom custom-select" nice-select>
@@ -13,40 +15,67 @@
                             </select>
                         </div>
                     </div> -->
-                </div>
-            </div>
-            <!-- Data -->
-            <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let item of roomTypeList | paginate: { itemsPerPage: 8, currentPage: 1 }">
-                <div class="hotel-grid mb-xl-30">
-                    <div class="hotel-grid-wrapper bx-wrapper">
-                        <div class="image-sec animate-img">
-                            <a [routerLink]="['/hotel-details', item.id]">
-                                <img src="assets/images/hotels/1.jpg" class="full-width" [alt]="item.typeName">
-                            </a>
-                        </div>
-                        <div class="hotel-grid-caption padding-20 bg-custom-white p-relative">
-                            <h4 class="title fs-16"><a [routerLink]="['/hotel-details', item.id]"
-                                    class="text-custom-black">{{item.typeName}}<small
-                                        class="text-light-dark">{{item.typeName}}</small></a></h4>
-                            <span class="price"><small>avg/night</small>${{item.price | number:'1.0-0'}}</span>
-                            <div class="action">
-                                <a [routerLink]="['/hotel-details', item.id]" class="btn-second btn-small">View</a>
-                                <a routerLink="/booking" class="btn-first btn-submit">Book</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Data -->
         </div>
-        <div class="row">
-            <div class="col-12">
-                <nav class="pagination_layout section-padding-top">
-                    <ul class="pagination justify-content-center">
-                        <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
-                    </ul>
-                </nav>
+      </div>
+      <!-- Data -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        *ngFor="
+          let item of roomTypeList
+            | paginate : { itemsPerPage: 8, currentPage: 1 }
+        "
+      >
+        <div class="hotel-grid mb-xl-30">
+          <div class="hotel-grid-wrapper bx-wrapper">
+            <div class="image-sec animate-img">
+              <a [routerLink]="['/hotel-details', item.id]">
+                <img
+                  [src]='!item.imgResponseList[0] ? "assets/images/hotels/2.jpg" : "data:image/jpeg;base64," + item.imgResponseList[0].imgEncodeString | safeHtml'
+                  class="full-width"
+                  alt="assets/images/hotels/1.jpg"
+                />
+              </a>
             </div>
+            <div
+              class="hotel-grid-caption padding-20 bg-custom-white p-relative"
+            >
+              <h4 class="title fs-16">
+                <a
+                  [routerLink]="['/hotel-details', item.id]"
+                  class="text-custom-black"
+                  >{{ item.typeName
+                  }}<small class="text-light-dark">{{
+                    item.typeName
+                  }}</small></a
+                >
+              </h4>
+              <span class="price"
+                ><small>avg/night</small>${{
+                  item.price | number : "1.0-0"
+                }}</span
+              >
+              <div class="action">
+                <a
+                  [routerLink]="['/hotel-details', item.id]"
+                  class="btn-second btn-small"
+                  >View</a
+                >
+                <a routerLink="/booking" class="btn-first btn-submit">Book</a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- Data -->
     </div>
+    <div class="row">
+      <div class="col-12">
+        <nav class="pagination_layout section-padding-top">
+          <ul class="pagination justify-content-center">
+            <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 </section>
