@@ -14,6 +14,10 @@ public class RoomTypeRequest {
     @NotNull
     private BigDecimal price;
 
+    private String shortDescription;
+
+    private String description;
+
     private List<String> imgCodeList;
 
     private List<String> deleteImgCodeList;
