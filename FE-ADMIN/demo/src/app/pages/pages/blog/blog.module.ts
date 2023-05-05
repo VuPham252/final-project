@@ -22,6 +22,9 @@ import { BlogComponent } from './blog.component';
 import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
 import { BlogCreateUpdateModule } from './blog-create-update/blog-create-update.module';
 // import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
+import { QuillModule } from 'ngx-quill';
+import 'quill-mention';
+import 'quill-emoji';
 
 const routes: VexRoutes = [
   {

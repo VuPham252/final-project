@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import {
   FormArray,
   FormGroup,
@@ -12,11 +12,15 @@ import { BlogData } from "src/app/core/api/blog/blog-data";
 import { Blog } from "src/app/core/model/blog";
 import { AlertService } from "src/app/_services/alert.service";
 import { UploadData } from "src/app/core/api/upload/upload-data";
-
 @Component({
   selector: "vex-blog-create-update",
   templateUrl: "./blog-create-update.component.html",
-  styleUrls: ["./blog-create-update.component.scss"],
+  styleUrls: [
+    "./blog-create-update.component.scss",
+    "../../../../../../node_modules/quill/dist/quill.snow.css",
+    "../../../../../@vex/styles/partials/plugins/quill/_quill.scss"
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BlogCreateUpdateComponent implements OnInit {
   id!: number;
@@ -29,6 +33,8 @@ export class BlogCreateUpdateComponent implements OnInit {
   uploadState: boolean = true;
   @Input() isView: string;
 
+
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
     private fb: UntypedFormBuilder,
@@ -36,7 +42,22 @@ export class BlogCreateUpdateComponent implements OnInit {
     private dialog: MatDialog,
     private blogData: BlogData,
     private uploadData: UploadData
-  ) {}
+  ) {
+
+  }
+  htmlText ="<p>Testing</p>"
+  hasFocus = false;
+  subject: string;
+
+  atValues = [
+    { id: 1, value: 'Fredrik Sundqvist', link: 'https://google.com' },
+    { id: 2, value: 'Patrik Sjölin' }
+  ];
+  hashValues = [
+    { id: 3, value: 'Fredrik Sundqvist 2' },
+    { id: 4, value: 'Patrik Sjölin 2' }
+  ]
+
 
   ngOnInit(): void {
     console.log(this.defaults);

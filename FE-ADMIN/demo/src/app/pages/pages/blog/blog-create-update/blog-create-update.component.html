@@ -29,16 +29,14 @@
         <mat-error *ngIf="submitted && f.shortDescription.hasError('required')">Short description is required</mat-error>
       </mat-form-field>
     </div>
+    <mat-label>Description</mat-label>
     <div class="flex flex-col sm:flex-row">
-      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto" color="primary">
-        <mat-label>Description</mat-label>
-        <textarea [readonly]="isView == 'view'" [ngClass]="isView == 'view' ? 'ban':''" formControlName="description"
-          matInput></textarea>
-        <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
-      </mat-form-field>
+
+      <quill-editor [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
+      <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
     </div>
 
-    <div class="flex flex-col sm:flex-row" style="max-width: 600px">
+    <div class="flex flex-col sm:flex-row" style="max-width: 600px; margin-top:25px">
       <div class="mt-3 ml-5 flex-auto">
         <input
           *ngIf="isView != 'view'"
