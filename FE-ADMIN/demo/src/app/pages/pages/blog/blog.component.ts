@@ -9,6 +9,7 @@ import { Blog } from 'src/app/core/model/blog';
 import { FormBuilder } from '@angular/forms';
 import { BlogData } from 'src/app/core/api/blog/blog-data';
 import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'vex-blog',
@@ -22,10 +23,11 @@ export class BlogComponent implements OnInit {
   searchForm: any;
   isLoading = false;
   constructor(
-     private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
-    private blogData: BlogData) { }
+    private blogData: BlogData,
+    private a : AlertService) { }
 
     dataSource: MatTableDataSource<Blog> = new MatTableDataSource();
 
@@ -93,6 +95,43 @@ export class BlogComponent implements OnInit {
     this.dialog.open(BlogCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
       this.reloadTable();
     });
+  }
+
+  update(item: any) {
+    this.dialog.open(BlogCreateUpdateComponent, {
+      data: item,
+    }).afterClosed().subscribe(updatedBlog => {
+      if (updatedBlog) {
+        this.reloadTable();
+      }
+    });
+  }
+
+  handleDelete(id: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      disableClose: false,
+      width: '400px',
+      data: {
+        title: "Delete Blog",
+        text: "Are you sure want to remove this Blog? You will not be able to recover this Blog!",
+        onYesClick: () => { this.delete(id) }
+      }
+    });
+  }
+
+  delete(id: number) {
+    this.blogData.deleteById(id)
+      .subscribe({
+        next: () => {
+          this.reloadTable();
+          this.a.success("Delete success");
+          this.dialog.closeAll();
+        },
+        error: (error) => {
+          this.a.error("Delete fail");
+          console.log(error)
+        }
+      })
   }
 
   get visibleColumns() {
