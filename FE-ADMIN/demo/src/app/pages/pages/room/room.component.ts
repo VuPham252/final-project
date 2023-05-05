@@ -13,6 +13,7 @@ import { roomType } from 'src/app/core/model/room-type';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { config } from 'process';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { MatSort } from '@angular/material/sort';
 
 
 @UntilDestroy()
@@ -21,14 +22,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, AfterViewInit {
 
   rows: Room[] = [];
   searchForm: any;
   isLoading = false;
   listRoomType: roomType[] = [];
   searchCtrl = new UntypedFormControl();
-
+  pageSize = 10;
+  pageSizeOptions: number[] = [2, 10, 20, 50];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -38,6 +42,10 @@ export class RoomComponent implements OnInit {
   ) { }
 
   dataSource: MatTableDataSource<Room> = new MatTableDataSource();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   @Input()
   columns: TableColumn<Room>[] = [

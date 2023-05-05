@@ -64,7 +64,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 20, 50];
+  pageSizeOptions: number[] = [2, 10, 20, 50];
   dataSource: MatTableDataSource<roomType> | null;
   selection = new SelectionModel<Customer>(true, []);
   searchCtrl = new UntypedFormControl();

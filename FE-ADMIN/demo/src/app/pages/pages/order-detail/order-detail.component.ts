@@ -13,18 +13,22 @@ import { OrderDetailCreateUpdateComponent } from './order-booking-create-update/
 import { CheckOutData } from 'src/app/core/api/check-out/check-out-data';
 import { CheckOut } from 'src/app/core/model/checkOut';
 import { AlertService } from 'src/app/_services/alert.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'vex-order-booking',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.scss']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit,AfterViewInit {
   rows: OrderDetail[] = [];
   searchForm: any;
   isLoading = false;
   listOrderDetail: OrderDetail[] = [];
-
+  pageSize = 10;
+  pageSizeOptions: number[] = [2, 10, 20, 50];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -35,7 +39,10 @@ export class OrderDetailComponent implements OnInit {
   ) { }
 
   dataSource: MatTableDataSource<OrderDetail> = new MatTableDataSource();
-
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   @Input()
   columns: TableColumn<OrderDetail>[] = [
     { label: 'Id', property: 'id', type: 'text', visible: false },

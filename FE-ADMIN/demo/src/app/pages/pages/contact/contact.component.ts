@@ -9,13 +9,14 @@ import { Blog } from 'src/app/core/model/blog';
 import { FormBuilder } from '@angular/forms';
 import { Contact } from 'src/app/core/model/contact';
 import { ContactData } from 'src/app/core/api/contact/contact-data';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'vex-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit {
   rows: Contact[] = [
     {id : 1, name : "Test", email : " test@gmail.com", subject: "test", phone: "test", message: "test"},
     {id : 2, name : "Test 2", email : " test1@gmail.com", subject: "test 2", phone: "test 2", message: "test 2"},
@@ -24,6 +25,10 @@ export class ContactComponent implements OnInit {
     ];
   searchForm: any;
   isLoading = false;
+  pageSize = 10;
+  pageSizeOptions: number[] = [2, 10, 20, 50];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
      private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -42,7 +47,10 @@ export class ContactComponent implements OnInit {
     { label: 'Message', property: 'message', type: 'text', visible: true, },
     { label: 'Actions', property: 'actions', type: 'text', visible: true },
   ];
-
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit(): void {
     // debugger

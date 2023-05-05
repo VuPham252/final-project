@@ -16,17 +16,20 @@ import { FormBuilder } from "@angular/forms";
 import { BlogData } from "src/app/core/api/blog/blog-data";
 import { BlogCreateUpdateComponent } from "./blog-create-update/blog-create-update.component";
 import { AlertService } from "src/app/_services/alert.service";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: "vex-blog",
   templateUrl: "./blog.component.html",
   styleUrls: ["./blog.component.scss"],
 })
-export class BlogComponent implements OnInit {
+export class BlogComponent implements OnInit,AfterViewInit {
   // rows: Blog[] = [];
   rows: Blog[] = [];
   searchForm: any;
   isLoading = false;
+  pageSize = 10;
+  pageSizeOptions: number[] = [2, 10, 20, 50];
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -36,6 +39,8 @@ export class BlogComponent implements OnInit {
   ) {}
 
   dataSource: MatTableDataSource<Blog> = new MatTableDataSource();
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @Input()
   columns: TableColumn<Blog>[] = [
@@ -68,6 +73,10 @@ export class BlogComponent implements OnInit {
 
     this.dataSource.data = this.rows;
     this.reloadTable();
+  }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   submitSearch() {
     // this.searchObject.keyword = this.searchForm.value.keyword;

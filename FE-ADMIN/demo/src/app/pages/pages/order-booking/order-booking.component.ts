@@ -14,18 +14,22 @@ import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
 import { Order } from 'src/app/core/model/order';
 import { OrderData } from 'src/app/core/api/order/order-data';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'vex-order-booking',
   templateUrl: './order-booking.component.html',
   styleUrls: ['./order-booking.component.scss']
 })
-export class OrderBookingComponent implements OnInit {
+export class OrderBookingComponent implements OnInit,AfterViewInit {
   rows: Order[] = [];
   searchForm: any;
   isLoading = false;
   listOrder: Order[] = [];
-
+  pageSize = 10;
+  pageSizeOptions: number[] = [2, 10, 20, 50];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -44,7 +48,10 @@ export class OrderBookingComponent implements OnInit {
     { label: 'Create Time', property: 'createdTime', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
-
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
       keyword: null,

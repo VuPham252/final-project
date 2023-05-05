@@ -85,9 +85,8 @@
         <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
         <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
       </table>
-      <!-- <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="searchObject.pageSize"
-        [pageIndex]="searchObject.pageIndex" [length]="totalElements" (page)="handlePageEvent($event)"
-        [showFirstLastButtons]="true" class="sticky left-0"></mat-paginator> -->
+      <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" class="sticky left-0"></mat-paginator>
+
     </div>
 
   </vex-page-layout-content>
