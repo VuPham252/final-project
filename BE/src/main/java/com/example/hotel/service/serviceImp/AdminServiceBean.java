@@ -419,13 +419,15 @@ public class AdminServiceBean implements AdminService {
         BlogResponse blogResponse = new BlogResponse();
         BeanUtils.copyProperties(blog, blogResponse);
         ImgResponse imgResponse = new ImgResponse();
-        List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
-        List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
-        if(imgEncodeStringList.size() != 0) {
-            imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
-        }
-        if(imgFileCodeStringList.size() != 0){
-            imgResponse.setFileCode(imgFileCodeStringList.get(0));
+        if(null != blog.getImage()) {
+            List<String> imgEncodeStringList = Utils.createImgEncodeString(Collections.singletonList(blog.getImage()));
+            List<String> imgFileCodeStringList = Utils.getImgFileCode(Collections.singletonList(blog.getImage()));
+            if(imgEncodeStringList.size() != 0) {
+                imgResponse.setImgEncodeString(imgEncodeStringList.get(0));
+            }
+            if(imgFileCodeStringList.size() != 0){
+                imgResponse.setFileCode(imgFileCodeStringList.get(0));
+            }
         }
         blogResponse.setImgResponse(imgResponse);
         return blogResponse;
