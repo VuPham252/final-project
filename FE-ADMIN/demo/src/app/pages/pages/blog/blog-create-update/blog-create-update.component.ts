@@ -52,7 +52,7 @@ export class BlogCreateUpdateComponent implements OnInit {
         imgResponse: this.fb.array([this.defaults.customer.imgResponse]),
         description: [this.defaults.customer.description, []],
       });
-    } else if (this.defaults && this.defaults.isView != 'view') {
+    } else if (this.defaults && this.defaults.isView != "view") {
       this.isCreateMode = false;
       this.form = this.fb.group({
         id: this.defaults.id,
@@ -69,10 +69,10 @@ export class BlogCreateUpdateComponent implements OnInit {
       this.defaults = {} as Blog;
       this.form = this.fb.group({
         id: 0,
-        title: ['', [Validators.required]],
-        shortDescription: ['', []],
-        description: ['', []],
-        author: ['', [Validators.required]],
+        title: ["", [Validators.required]],
+        shortDescription: ["", []],
+        description: ["", []],
+        author: ["", [Validators.required]],
         imgCodeList: this.fb.array([]),
         imgResponse: this.fb.array([]),
         deleteImgCodeList: this.fb.array([]),
@@ -86,7 +86,7 @@ export class BlogCreateUpdateComponent implements OnInit {
     if (this.form.invalid) return;
 
     const blog = this.form.value;
-    debugger
+    // debugger;
     if (this.isCreateMode) {
       this.blogData.save(blog).subscribe({
         next: (response) => {
@@ -122,40 +122,41 @@ export class BlogCreateUpdateComponent implements OnInit {
   }
 
   get imgCodeList() {
-    return this.form.get('imgCodeList') as FormArray;
+    return this.form.get("imgCodeList") as FormArray;
   }
 
   get imgResponse() {
-    return this.form.get('imgResponse') as FormArray;
+    return this.form.get("imgResponse") as FormArray;
   }
 
   get deleteImgCodeList() {
-    return this.form.get('deleteImgCodeList') as FormArray;
+    return this.form.get("deleteImgCodeList") as FormArray;
   }
 
   uploadFile(event: any) {
     this.uploadState = false;
     let item = event.files;
     const formData = new FormData();
-    for(let i = 0; i < item.length; i++) {
+    for (let i = 0; i < item.length; i++) {
       formData.append("file", item[i]);
     }
-    if(item.length > 0) {
-      debugger
-      let a = this.imgResponse.value[0].fileCode;
-      this.deleteImgCodeList.push(this.fb.control(a));
+    if (item.length > 0) {
+      if (this.imgResponse.value.length > 0) {
+        let a = this.imgResponse.value[0].fileCode;
+        this.deleteImgCodeList.push(this.fb.control(a));
+      }
       this.uploadData.save(formData).subscribe({
         next: (res) => {
           this.uploadState = true;
-          for(let i = 0; i < item.length; i++) {
-            const file = this.form.get('imgCodeList') as FormArray;
+          for (let i = 0; i < item.length; i++) {
+            const file = this.form.get("imgCodeList") as FormArray;
             file.push(this.fb.control(res[i].fileCode));
           }
         },
         error: (err) => {
           console.log(err);
-        }
-      })
+        },
+      });
     }
   }
 
