@@ -40,6 +40,30 @@
       </mat-form-field>
     </div>
 
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Short Description</mat-label>
+        <textarea
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="shortDescription"
+          matInput
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Description</mat-label>
+        <textarea
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="description"
+          matInput
+        ></textarea>
+      </mat-form-field>
+    </div>
+
     <div class="flex flex-col sm:flex-row" style="max-width: 600px">
       <div class="mt-3 flex-auto">
         <input
@@ -65,17 +89,26 @@
               width="190px"
               height="190px"
             />
-            <span
+            <button
               style="
                 position: absolute;
                 top: 3px;
-                right: 7px;
+                right: 5px;
                 color: black;
                 z-index: 1000;
                 cursor: pointer;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                border: 1px solid black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
               "
+              *ngIf="isView != 'view'"
               (click)="deleteImg(idx)"
-              >X</span
+              ><mat-icon svgIcon="mat:delete"></mat-icon></button
             >
           </div>
         </div>

@@ -7,12 +7,12 @@ export class Room {
   size: number
 
   constructor() {
-    this.id = null
+    this.id = 0
     this.name = "";
-    this.roomTypeId = null;
+    this.roomTypeId = 0;
     this.description=  "";
-    this.area= null;
-    this.size=  null;
+    this.area = 0;
+    this.size = 0;
   }
 
 }

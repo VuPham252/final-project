@@ -9,21 +9,20 @@ import { HotelsGridRoutingModule } from './hotels-grid-routing.module';
 import { HotelsGridComponent } from './hotels-grid.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from './content/content.component';
+import { ShareModule } from "../../../share/share.module";
 
 @NgModule({
-  declarations: [HotelsGridComponent, ContentComponent],
-  imports: [
-    CommonModule,
-    HotelsGridRoutingModule,
-    SharedModule,
-    NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NiceSelectModule,
-    NgxPaginationModule,
-    // HttpClientModule,
-    // CoreModule.forRoot(),
-  ],
-
+    declarations: [HotelsGridComponent, ContentComponent],
+    imports: [
+        CommonModule,
+        HotelsGridRoutingModule,
+        SharedModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NiceSelectModule,
+        NgxPaginationModule,
+        ShareModule
+    ]
 })
 export class HotelsGridModule {}

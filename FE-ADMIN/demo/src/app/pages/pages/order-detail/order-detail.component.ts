@@ -5,10 +5,14 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Booking } from 'src/app/core/model/booking';
-import { Order } from 'src/app/core/model/order';
+import { OrderDetail } from 'src/app/core/model/order';
 import { OrderData } from 'src/app/core/api/order/order-data';
+import { OrderDetailCreateUpdateComponent } from './order-booking-create-update/order-detail-create-update.component';
+import { CheckOutData } from 'src/app/core/api/check-out/check-out-data';
+import { CheckOut } from 'src/app/core/model/checkOut';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'vex-order-booking',
@@ -16,27 +20,28 @@ import { OrderData } from 'src/app/core/api/order/order-data';
   styleUrls: ['./order-detail.component.scss']
 })
 export class OrderDetailComponent implements OnInit {
-  rows: Order[] = [];
+  rows: OrderDetail[] = [];
   searchForm: any;
   isLoading = false;
-  listOrder: Order[] = [];
+  listOrderDetail: OrderDetail[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,
-    private orderData: OrderData
+    private route: ActivatedRoute,
+    private orderDetailData: OrderData,
+    private checkOutData: CheckOutData,
+    private a : AlertService
   ) { }
 
-  dataSource: MatTableDataSource<Order> = new MatTableDataSource();
+  dataSource: MatTableDataSource<OrderDetail> = new MatTableDataSource();
 
   @Input()
-  columns: TableColumn<Order>[] = [
-    { label: 'Id', property: 'id', type: 'text', visible: true },
-    { label: 'Customer Name', property: 'customerName', type: 'text', visible: true },
-    { label: 'Email', property: 'email', type: 'text', visible: true, },
-    { label: 'Phone Number', property: 'phoneNumber', type: 'text', visible: true },
-    { label: 'Create Time', property: 'createdTime', type: 'text', visible: true },
+  columns: TableColumn<OrderDetail>[] = [
+    { label: 'Id', property: 'id', type: 'text', visible: false },
+    { label: 'Check In', property: 'checkInDate', type: 'text', visible: true, },
+    { label: 'Check Out', property: 'checkOutDate', type: 'text', visible: true },
+    { label: 'Status', property: 'status', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -47,8 +52,70 @@ export class OrderDetailComponent implements OnInit {
       pageSize: 10
     })
     this.dataSource = new MatTableDataSource();
-    this.orderData.search().subscribe((x: Array<Order>) => this.listOrder = x || []);
-    // this.reloadTable();
+    // this.orderDetailData.search().subscribe((x: Array<OrderDetail>) => this.listOrderDetail = x || []);
+    this.reloadTable();
+  }
+
+  create(item: any) {
+    const dialogConfig = new MatDialogConfig();
+    // // Set the size of the dialog
+     dialogConfig.width = '900px';
+    // dialogConfig.height = '356px';
+    this.dialog.open(OrderDetailCreateUpdateComponent, { data: {data: item, mode: 'check-in'} }).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });
+  }
+
+  checkOut(id: number) {
+    let item: CheckOut = { orderId: id }
+    this.dialog.open(ConfirmDialogComponent, {
+      disableClose: false,
+      width: '400px',
+      data: {
+        title: "Check Out",
+        text: "Are you sure want to Check Out?",
+        onYesClick: () => { this.checkOutData.checkOut(item).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.a.success("Check Out success");
+            this.dialog.closeAll();
+          },
+          error: (err) => {
+            console.log(err);
+            this.a.success("Check Out failed");
+            this.dialog.closeAll();
+          }
+        }) }
+      }
+    }).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });;
+  }
+
+  Cancel(id: number) {
+    let item: CheckOut = { orderId: id }
+    this.dialog.open(ConfirmDialogComponent, {
+      disableClose: false,
+      width: '400px',
+      data: {
+        title: "Cancel",
+        text: "Are you sure want to cancel order?",
+        onYesClick: () => { this.checkOutData.Cancel(item).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.a.success("Cancel success");
+            this.dialog.closeAll();
+          },
+          error: (err) => {
+            console.log(err);
+            this.a.success("Cancel failed");
+            this.dialog.closeAll();
+          }
+        }) }
+      }
+    }).afterClosed().subscribe(result => {
+      this.reloadTable();
+    });;
   }
 
   submitSearch() {
@@ -63,6 +130,19 @@ export class OrderDetailComponent implements OnInit {
   }
   reloadTable() {
     this.isLoading = true;
+    let id = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.orderDetailData.getById(id).subscribe({
+      next: (res) => {
+        this.listOrderDetail = res;
+        this.dataSource.data = res;
+        console.log(res);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    })
     // this.roomData.search()
     //   .subscribe({
     //     next: (response) => {

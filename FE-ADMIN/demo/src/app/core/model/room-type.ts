@@ -2,11 +2,15 @@ export class roomType {
   id: number;
   typeName: string;
   price: number;
+  description: string;
+  shortDescription: string;
 
   constructor() {
-    this.id = null
+    this.id = 0
     this.typeName = "";
-    this.price = null;
+    this.price = 0;
+    this.description = "";
+    this.shortDescription = "";
   }
 
 }

@@ -28,7 +28,7 @@ export class HotelBookingComponent implements OnInit {
     private roomTypeData: RoomTypeData,
     private bookingData: BookingData,
     private element: ElementRef,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {}
 
   get customerName() {
@@ -101,14 +101,12 @@ export class HotelBookingComponent implements OnInit {
       this.bookingData.checkAva(item).subscribe({
         next: (res) => {
           console.log(res);
-          if (res > 0) {
-            this.bookingRequestList.controls[index]
-              .get('isAvailable')
-              .setValue(true);
-            this.bookingRequestList.controls[index]
-              .get('availableRoom')
-              .setValue(res);
-          }
+          this.bookingRequestList.controls[index]
+            .get('isAvailable')
+            .setValue(true);
+          this.bookingRequestList.controls[index]
+            .get('availableRoom')
+            .setValue(res);
         },
         error: (err) => {
           console.log(err);
@@ -160,16 +158,15 @@ export class HotelBookingComponent implements OnInit {
   }
 
   openVerticallyCentered(content) {
-		this.modalService.open(content, { centered: true });
-	}
+    this.modalService.open(content, { centered: true });
+  }
 
   onSubmit() {
     let item: Booking = this.bookingForm.value;
     let arr = item.bookingRequestList;
     for (let i = 0; i < arr.length; i++) {
-
-      let obj = this.roomTypeList.find(o => o.id == arr[i].roomTypeId);
-      if(obj != null && obj != undefined) {
+      let obj = this.roomTypeList.find((o) => o.id == arr[i].roomTypeId);
+      if (obj != null && obj != undefined) {
         arr[i].roomTypeName = obj.typeName;
         arr[i].roomTypePrice = obj.price;
       }

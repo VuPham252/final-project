@@ -17,11 +17,16 @@
         </h2>
 
         <form [formGroup]="searchForm" (ngSubmit)="submitSearch()"
-          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border border-gray-300">
+          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border-gray-300">
           <mat-icon class="icon-sm text-secondary" svgIcon="mat:search"></mat-icon>
           <input formControlName="keyword" id="keyword" name="keyword"
             class="px-4 py-2 border-0 outline-none w-full bg-transparent" placeholder="Search..." type="text">
         </form>
+
+        <!-- <select>
+          <option>Test1</option>
+          <option>Test2</option>
+        </select> -->
 
         <span class="flex-1"></span>
 
@@ -65,7 +70,7 @@
 
           <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ column.property === 'createdTime' ? (row[column.property] | date : "MM-dd-yyyy") : row[column.property] }}</td>
           </ng-container>
         </ng-container>
 

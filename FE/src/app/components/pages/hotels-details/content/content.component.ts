@@ -12,11 +12,7 @@ import { roomType } from 'src/app/core/model/room-type';
 export class ContentComponent implements OnInit {
 
   fake: any;
-  roomTypeDetail: roomType = {
-    id: 0,
-    typeName: '',
-    price: 0
-  };
+  roomTypeDetail: any
 
   constructor(private roomTypeData: RoomTypeData, private route: ActivatedRoute) {}
 

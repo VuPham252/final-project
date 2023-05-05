@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" >
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">{{'Check In'}}</h2>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="flex flex-col">
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field appearance="outline" class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Room</mat-label>
+        <mtx-select [ngClass]="isView == 'view' ? 'ban':''" [readonly]="isView == 'view'" [items]="listRoom" bindLabel="name" formControlName="roomId" appendTo="body"
+                    bindValue="id" notFoundText="Không tìm thấy dữ liệu" [clearable]="false">
+        </mtx-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button *ngIf="isView != 'view'"  color="primary" mat-flat-button type="submit">Submit</button>
+  </mat-dialog-actions>
+</form>

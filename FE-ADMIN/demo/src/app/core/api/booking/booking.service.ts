@@ -8,6 +8,9 @@ import { Booking, checkAva } from '../../model/booking';
 export class BookingService implements BookingData {
 
   constructor(private api: BookingApi) { }
+  checkAvaAdmin(data: checkAva): Observable<any> {
+    return this.api.checkAvaAdmin(data);
+  }
 
   checkAva(data: checkAva): Observable<any> {
     return this.api.checkAva(data);

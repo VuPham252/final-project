@@ -9,6 +9,8 @@ export class BookingApi {
 
   private readonly apiController: string = 'booking';
 
+  private readonly apiAdminController: string = 'admin/availableRooms';
+
   constructor(private http: HttpService) { }
 
   checkAva(data: checkAva): Observable<any> {
@@ -17,6 +19,10 @@ export class BookingApi {
 
   booking(data: Booking): Observable<any> {
     return this.http.post(this.apiController + '/booking-rooms', data);
+  }
+
+  checkAvaAdmin(data: checkAva): Observable<any> {
+    return this.http.post(this.apiAdminController, data);
   }
 
 }

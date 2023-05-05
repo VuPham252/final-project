@@ -1,11 +1,12 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShareService } from './share.service';
+import { SafeHtml } from './pipe/test.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [SafeHtml],
   imports: [CommonModule],
-  exports: [],
+  exports: [SafeHtml],
   // providers: [ShareService],
 })
 export class ShareModule {

@@ -28,11 +28,17 @@ import { BookingApi } from './api/booking/booking.api';
 import { OrderApi } from './api/order/order.api';
 import { OrderData } from './api/order/order-data';
 import { OrderService } from './api/order/order.service';
+import { CheckInApi } from './api/check-in/check-in.api';
+import { CheckInData } from './api/check-in/check-in-data';
+import { CheckInService } from './api/check-in/check-in.service';
+import { CheckOutApi } from './api/check-out/check-out.api';
+import { CheckOutData } from './api/check-out/check-out-data';
+import { CheckOutService } from './api/check-out/check-out.service';
 import { BlogApi } from './api/blog/blog.api';
 import { BlogData } from './api/blog/blog-data';
 import { BlogService } from './api/blog/blog.service';
 
-const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi, BlogApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi, CheckInApi, CheckOutApi, BlogApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
@@ -44,6 +50,8 @@ const SERVICES = [
   { provide: UploadData, useClass: UploadService },
   { provide: BookingData, useClass: BookingService },
   { provide: OrderData, useClass: OrderService },
+  { provide: CheckInData, useClass: CheckInService },
+  { provide: CheckOutData, useClass: CheckOutService },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,

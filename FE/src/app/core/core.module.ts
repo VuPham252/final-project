@@ -19,8 +19,18 @@ import { BookingService } from './api/ava-room/booking.service';
 import { ContactApi } from './api/contact/contact.api';
 import { ContactData } from './api/contact/contact-data';
 import { ContactService } from './api/contact/contact.service';
+import { BlogApi } from './api/blog/blog.api';
+import { BlogData } from './api/blog/blog-data';
+import { BlogService } from './api/blog/blog.service';
 
-const API = [RoomTypeApi, RegisterApi, LoginApi, BookingApi, ContactApi];
+const API = [
+  RoomTypeApi,
+  RegisterApi,
+  LoginApi,
+  BookingApi,
+  ContactApi,
+  BlogApi,
+];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
@@ -28,6 +38,7 @@ const SERVICES = [
   { provide: LoginData, useClass: LoginService },
   { provide: BookingData, useClass: BookingService },
   { provide: ContactData, useClass: ContactService },
+  { provide: BlogData, useClass: BlogService },
   // {
   //   provide: HTTP_INTERCEPTORS,
   //   useClass: JwtInterceptorService,

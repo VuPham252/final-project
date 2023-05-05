@@ -166,7 +166,11 @@
               >
             </mat-form-field>
           </div>
-
+          <div class="col-md-12" *ngIf="item.get('isAvailable').value">
+            <span style="font-size: 20px; margin-left: 22px;"
+              >Available Room: {{ item.get("availableRoom").value }}</span
+            >
+          </div>
           <div
             style="border-bottom: 3px solid rgba(0, 0, 0, 0.1); margin: 20px 0"
             class="flex flex-col sm:flex-row"
@@ -174,9 +178,9 @@
         </ng-container>
       </ng-container>
     </ng-container>
-    <pre
+    <!-- <pre
       >{{ form.value | json }}
-    </pre>
+    </pre> -->
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">Cancel</button>

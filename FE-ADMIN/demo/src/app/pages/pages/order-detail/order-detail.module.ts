@@ -19,6 +19,7 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { OrderDetailComponent } from './order-detail.component';
+import { OrderDetailCreateUpdateModule } from './order-booking-create-update/order-detail-create-update.module';
 
 const routes: VexRoutes = [
   {
@@ -55,7 +56,7 @@ const routes: VexRoutes = [
     PageLayoutModule,
     BreadcrumbsModule,
     MatDialogModule,
-
+    OrderDetailCreateUpdateModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule, QuicklinkModule]

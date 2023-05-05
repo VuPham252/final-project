@@ -124,7 +124,7 @@ export class OrderBookingCreateUpdateComponent implements OnInit {
       dateValueMonth = "0" + dateValueMonth;
     }
 
-    return dateValueYear + '-' + dateValueMonth + '-' + dateValueDay;
+    return dateValueYear + "-" + dateValueMonth + "-" + dateValueDay;
   }
 
   onChangeAva(index: number) {
@@ -133,7 +133,6 @@ export class OrderBookingCreateUpdateComponent implements OnInit {
     let checkout = this.element.nativeElement.querySelectorAll(".checkOut");
     let roomtype =
       this.element.nativeElement.querySelectorAll("select.roomType");
-    debugger
     this.listRoomType.forEach((element) => {
       if (element.formId == index) {
         element.used = false;
@@ -149,32 +148,6 @@ export class OrderBookingCreateUpdateComponent implements OnInit {
       checkout[index].value.length > 0 &&
       roomtype[index].value.length > 0
     ) {
-      // debugger;
-      // let dateFormat = require('date-format');
-      // let checkIn = new Date(checkin[index].value);
-      // let checkInDate = checkIn.getDate().toString();
-      // let checkInMonth = (checkIn.getMonth() + 1).toString();
-      // let checkInYear = checkIn.getFullYear().toString();
-
-      // if (checkInDate.length < 2) {
-      //   checkInDate = "0" + checkInDate;
-      // }
-      // if (checkInMonth.length < 2) {
-      //   checkInMonth = "0" + checkInMonth;
-      // }
-
-      // let checkOut = new Date(checkout[index].value);
-      // let checkOutDate = checkOut.getDate().toString();
-      // let checkOutMonth = (checkOut.getMonth() + 1).toString();
-      // let checkOutYear = checkOut.getFullYear().toString();
-
-      // if (checkOutDate.length < 2) {
-      //   checkOutDate = "0" + checkOutDate;
-      // }
-      // if (checkOutMonth.length < 2) {
-      //   checkOutMonth = "0" + checkOutMonth;
-      // }
-
       let item = {
         inputCheckinDate: this.formatDate(checkin[index].value),
         inputCheckoutDate: this.formatDate(checkout[index].value),
@@ -183,14 +156,12 @@ export class OrderBookingCreateUpdateComponent implements OnInit {
       this.bookingData.checkAva(item).subscribe({
         next: (res) => {
           console.log(res);
-          if (res > 0) {
-            this.bookingRequestList.controls[index]
-              .get("isAvailable")
-              .setValue(true);
-            this.bookingRequestList.controls[index]
-              .get("availableRoom")
-              .setValue(res);
-          }
+          this.bookingRequestList.controls[index]
+            .get("isAvailable")
+            .setValue(true);
+          this.bookingRequestList.controls[index]
+            .get("availableRoom")
+            .setValue(res);
         },
         error: (err) => {
           console.log(err);
