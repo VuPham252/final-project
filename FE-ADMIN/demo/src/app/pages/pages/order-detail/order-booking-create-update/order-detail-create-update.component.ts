@@ -46,7 +46,6 @@ export class OrderDetailCreateUpdateComponent implements OnInit {
     return this.form.controls;
   }
   ngOnInit(): void {
-    debugger
     let item = {
       inputCheckinDate: this.defaults.data.checkInDate,
       inputCheckoutDate: this.defaults.data.checkOutDate,

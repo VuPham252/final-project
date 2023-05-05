@@ -19,6 +19,9 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BlogComponent } from './blog.component';
+import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
+import { BlogCreateUpdateModule } from './blog-create-update/blog-create-update.module';
+// import { BlogCreateUpdateComponent } from './blog-create-update/blog-create-update.component';
 
 const routes: VexRoutes = [
   {
@@ -39,6 +42,7 @@ const routes: VexRoutes = [
 
   imports: [
     CommonModule,
+    BlogCreateUpdateModule,
     //theme]
     MatPaginatorModule,
     MatTableModule,

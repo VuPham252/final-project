@@ -34,13 +34,17 @@ import { CheckInService } from './api/check-in/check-in.service';
 import { CheckOutApi } from './api/check-out/check-out.api';
 import { CheckOutData } from './api/check-out/check-out-data';
 import { CheckOutService } from './api/check-out/check-out.service';
+import { BlogApi } from './api/blog/blog.api';
+import { BlogData } from './api/blog/blog-data';
+import { BlogService } from './api/blog/blog.service';
 
-const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi, CheckInApi, CheckOutApi];
+const API = [RoomTypeApi, RoomApi , RegisterApi, LoginApi, ContactApi, UploadApi, BookingApi, OrderApi, CheckInApi, CheckOutApi, BlogApi];
 
 const SERVICES = [
   { provide: RoomTypeData, useClass: RoomTypeService },
   { provide: RoomData, useClass: RoomService },
   { provide: RegisterData, useClass: RegisterService },
+  { provide: BlogData, useClass: BlogService },
   { provide: LoginData, useClass: LoginService },
   { provide: ContactData, useClass: ContactService },
   { provide: UploadData, useClass: UploadService },
