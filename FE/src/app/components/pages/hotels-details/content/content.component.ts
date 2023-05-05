@@ -15,7 +15,9 @@ export class ContentComponent implements OnInit {
   roomTypeDetail: roomType = {
     id: 0,
     typeName: '',
-    price: 0
+    price: 0,
+    description: '',
+    shortDescription: ''
   };
 
   constructor(private roomTypeData: RoomTypeData, private route: ActivatedRoute) {}
