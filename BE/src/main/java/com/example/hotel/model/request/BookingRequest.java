@@ -34,4 +34,6 @@ public class BookingRequest {
     @NotNull
     private Long amount;
 
+    private Double roomTypePrice;
+
 }

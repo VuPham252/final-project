@@ -366,20 +366,20 @@
                                                         <strong class="book-title"></strong>
                                                     </td>
                                                     <td class="item-stock" th:text="${bookingRequest.getInputCheckinDate()}"></td>
-                                                    <td class="item-stock" th:text="${bookingRequest.getInputCheckoutDate()}">25/04/2023</td>
-                                                    <td class="item-qty" th:text="${bookingRequest.getAmount()}">1</td>
-                                                    <td class="item-price">$30.02</td>
+                                                    <td class="item-stock" th:text="${bookingRequest.getInputCheckoutDate()}"></td>
+                                                    <td class="item-qty" th:text="${bookingRequest.getAmount()}"></td>
+                                                    <td class="item-price" th:text="'$'+${bookingRequest.getRoomTypePrice()}"></td>
                                                 </tr>
                                             </tbody>
 
                                             <tfoot class="table-td">
                                             <tr class="text-offset">
                                                 <td colspan="4">SubTotal</td>
-                                                <td>135.36</td>
+                                                <td th:text="${subTotal}">135.36</td>
                                             </tr>
                                             <tr class="text-offset">
                                                 <td colspan="4">Tax</td>
-                                                <td>13.54</td>
+                                                <td th:text="${tax}"></td>
                                             </tr>
                                             <tr class="text-offset">
                                                 <td colspan="4">Total</td>

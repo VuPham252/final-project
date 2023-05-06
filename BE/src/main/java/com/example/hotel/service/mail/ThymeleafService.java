@@ -1,6 +1,7 @@
 package com.example.hotel.service.mail;
 
 import com.example.hotel.exception.SystemErrorException;
+import com.example.hotel.model.request.BookingRequest;
 import com.example.hotel.model.request.ContactRequest;
 import com.example.hotel.model.request.GeneralRequest;
 import com.example.hotel.model.request.OrderRequest;
@@ -65,6 +66,13 @@ public class ThymeleafService {
                     OrderRequest orderRequest = (OrderRequest) request.getData();
                     context.setVariable("name", orderRequest.getCustomerName());
                     context.setVariable("bookingRequestList", orderRequest.getBookingRequestList());
+                    Double subTotal = 0d;
+                    for (BookingRequest bookingRequest : orderRequest.getBookingRequestList()) {
+                        subTotal += bookingRequest.getRoomTypePrice() * bookingRequest.getAmount();
+                    }
+                    Double tax = subTotal * 0.1;
+                    context.setVariable("subTotal", subTotal);
+                    context.setVariable("tax", tax);
                     return templateEngine.process(MAIL_TEMPLATE, context);
             }
         }catch (Exception e) {

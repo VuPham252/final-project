@@ -120,6 +120,7 @@ public class BookingServiceBean implements BookingService {
             Long bookingAmount = bookingRequest.getAmount();
             for(int i = 0; i < bookingAmount; i++) {
                 Booking booking = Booking.builder()
+                        .orderBooking(createdOrderBooking)
                         .orderId(createdOrderBooking.getId())
                         .checkInDate(bookingRequest.getInputCheckinDate())
                         .checkOutDate(bookingRequest.getInputCheckoutDate())
