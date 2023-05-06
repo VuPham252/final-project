@@ -3,23 +3,28 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
-import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
-import { Room } from 'src/app/core/model/room';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { roomType } from 'src/app/core/model/room-type';
-import { Booking } from 'src/app/core/model/booking';
-import { RoomData } from 'src/app/core/api/room/room-data';
-import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
 import { Order } from 'src/app/core/model/order';
 import { OrderData } from 'src/app/core/api/order/order-data';
 import { MatSort } from '@angular/material/sort';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
+@UntilDestroy()
 @Component({
   selector: 'vex-order-booking',
   templateUrl: './order-booking.component.html',
-  styleUrls: ['./order-booking.component.scss']
+  styleUrls: ['./order-booking.component.scss'],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'standard'
+      } as MatFormFieldDefaultOptions
+    }
+  ]
 })
 export class OrderBookingComponent implements OnInit,AfterViewInit {
   rows: Order[] = [];
@@ -28,6 +33,25 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
   listOrder: Order[] = [];
   pageSize = 10;
   pageSizeOptions: number[] = [2, 10, 20, 50];
+  filter: any[] = [
+    {
+      name: 'Customer Name',
+      value: 'customerName'
+    },
+    {
+      name: 'Phone Number',
+      value: 'phoneNumber'
+    },
+    {
+      name: 'Email Address',
+      value: 'email'
+    }
+  ];
+  filterValue = {
+    name: 'Phone Number',
+    value: 'phoneNumber'
+  };
+  searchCtrl = new UntypedFormControl();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
@@ -37,7 +61,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     private orderData: OrderData
   ) { }
 
-  dataSource: MatTableDataSource<Order> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Order> | null;
 
   @Input()
   columns: TableColumn<Order>[] = [
@@ -53,6 +77,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
+    debugger
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
@@ -62,7 +87,45 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     this.orderData.search().subscribe((x: Array<Order>) => this.listOrder = x || []);
 
     this.reloadTable();
+
+    this.searchCtrl.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.onFilterChange(value));
   }
+
+  getFilterValue(value: any) {
+    this.filterValue = value;
+  }
+
+  onFilterChange(value: string) {
+    debugger
+    let a = this.filterValue.value;
+    if (!this.dataSource) {
+      return;
+    }
+    value = value.trim();
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
+    this.dataSource.filterPredicate = (data: Order, filter: string) => {
+      debugger
+      if(data.hasOwnProperty(a)) {
+        return data[a].toLocaleLowerCase().includes(filter);
+      }
+      else return data.phoneNumber.toLocaleLowerCase().includes(filter);
+     };
+  }
+
+  // onFilterChange(value: string) {
+  //   if (!this.dataSource) {
+  //     return;
+  //   }
+  //   value = value.trim();
+  //   value = value.toLowerCase();
+  //   this.dataSource.filter = value;
+  //   this.dataSource.filterPredicate = (data: Order, filter: string) => {
+  //     return data.phoneNumber.toLocaleLowerCase().includes(filter);
+  //    };
+  // }
 
   redirectDetail(item: any) {
     this.router.navigate(['/pages/order-detail', item.id]);

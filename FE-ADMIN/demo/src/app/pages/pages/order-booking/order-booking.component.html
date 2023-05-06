@@ -1,32 +1,68 @@
 <vex-page-layout>
-
-  <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center" >
-    <div [class.px-gutter]="'fullwidth'" class="w-full flex flex-col sm:flex-row justify-between">
-      <div >
+  <vex-page-layout-header
+    class="pb-16 flex flex-col items-start justify-center"
+  >
+    <div
+      [class.px-gutter]="'fullwidth'"
+      class="w-full flex flex-col sm:flex-row justify-between"
+    >
+      <div>
         <h1 class="title mt-0 mb-1">Order Booking</h1>
         <vex-breadcrumbs [crumbs]="['Order Booking']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content [class.px-gutter]="'fullwidth'" class="-mt-6">
-
     <div class="card overflow-auto -mt-16">
-      <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
-        <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+      <div
+        class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center"
+      >
+        <h2
+          class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none"
+        >
           <span>Order Booking</span>
         </h2>
 
-        <form [formGroup]="searchForm" (ngSubmit)="submitSearch()"
-          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border-gray-300">
-          <mat-icon class="icon-sm text-secondary" svgIcon="mat:search"></mat-icon>
-          <input formControlName="keyword" id="keyword" name="keyword"
-            class="px-4 py-2 border-0 outline-none w-full bg-transparent" placeholder="Search..." type="text">
-        </form>
+        <div
+          class="bg-foreground rounded-full px-4 max-w-[300px] flex-auto flex items-center border border-gray-300"
+        >
+          <mat-icon
+            class="icon-sm text-secondary"
+            svgIcon="mat:search"
+          ></mat-icon>
+          <input
+            [formControl]="searchCtrl"
+            class="px-4 py-2 border-0 outline-none w-full bg-transparent"
+            placeholder="Search..."
+            type="search"
+          />
+        </div>
 
-        <!-- <select>
-          <option>Test1</option>
-          <option>Test2</option>
-        </select> -->
+        <!-- <form
+          [formGroup]="searchForm"
+          (ngSubmit)="submitSearch()"
+          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border-gray-300"
+        >
+          <mat-icon
+            class="icon-sm text-secondary"
+            svgIcon="mat:search"
+          ></mat-icon>
+          <input
+            formControlName="keyword"
+            id="keyword"
+            name="keyword"
+            class="px-4 py-2 border-0 outline-none w-full bg-transparent"
+            placeholder="Search..."
+            type="text"
+          />
+        </form> -->
+
+        <button class="ml-2" mat-button [matMenuTriggerFor]="menu">{{filterValue.name}}</button>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngFor="let item of filter, let idx = index">
+            <button mat-menu-item (click)="getFilterValue(item)">{{item.name}}</button>
+          </ng-container>
+        </mat-menu>
 
         <span class="flex-1"></span>
 
@@ -34,8 +70,14 @@
           matTooltip="Filter Columns" type="button">
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
         </button> -->
-        <button (click)="create()" class="ml-4 flex-none" color="primary" mat-mini-fab matTooltip="Add Room"
-          type="button">
+        <button
+          (click)="create()"
+          class="ml-4 flex-none"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Add Room"
+          type="button"
+        >
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
@@ -67,30 +109,52 @@
           </td>
         </ng-container> -->
         <ng-container *ngFor="let column of columns">
-
-          <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
-            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ column.property === 'createdTime' ? (row[column.property] | date : "MM-dd-yyyy") : row[column.property] }}</td>
+          <ng-container
+            *ngIf="column.property != 'actions'"
+            [matColumnDef]="column.property"
+          >
+            <th
+              *matHeaderCellDef
+              class="uppercase"
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+              {{
+                column.property === "createdTime"
+                  ? (row[column.property] | date : "MM-dd-yyyy")
+                  : row[column.property]
+              }}
+            </td>
           </ng-container>
         </ng-container>
 
-
         <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-        <tr mat-row *matRowDef="let row; columns: visibleColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" class="sticky left-0"></mat-paginator>
-
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        class="sticky left-0"
+      ></mat-paginator>
     </div>
-
   </vex-page-layout-content>
-
 </vex-page-layout>
 
 <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
   <ng-container *ngFor="let column of columns">
-    <button (click)="toggleColumnVisibility(column, $event)" *ngIf="column.property != 'actions'"
-      class="checkbox-item mat-menu-item">
-      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="column.visible" color="primary">
+    <button
+      (click)="toggleColumnVisibility(column, $event)"
+      *ngIf="column.property != 'actions'"
+      class="checkbox-item mat-menu-item"
+    >
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        [(ngModel)]="column.visible"
+        color="primary"
+      >
         {{ column.label }}
       </mat-checkbox>
     </button>
