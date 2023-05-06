@@ -1,6 +1,7 @@
 package com.example.hotel.model.entity;
 
 import com.example.hotel.model.enums.BookingStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -21,6 +22,10 @@ public class Booking {
     private Long id;
 
     private Long orderId;
+
+    @ManyToOne
+    @JsonBackReference
+    private OrderBooking orderBooking;
 
     private LocalDate checkInDate;
 

@@ -1,14 +1,13 @@
 package com.example.hotel.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +25,10 @@ public class OrderBooking {
     private String email;
 
     private String phoneNumber;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderBooking")
+    @JsonManagedReference
+    private List<Booking> bookingList;
 
     @CreationTimestamp
     private LocalDateTime createdTime;
