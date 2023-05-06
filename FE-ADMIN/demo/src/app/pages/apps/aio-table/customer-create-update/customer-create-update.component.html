@@ -52,19 +52,15 @@
       </mat-form-field>
     </div>
 
+    <mat-label>Description</mat-label>
     <div class="flex flex-col sm:flex-row">
-      <mat-form-field class="mt-6 flex-auto">
-        <mat-label>Description</mat-label>
-        <textarea
-          [ngClass]="isView == 'view' ? 'ban' : ''"
-          [readonly]="isView == 'view'"
-          formControlName="description"
-          matInput
-        ></textarea>
-      </mat-form-field>
+
+      <quill-editor [ngClass]="isView == 'view' ? 'ban' : ''"
+      [readOnly] ="isView == 'view'" [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
+      <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
     </div>
 
-    <div class="flex flex-col sm:flex-row" style="max-width: 600px">
+    <div class="flex flex-col sm:flex-row" style="max-width: 600px; margin-top:30px">
       <div class="mt-3 flex-auto">
         <input
           *ngIf="isView != 'view'"

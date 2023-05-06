@@ -32,7 +32,8 @@
     <mat-label>Description</mat-label>
     <div class="flex flex-col sm:flex-row">
 
-      <quill-editor [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
+      <quill-editor [ngClass]="isView == 'view' ? 'ban' : ''"
+      [readOnly] ="isView == 'view'" [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
       <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
     </div>
 

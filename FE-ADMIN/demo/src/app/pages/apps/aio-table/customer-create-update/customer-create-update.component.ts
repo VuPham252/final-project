@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
@@ -8,7 +8,12 @@ import { UploadData } from 'src/app/core/api/upload/upload-data';
 @Component({
   selector: 'vex-customer-create-update',
   templateUrl: './customer-create-update.component.html',
-  styleUrls: ['./customer-create-update.component.scss']
+  styleUrls: [
+    './customer-create-update.component.scss',
+    "../../../../../../node_modules/quill/dist/quill.snow.css",
+    "../../../../../@vex/styles/partials/plugins/quill/_quill.scss"
+],
+encapsulation: ViewEncapsulation.None,
 })
 export class CustomerCreateUpdateComponent implements OnInit {
 
