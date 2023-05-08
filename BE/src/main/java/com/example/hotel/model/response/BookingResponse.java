@@ -17,6 +17,10 @@ public class BookingResponse {
 
     private Long roomTypeId;
 
+    private String roomTypeName;
+
+    private String roomName;
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
