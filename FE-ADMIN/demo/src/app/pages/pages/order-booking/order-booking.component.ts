@@ -69,6 +69,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     { label: 'Customer Name', property: 'customerName', type: 'text', visible: true },
     { label: 'Email', property: 'email', type: 'text', visible: true, },
     { label: 'Phone Number', property: 'phoneNumber', type: 'text', visible: true },
+    { label: 'List Room Type', property: 'roomTypeNameList', type: 'text', visible: true },
     { label: 'Create Time', property: 'createdTime', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
@@ -77,7 +78,9 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
-    debugger
+
+    console.log(typeof this.pageSizeOptions);
+
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
@@ -93,12 +96,15 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     ).subscribe(value => this.onFilterChange(value));
   }
 
+  isObject(value: any) {
+    return typeof value === 'object';
+  }
+
   getFilterValue(value: any) {
     this.filterValue = value;
   }
 
   onFilterChange(value: string) {
-    debugger
     let a = this.filterValue.value;
     if (!this.dataSource) {
       return;
@@ -107,7 +113,6 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     value = value.toLowerCase();
     this.dataSource.filter = value;
     this.dataSource.filterPredicate = (data: Order, filter: string) => {
-      debugger
       if(data.hasOwnProperty(a)) {
         return data[a].toLocaleLowerCase().includes(filter);
       }
@@ -155,6 +160,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     this.isLoading = true;
     this.orderData.search().subscribe({
       next: (res) => {
+        debugger
         this.dataSource.data = res;
         console.log(res);
         this.isLoading = false;

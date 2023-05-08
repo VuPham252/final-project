@@ -77,16 +77,27 @@ export class DashboardAnalyticsComponent {
     data: [28, 40, 36, 0, 52, 38, 60, 55, 67, 33, 89, 44]
   }];
 
-  userSessionsSeries: ApexAxisChartSeries = [
-    {
-      name: 'Users',
-      data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+  userSessionsSeries = defaultChartOptions({
+    chart: {
+      type: 'bar',
     },
-    {
-      name: 'Sessions',
-      data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
-    },
-  ];
+    series: [
+      {
+        name: 'Orders',
+        data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+      },
+    ]
+  })
+  //  = [
+  //   {
+  //     name: 'Orders',
+  //     data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+  //   },
+  //   // {
+  //   //   name: 'Sessions',
+  //   //   data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
+  //   // },
+  // ];
 
   salesSeries: ApexAxisChartSeries = [{
     name: 'Sales',

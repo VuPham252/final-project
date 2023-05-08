@@ -48,6 +48,8 @@ export class OrderDetailComponent implements OnInit,AfterViewInit {
     { label: 'Id', property: 'id', type: 'text', visible: false },
     { label: 'Check In', property: 'checkInDate', type: 'text', visible: true, },
     { label: 'Check Out', property: 'checkOutDate', type: 'text', visible: true },
+    { label: 'Room Type', property: 'roomTypeId', type: 'text', visible: true },
+    { label: 'Room', property: 'roomId', type: 'text', visible: true },
     { label: 'Status', property: 'status', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
