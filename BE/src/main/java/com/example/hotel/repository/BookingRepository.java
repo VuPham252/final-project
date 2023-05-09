@@ -1,6 +1,8 @@
 package com.example.hotel.repository;
 
+import com.example.hotel.model.dto.BookingCountDTO;
 import com.example.hotel.model.entity.Booking;
+import com.example.hotel.model.response.BookingCountResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,4 +39,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                   @Param("roomTypeId") long roomTypeId);
 
     List<Booking> getBookingsByOrderId(Long id);
+
 }

@@ -2,9 +2,11 @@ package com.example.hotel.controller;
 
 import com.example.hotel.exception.BookingBusinessException;
 import com.example.hotel.exception.SystemErrorException;
+import com.example.hotel.model.dto.BookingCountDTO;
 import com.example.hotel.model.request.*;
 import com.example.hotel.model.response.*;
 import com.example.hotel.service.AdminService;
+import com.example.hotel.service.BookingService;
 import com.example.hotel.service.OrderBookingService;
 import com.example.hotel.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,19 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private BookingService bookingService;
+
+    @GetMapping("/booking-count-by-month")
+    public BookingCountResponse getMostBookedRoomType(@RequestParam(name = "year") String year){
+        return bookingService.getBookingCount(year);
+    }
+
+    @GetMapping("/income-in-months")
+    public List<IncomeInMonthResponse> getIncomeByMonth(@RequestParam(name = "year") String year){
+        return bookingService.getIncomeInMonths(year);
+    }
 
     @GetMapping("/orders")
     public List<OrderBookingResponse> getOrderBooking(@RequestParam(name = "phone") String phoneNumber){
