@@ -24,40 +24,40 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import { QuickBookFormComponent } from './search-form/quick-book-form/quick-book-form.component';
+import { ShareModule } from "../../../share/share.module";
 // import { NgZorroModule } from 'src/app/_theme/ng-zorro.module';
 // import { IconsProviderModule } from 'src/app/_theme/iconsProvider.module';
 
 registerLocaleData(vi);
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    BannerComponent,
-    SearchFormComponent,
-    AboutUsComponent,
-    RecomHotelsComponent,
-    CategoryComponent,
-    RecomFlightsComponent,
-    RecomCruiseComponent,
-    ServicesComponent,
-    RecomCarsComponent,
-    TeamComponent,
-    WhyUsComponent,
-    TestimonialsComponent,
-    BlogsComponent,
-    QuickBookFormComponent
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    SharedModule,
-    NgbModule,
-    SlickCarouselModule,
-    NiceSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    // NgZorroModule,
-    // IconsProviderModule,
-  ]
+    declarations: [
+        HomeComponent,
+        BannerComponent,
+        SearchFormComponent,
+        AboutUsComponent,
+        RecomHotelsComponent,
+        CategoryComponent,
+        RecomFlightsComponent,
+        RecomCruiseComponent,
+        ServicesComponent,
+        RecomCarsComponent,
+        TeamComponent,
+        WhyUsComponent,
+        TestimonialsComponent,
+        BlogsComponent,
+        QuickBookFormComponent
+    ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        SharedModule,
+        NgbModule,
+        SlickCarouselModule,
+        NiceSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ShareModule
+    ]
 })
 export class HomeModule { }

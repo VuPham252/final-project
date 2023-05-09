@@ -19,6 +19,11 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ContactComponent } from './contact.component';
+import { ConfirmDialogModule } from 'src/app/dialogs/confirm-dialog/confirm-dialog.module';
+import { ContactCreateUpdateComponent } from './contact-create-update/contact-create-update.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: VexRoutes = [
   {
@@ -35,6 +40,7 @@ const routes: VexRoutes = [
 @NgModule({
   declarations: [
     ContactComponent,
+    ContactCreateUpdateComponent,
     ],
 
   imports: [
@@ -56,7 +62,10 @@ const routes: VexRoutes = [
     PageLayoutModule,
     BreadcrumbsModule,
     MatDialogModule,
-
+    ConfirmDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule, QuicklinkModule]

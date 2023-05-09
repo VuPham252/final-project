@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class ShareService {
+  private getRoomTypeId = new BehaviorSubject<any>(0);
 
-  public getUser: Subject<any> = new Subject<any>();
+  currentId = this.getRoomTypeId.asObservable();
 
-  constructor() { }
+  constructor() {}
+
+  public sendRoomTypeId(id: number) {
+    this.getRoomTypeId.next(id);
+  }
+
+  // public getValue(): Observable<any> {
+  //   return this.getRoomTypeId.asObservable();
+  // }
 }

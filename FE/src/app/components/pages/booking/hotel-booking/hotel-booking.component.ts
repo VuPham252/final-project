@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingData } from 'src/app/core/api/ava-room/booking-data';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
@@ -20,6 +21,8 @@ export class HotelBookingComponent implements OnInit {
   public successAlertClosed = false;
   public errorAlertClosed = false;
 
+  public id: number = 0;
+
   @ViewChild('successAlert', { static: false }) successAlert: NgbAlert;
   @ViewChild('errorAlert', { static: false }) errorAlert: NgbAlert;
 
@@ -28,7 +31,8 @@ export class HotelBookingComponent implements OnInit {
     private roomTypeData: RoomTypeData,
     private bookingData: BookingData,
     private element: ElementRef,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private route: ActivatedRoute
   ) {}
 
   get customerName() {
@@ -48,26 +52,52 @@ export class HotelBookingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.bookingForm = this.fb.group({
-      customerName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required]],
-      bookingRequestList: this.fb.array(
-        [
-          this.fb.group({
-            inputCheckinDate: ['', [Validators.required]],
-            inputCheckoutDate: ['', [Validators.required]],
-            amount: ['', [Validators.required, Validators.max, Validators.min]],
-            roomTypeId: ['', [Validators.required]],
-            roomTypeName: ['', []],
-            roomTypePrice: ['', []],
-            isAvailable: [false, []],
-            availableRoom: [99, []],
-          }),
-        ],
-        [Validators.required]
-      ),
-    });
+    debugger
+    this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+    if(this.id > 0) {
+      this.bookingForm = this.fb.group({
+        customerName: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        phoneNumber: ['', [Validators.required]],
+        bookingRequestList: this.fb.array(
+          [
+            this.fb.group({
+              inputCheckinDate: ['', [Validators.required]],
+              inputCheckoutDate: ['', [Validators.required]],
+              amount: ['', [Validators.required, Validators.max, Validators.min]],
+              roomTypeId: [this.id, [Validators.required]],
+              roomTypeName: ['', []],
+              roomTypePrice: ['', []],
+              isAvailable: [false, []],
+              availableRoom: [99, []],
+            }),
+          ],
+          [Validators.required]
+        ),
+      });
+    }
+    else {
+      this.bookingForm = this.fb.group({
+        customerName: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        phoneNumber: ['', [Validators.required]],
+        bookingRequestList: this.fb.array(
+          [
+            this.fb.group({
+              inputCheckinDate: ['', [Validators.required]],
+              inputCheckoutDate: ['', [Validators.required]],
+              amount: ['', [Validators.required, Validators.max, Validators.min]],
+              roomTypeId: ['', [Validators.required]],
+              roomTypeName: ['', []],
+              roomTypePrice: ['', []],
+              isAvailable: [false, []],
+              availableRoom: [99, []],
+            }),
+          ],
+          [Validators.required]
+        ),
+      });
+    }
     this.getRoomType();
   }
 

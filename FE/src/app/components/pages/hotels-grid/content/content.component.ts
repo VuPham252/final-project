@@ -6,14 +6,14 @@ import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
-
 export class ContentComponent implements OnInit {
-
   public roomTypeList: any[] = [];
 
-  constructor(private roomTypeData: RoomTypeData) {}
+  constructor(
+    private roomTypeData: RoomTypeData,
+  ) {}
 
   ngOnInit(): void {
     this.getRoomType();
@@ -22,14 +22,14 @@ export class ContentComponent implements OnInit {
   getRoomType() {
     this.roomTypeData.search().subscribe({
       next: (res) => {
-        if(res) {
+        if (res) {
           console.log(res);
           this.roomTypeList = res;
         }
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 }

@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { Contact } from 'src/app/core/model/contact';
 import { ContactData } from 'src/app/core/api/contact/contact-data';
 import { MatSort } from '@angular/material/sort';
+import { ContactCreateUpdateComponent } from './contact-create-update/contact-create-update.component';
 
 @Component({
   selector: 'vex-contact',
@@ -17,12 +18,6 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit, AfterViewInit {
-  rows: Contact[] = [
-    {id : 1, name : "Test", email : " test@gmail.com", subject: "test", phone: "test", message: "test"},
-    {id : 2, name : "Test 2", email : " test1@gmail.com", subject: "test 2", phone: "test 2", message: "test 2"},
-    {id : 3, name : "Test 3", email : " test2@gmail.com", subject: "test 3", phone: "test 3", message: "test 3 "},
-
-    ];
   searchForm: any;
   isLoading = false;
   pageSize = 10;
@@ -64,6 +59,17 @@ export class ContactComponent implements OnInit, AfterViewInit {
     // this.dataSource.data = this.rows;
     this.reloadTable();
   }
+
+  view(customer: Contact) {
+    this.dialog.open(ContactCreateUpdateComponent, {
+      data: {
+        title: "View Contact",
+        customer,
+        isView: "view",
+      }
+    })
+  }
+
   submitSearch() {
     // this.searchObject.keyword = this.searchForm.value.keyword;
     // this.searchObject.pageIndex = 1;
@@ -78,7 +84,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
   reloadTable() {
     // debugger
     this.isLoading = true;
-    console.log(this.rows);
     this.contactData.search()
       .subscribe({
         next: (response) => {

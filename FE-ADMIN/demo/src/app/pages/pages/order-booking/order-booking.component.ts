@@ -65,7 +65,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
 
   @Input()
   columns: TableColumn<Order>[] = [
-    { label: 'Id', property: 'id', type: 'text', visible: true },
+    { label: 'NO.', property: 'numbers', type: 'text', visible: true },
     { label: 'Customer Name', property: 'customerName', type: 'text', visible: true },
     { label: 'Email', property: 'email', type: 'text', visible: true, },
     { label: 'Phone Number', property: 'phoneNumber', type: 'text', visible: true },
