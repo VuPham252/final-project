@@ -7,7 +7,7 @@ import { SafeHtml } from './pipe/test.pipe';
   declarations: [SafeHtml],
   imports: [CommonModule],
   exports: [SafeHtml],
-  // providers: [ShareService],
+  providers: [ShareService],
 })
 export class ShareModule {
   static forRoot(): ModuleWithProviders<ShareModule> {

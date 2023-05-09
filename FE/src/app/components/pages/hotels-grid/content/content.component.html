@@ -60,7 +60,7 @@
                   class="btn-second btn-small"
                   >View</a
                 >
-                <a routerLink="/booking" class="btn-first btn-submit">Book</a>
+                <a style="cursor: pointer;" [routerLink]="['/booking', item.id]" class="btn-first btn-submit">Book</a>
               </div>
             </div>
           </div>

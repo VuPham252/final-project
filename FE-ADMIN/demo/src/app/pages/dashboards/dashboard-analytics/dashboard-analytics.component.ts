@@ -7,6 +7,32 @@ import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { Room } from 'src/app/core/model/room';
 import { roomType } from 'src/app/core/model/room-type';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrderData } from 'src/app/core/api/order/order-data';
+
+type ApexXAxis = {
+  type?: "category" | "datetime" | "numeric";
+  categories?: any;
+  labels?: {
+    style?: {
+      colors?: string | string[];
+      fontSize?: string;
+    };
+  };
+};
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  colors: string[];
+  title: ApexTitleSubtitle;
+  legend: ApexLegend;
+  grid: ApexGrid;
+};
 
 @Component({
   selector: 'vex-dashboard-analytics',
@@ -16,10 +42,85 @@ import { MatTableDataSource } from '@angular/material/table';
 export class DashboardAnalyticsComponent {
   dataSource: MatTableDataSource<roomType> | null;
   numberRoom: number;
+  numberOrder: number = 0;
+
+  public userSessionsSeries: Partial<ChartOptions>;
+
   constructor(
     private roomData : RoomData,
-    private roomType :RoomTypeData
-  ){}
+    private roomType :RoomTypeData,
+    private orderData: OrderData,
+  ){
+    this.userSessionsSeries = {
+      series: [
+        {
+          name: "distibuted",
+          data: [21, 22, 10, 28, 16, 21, 13, 30]
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "bar",
+        events: {
+          click: function(chart, w, e) {
+            // console.log(chart, w, e)
+          }
+        }
+      },
+      colors: [
+        "#008FFB",
+        "#00E396",
+        "#FEB019",
+        "#FF4560",
+        "#775DD0",
+        "#546E7A",
+        "#26a69a",
+        "#D10CE8"
+      ],
+      plotOptions: {
+        bar: {
+          columnWidth: "45%",
+          distributed: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      grid: {
+        show: false
+      },
+      xaxis: {
+        categories: [
+          ["John", "Doe"],
+          ["Joe", "Smith"],
+          ["Jake", "Williams"],
+          "Amber",
+          ["Peter", "Brown"],
+          ["Mary", "Evans"],
+          ["David", "Wilson"],
+          ["Lily", "Roberts"]
+        ],
+        labels: {
+          style: {
+            colors: [
+              "#008FFB",
+              "#00E396",
+              "#FEB019",
+              "#FF4560",
+              "#775DD0",
+              "#546E7A",
+              "#26a69a",
+              "#D10CE8"
+            ],
+            fontSize: "12px"
+          }
+        }
+      }
+    }
+  }
 
   tableColumns: TableColumn<roomType>[] = [
 
@@ -38,6 +139,7 @@ export class DashboardAnalyticsComponent {
   ngOnInit() {
     this.getDataRoom();
     this.getNumberRoom();
+    this.getOrderBooking();
     this.dataSource = new MatTableDataSource();
 
   }
@@ -70,6 +172,18 @@ export class DashboardAnalyticsComponent {
       })
   }
 
+  getOrderBooking() {
+    this.orderData.search().subscribe({
+      next: (res) => {
+        this.numberOrder = res.length;
+        console.log(res);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
   tableData = tableSalesData;
 
   series: ApexAxisChartSeries = [{
@@ -77,16 +191,17 @@ export class DashboardAnalyticsComponent {
     data: [28, 40, 36, 0, 52, 38, 60, 55, 67, 33, 89, 44]
   }];
 
-  userSessionsSeries: ApexAxisChartSeries = [
-    {
-      name: 'Users',
-      data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
-    },
-    {
-      name: 'Sessions',
-      data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
-    },
-  ];
+
+  //  = [
+  //   {
+  //     name: 'Orders',
+  //     data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+  //   },
+  //   // {
+  //   //   name: 'Sessions',
+  //   //   data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
+  //   // },
+  // ];
 
   salesSeries: ApexAxisChartSeries = [{
     name: 'Sales',

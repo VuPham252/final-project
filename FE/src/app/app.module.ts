@@ -15,6 +15,7 @@ import { CoreModule } from './core/core.module';
 import { JwtInterceptorService } from './auth/interceptor/jwt-interceptor.service';
 import { ShareModule } from './share/share.module';
 import { AdminComponent } from './admin/admin.component';
+import { ShareService } from './share/share.service';
 
 registerLocaleData(vi);
 
@@ -34,13 +35,7 @@ registerLocaleData(vi);
     CoreModule.forRoot(),
     ShareModule.forRoot(),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptorService,
-      multi: true
-    },
-  ],
+  providers: [ShareService],
   bootstrap: [AppComponent],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
