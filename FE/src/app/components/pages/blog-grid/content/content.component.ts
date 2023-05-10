@@ -10,6 +10,8 @@ import { BlogData } from 'src/app/core/api/blog/blog-data';
 export class ContentComponent implements OnInit {
 
   blogList: any[] = [];
+  pageSize = 25;
+  page = 1;
 
   constructor(private blogData: BlogData) {
 

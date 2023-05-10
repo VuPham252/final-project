@@ -2158,7 +2158,7 @@ label.custom-checkbox .checkmark:after {
     position: relative;
     margin: 0;
 }
-.listing-details-inner .detail-slider-for .slide-item .popup:before{
+/* .listing-details-inner .detail-slider-for .slide-item .popup:before{
     position: absolute;
     top: 50%;
     opacity: 0;
@@ -2185,7 +2185,7 @@ label.custom-checkbox .checkmark:after {
     background: #01b7f29c;
     content: '';
     transition: 0.4s;
-}
+} */
 .listing-details-inner .detail-slider-for .slide-item:hover .popup:after,
 .listing-details-inner .detail-slider-for .slide-item:hover .popup:before{
     opacity: 1;
@@ -2428,7 +2428,7 @@ label.custom-checkbox .checkmark:after {
     position: relative;
     overflow: hidden;
 }
-.gallery .gallery-item .popup:before{
+/* .gallery .gallery-item .popup:before{
     position: absolute;
     top: 50%;
     opacity: 0;
@@ -2445,8 +2445,8 @@ label.custom-checkbox .checkmark:after {
     right: 0;
     text-align: center;
     line-height: 0.5;
-}
-.gallery .gallery-item .popup:after{
+} */
+/* .gallery .gallery-item .popup:after{
     position: absolute;
     top: 0;
     left: 0px;
@@ -2458,7 +2458,7 @@ label.custom-checkbox .checkmark:after {
     transition: 0.5s all;
     margin: 10px;
     transform: translateX(-100%);
-}
+} */
 .gallery .gallery-item:hover .popup:before,
 .gallery .gallery-item:hover .popup:after{
     opacity: 1;

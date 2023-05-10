@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactData } from 'src/app/core/api/contact/contact-data';
 
 @Component({
@@ -9,7 +10,13 @@ import { ContactData } from 'src/app/core/api/contact/contact-data';
 })
 export class ContactFormComponent implements OnInit {
 
-  constructor(private contactData: ContactData) { }
+  @ViewChild('successAlert', { static: false }) successAlert: NgbAlert;
+  @ViewChild('errorAlert', { static: false }) errorAlert: NgbAlert;
+
+  public successAlertClosed = false;
+  public errorAlertClosed = false;
+
+  constructor(private contactData: ContactData, private modalService: NgbModal,) { }
   contactForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -53,9 +60,15 @@ export class ContactFormComponent implements OnInit {
     this.contactData.post(item).subscribe({
       next: (res) => {
         console.log(res);
+        this.contactForm.reset();
+        this.modalService.dismissAll();
+        this.successAlertClosed = true;
+        setTimeout(() => this.successAlert.close(), 2000);
       },
       error: (err) => {
         console.log(err);
+        this.errorAlertClosed = true;
+        setTimeout(() => this.errorAlert.close(), 2000);
       }
     })
   }

@@ -7,4 +7,8 @@ export abstract class BookingData {
   abstract booking(data: Booking): Observable<any>;
 
   abstract checkAvaAdmin(data: checkAva): Observable<any>;
+
+  abstract bookingCount(data: any): Observable<any>;
+
+  abstract income(data: any): Observable<any>;
 }

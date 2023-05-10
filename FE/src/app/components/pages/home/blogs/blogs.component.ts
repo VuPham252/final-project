@@ -1,12 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BlogHelperService } from 'src/app/components/helper/blog/blog-helper.service';
+import { BlogData } from 'src/app/core/api/blog/blog-data';
 
 @Component({
   selector: 'app-blogs',
   templateUrl: './blogs.component.html',
   styleUrls: ['./blogs.component.css']
 })
-export class BlogsComponent extends BlogHelperService {
+export class BlogsComponent implements OnInit {
+
+  public blogList: any[] = [];
+
+  constructor(
+    private blogData: BlogData,
+  ) {}
+
+  ngOnInit(): void {
+    this.getBlog();
+  }
+
+  getBlog() {
+    this.blogData.search().subscribe({
+      next: (res) => {
+        if (res) {
+          console.log(res);
+          this.blogList = res;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   settings = {
     infinite: true,
     slidesToShow: 3,

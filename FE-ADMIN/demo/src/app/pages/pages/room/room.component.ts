@@ -84,7 +84,9 @@ export class RoomComponent implements OnInit, AfterViewInit {
      dialogConfig.width = '900px';
     // dialogConfig.height = '356px';
     this.dialog.open(RoomCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
-      this.reloadTable();
+      if(result) {
+        this.reloadTable();
+      }
     });
   }
 
@@ -99,7 +101,9 @@ export class RoomComponent implements OnInit, AfterViewInit {
           this.dialog.open(RoomCreateUpdateComponent , {
             data: response
           }).afterClosed().subscribe(result => {
-            this.reloadTable();
+            if(result) {
+              this.reloadTable();
+            }
           });
         }, error: (error) => {
           console.log(error);
@@ -120,14 +124,8 @@ export class RoomComponent implements OnInit, AfterViewInit {
             roomData: response,
             isView: "view"
            }
-         }).afterClosed().subscribe(result => {
-
-           this.reloadTable();
-         });
-       }, error: (error) => {
-         console.log(error);
-         this.isLoading = false;
-       }
+         })
+       },
      })
   }
   onFilterChange(value: string) {
