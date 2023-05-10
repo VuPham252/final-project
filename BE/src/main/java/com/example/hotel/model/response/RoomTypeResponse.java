@@ -26,6 +26,14 @@ public class RoomTypeResponse {
 
     private String description;
 
+    private Double size;
+
+    private Double area;
+
+    private String layout;
+
+    private String extraService;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdTime;
