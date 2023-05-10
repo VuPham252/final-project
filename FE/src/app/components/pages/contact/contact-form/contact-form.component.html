@@ -1,4 +1,24 @@
 <div class="section-padding contact-form-map">
+  <ngb-alert
+    #successAlert
+    [dismissible]="false"
+    *ngIf="successAlertClosed"
+    (closed)="successAlertClosed = false"
+    type="success"
+    class="toast-container position-fixed py-2 px-3"
+    style="z-index: 100; top: 20px; right: 2%"
+    >Contact Success</ngb-alert
+  >
+  <ngb-alert
+    #errorAlert
+    [dismissible]="false"
+    *ngIf="errorAlertClosed"
+    (closed)="errorAlertClosed = false"
+    type="danger"
+    class="toast-container position-fixed py-2 px-3"
+    style="z-index: 100; top: 20px; right: 2%"
+    >Contact Error</ngb-alert
+  >
   <div class="container">
     <div class="row">
       <div class="col-lg-7">

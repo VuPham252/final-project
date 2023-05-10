@@ -2,13 +2,16 @@
   <div class="border-b py-4 px-6 flex items-center">
     <h2 class="m-0 title flex-auto">Recent Sales</h2>
 
-    <button mat-icon-button type="button">
-      <mat-icon class="text-secondary" svgIcon="mat:cloud_download"></mat-icon>
-    </button>
-
-    <button mat-icon-button type="button">
-      <mat-icon class="text-secondary" svgIcon="mat:more_horiz"></mat-icon>
-    </button>
+    <mat-form-field>
+      <mat-label>Year</mat-label>
+      <input matInput [matDatepicker]="dp" placeholder="Year" [formControl]="date" readonly>
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp
+                      startView="multi-year"
+                      (yearSelected)="chosenYearHandler($event, dp)"
+                      panelClass="example-month-picker">
+      </mat-datepicker>
+    </mat-form-field>
   </div>
 
   <div class="overflow-auto">

@@ -19,11 +19,11 @@
                                label="Number of Order"
                                value="{{numberOrder}}"></vex-widget-quick-value-center>
 
-  <vex-widget-large-chart [options]="userSessionsSeries"
-                          class="sm:col-span-2"></vex-widget-large-chart>
+  <vex-widget-large-chart class="sm:col-span-2"></vex-widget-large-chart>
 
   <vex-widget-table [columns]="tableColumns"
                     [data]="tableData"
+                    (year)="getYear($event)"
                     class="sm:col-span-2"></vex-widget-table>
 
   <vex-widget-quick-value-center [change]="124.4"

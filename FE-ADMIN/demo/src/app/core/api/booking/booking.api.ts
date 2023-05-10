@@ -11,6 +11,10 @@ export class BookingApi {
 
   private readonly apiAdminController: string = 'admin/availableRooms';
 
+  private readonly apiBookingCountController: string = 'admin/booking-count-by-month';
+
+  private readonly apiIncomeController: string = 'admin/income-in-months';
+
   constructor(private http: HttpService) { }
 
   checkAva(data: checkAva): Observable<any> {
@@ -23,6 +27,14 @@ export class BookingApi {
 
   checkAvaAdmin(data: checkAva): Observable<any> {
     return this.http.post(this.apiAdminController, data);
+  }
+
+  bookingCount(data: any): Observable<any> {
+    return this.http.get(`${this.apiBookingCountController}?year=${data}`);
+  }
+
+  income(data: any): Observable<any> {
+    return this.http.get(`${this.apiIncomeController}?year=${data}`)
   }
 
 }

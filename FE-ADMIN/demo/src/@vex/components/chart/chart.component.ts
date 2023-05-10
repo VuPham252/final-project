@@ -47,8 +47,8 @@ export interface ApexOptions {
 })
 export class ChartComponent implements OnInit, OnChanges {
 
-  @Input() options: ApexOptions;
-  @Input() series: ApexAxisChartSeries | ApexNonAxisChartSeries;
+  @Input() options: any;
+  @Input() series: any;
   @Input() autoUpdateSeries = true;
   public chart: ApexCharts;
   @ViewChild('chart', { static: true }) private chartElement: ElementRef;

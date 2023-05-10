@@ -31,10 +31,10 @@
     </div>
     <mat-label>Description</mat-label>
     <div class="flex flex-col sm:flex-row">
-
-      <quill-editor [ngClass]="isView == 'view' ? 'ban' : ''"
-      [readOnly] ="isView == 'view'" [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
-      <mat-error *ngIf="submitted && f.description.hasError('required')">Description is required</mat-error>
+      <div class="sm:mt-6 sm:ml-6 flex-auto">
+        <quill-editor [ngClass]="isView == 'view' ? 'ban' : ''"
+        [readOnly] ="isView == 'view'" [styles]="{flex: '1 1 auto'}" formControlName="description" ></quill-editor>
+      </div>
     </div>
 
     <div class="flex flex-col sm:flex-row" style="max-width: 600px; margin-top:25px">

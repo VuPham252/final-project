@@ -6,7 +6,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BlogData } from "src/app/core/api/blog/blog-data";
 import { Blog } from "src/app/core/model/blog";
@@ -39,7 +39,7 @@ export class BlogCreateUpdateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public defaults: any,
     private fb: UntypedFormBuilder,
     private alertService: AlertService,
-    private dialog: MatDialog,
+    private dialog: MatDialogRef<BlogCreateUpdateComponent>,
     private blogData: BlogData,
     private uploadData: UploadData
   ) {
@@ -114,7 +114,7 @@ export class BlogCreateUpdateComponent implements OnInit {
           this.alertService.success(
             this.isCreateMode ? "Create Successful!" : "Update Successful"
           );
-          this.dialog.closeAll();
+          this.dialog.close(response);
         },
         error: (error) => {
           console.log(error);
@@ -130,7 +130,7 @@ export class BlogCreateUpdateComponent implements OnInit {
           this.alertService.success(
             this.isCreateMode ? "Create Successful!" : "Update Successful"
           );
-          this.dialog.closeAll();
+          this.dialog.close(response);
         },
         error: (error) => {
           console.log(error);
@@ -188,11 +188,11 @@ export class BlogCreateUpdateComponent implements OnInit {
   // }
 
   onNoClick() {
-    this.dialog.closeAll();
+    this.dialog.close();
   }
 
   close(answer: string) {
-    this.dialog.closeAll();
+    this.dialog.close();
   }
 
   get f() {

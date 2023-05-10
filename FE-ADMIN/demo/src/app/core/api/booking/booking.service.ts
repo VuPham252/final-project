@@ -20,4 +20,12 @@ export class BookingService implements BookingData {
     return this.api.booking(data);
   }
 
+  bookingCount(data: any): Observable<any> {
+    return this.api.bookingCount(data);
+  }
+
+  income(data: any): Observable<any> {
+    return this.api.income(data);
+  }
+
 }

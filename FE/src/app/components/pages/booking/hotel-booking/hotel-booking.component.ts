@@ -52,7 +52,6 @@ export class HotelBookingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
     if(this.id > 0) {
       this.bookingForm = this.fb.group({

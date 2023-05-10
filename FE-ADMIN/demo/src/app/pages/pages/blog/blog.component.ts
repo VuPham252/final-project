@@ -129,7 +129,9 @@ export class BlogComponent implements OnInit,AfterViewInit {
       .open(BlogCreateUpdateComponent, dialogConfig)
       .afterClosed()
       .subscribe((result) => {
-        this.reloadTable();
+        if(result) {
+          this.reloadTable();
+        }
       });
   }
 
@@ -140,7 +142,9 @@ export class BlogComponent implements OnInit,AfterViewInit {
       })
       .afterClosed()
       .subscribe((updatedBlog) => {
-        this.reloadTable();
+        if(updatedBlog) {
+          this.reloadTable();
+        }
       });
   }
 

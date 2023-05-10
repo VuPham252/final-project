@@ -8,6 +8,7 @@ import { Room } from 'src/app/core/model/room';
 import { roomType } from 'src/app/core/model/room-type';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderData } from 'src/app/core/api/order/order-data';
+import { BookingData } from 'src/app/core/api/booking/booking-data';
 
 type ApexXAxis = {
   type?: "category" | "datetime" | "numeric";
@@ -44,109 +45,43 @@ export class DashboardAnalyticsComponent {
   numberRoom: number;
   numberOrder: number = 0;
 
-  public userSessionsSeries: Partial<ChartOptions>;
+  public year: number = 0;
 
   constructor(
     private roomData : RoomData,
     private roomType :RoomTypeData,
     private orderData: OrderData,
-  ){
-    this.userSessionsSeries = {
-      series: [
-        {
-          name: "distibuted",
-          data: [21, 22, 10, 28, 16, 21, 13, 30]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: "bar",
-        events: {
-          click: function(chart, w, e) {
-            // console.log(chart, w, e)
-          }
-        }
-      },
-      colors: [
-        "#008FFB",
-        "#00E396",
-        "#FEB019",
-        "#FF4560",
-        "#775DD0",
-        "#546E7A",
-        "#26a69a",
-        "#D10CE8"
-      ],
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          distributed: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: {
-        show: false
-      },
-      grid: {
-        show: false
-      },
-      xaxis: {
-        categories: [
-          ["John", "Doe"],
-          ["Joe", "Smith"],
-          ["Jake", "Williams"],
-          "Amber",
-          ["Peter", "Brown"],
-          ["Mary", "Evans"],
-          ["David", "Wilson"],
-          ["Lily", "Roberts"]
-        ],
-        labels: {
-          style: {
-            colors: [
-              "#008FFB",
-              "#00E396",
-              "#FEB019",
-              "#FF4560",
-              "#775DD0",
-              "#546E7A",
-              "#26a69a",
-              "#D10CE8"
-            ],
-            fontSize: "12px"
-          }
-        }
-      }
-    }
-  }
+    private bookingData : BookingData,
+  ){}
 
-  tableColumns: TableColumn<roomType>[] = [
+  tableColumns: TableColumn<any>[] = [
 
     {
-      label: 'NAME',
-      property: 'typeName',
+      label: 'Month',
+      property: 'month',
       type: 'text'
     },
     {
-      label: '$ PRICE',
-      property: 'price',
+      label: 'Income ($)',
+      property: 'income',
       type: 'text',
       cssClasses: ['font-medium']
     },
   ];
   ngOnInit() {
-    this.getDataRoom();
+    this.getIncome();
     this.getNumberRoom();
     this.getOrderBooking();
     this.dataSource = new MatTableDataSource();
 
   }
-  getDataRoom(){
-    this.roomType.search().subscribe({
-      next: (res) => {
 
+  getIncome(){
+    if(this.year <= 0) {
+      this.year = new Date().getFullYear();
+    }
+    this.bookingData.income(this.year).subscribe({
+      next: (res) => {
         this.dataSource.data = res;
         this.tableData = this.dataSource.data;
         console.log(res);
@@ -184,12 +119,28 @@ export class DashboardAnalyticsComponent {
     })
   }
 
+  getYear(event: any) {
+    this.year = event;
+    this.getIncome();
+  }
+
   tableData = tableSalesData;
 
   series: ApexAxisChartSeries = [{
     name: 'Subscribers',
     data: [28, 40, 36, 0, 52, 38, 60, 55, 67, 33, 89, 44]
   }];
+
+  userSessionsSeries: ApexAxisChartSeries = [
+    {
+      name: 'Users',
+      data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+    },
+    {
+      name: 'Sessions',
+      data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
+    },
+  ]
 
 
   //  = [

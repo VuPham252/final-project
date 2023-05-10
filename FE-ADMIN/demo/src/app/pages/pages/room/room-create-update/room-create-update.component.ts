@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomTypeData } from 'src/app/core/api/room-type/room-type-data';
 import { RoomData } from 'src/app/core/api/room/room-data';
@@ -30,7 +30,7 @@ export class RoomCreateUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private roomData : RoomData,
-    private dialog: MatDialog,
+    private dialog: MatDialogRef<RoomCreateUpdateComponent>,
     private roomType :RoomTypeData
     ) { }
 
@@ -81,7 +81,7 @@ export class RoomCreateUpdateComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.alertService.success(this.isCreateMode ? "Create Successful!" : "Update Successful");
-            this.dialog.closeAll()
+            this.dialog.close(response)
           },
           error: (error) => {
             console.log(error)
@@ -94,7 +94,7 @@ export class RoomCreateUpdateComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.alertService.success(this.isCreateMode ? "Create Successful!" : "Update Successful");
-            this.dialog.closeAll()
+            this.dialog.close(response)
           },
           error: (error) => {
             console.log(error)
@@ -107,11 +107,11 @@ export class RoomCreateUpdateComponent implements OnInit {
     }
 
     onNoClick() {
-      this.dialog.closeAll()
+      this.dialog.close()
     }
 
     close(answer: string) {
-      this.dialog.closeAll();
+      this.dialog.close();
     }
 
 }
