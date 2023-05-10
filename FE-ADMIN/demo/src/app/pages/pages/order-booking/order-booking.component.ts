@@ -1,32 +1,41 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
-import { FormBuilder, UntypedFormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { OrderBookingCreateUpdateComponent } from './order-booking-create-update/order-booking-create-update.component';
-import { Order } from 'src/app/core/model/order';
-import { OrderData } from 'src/app/core/api/order/order-data';
-import { MatSort } from '@angular/material/sort';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { TableColumn } from "../../../../@vex/interfaces/table-column.interface";
+import { FormBuilder, UntypedFormControl } from "@angular/forms";
+import { Router } from "@angular/router";
+import { OrderBookingCreateUpdateComponent } from "./order-booking-create-update/order-booking-create-update.component";
+import { Order } from "src/app/core/model/order";
+import { OrderData } from "src/app/core/api/order/order-data";
+import { MatSort } from "@angular/material/sort";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldDefaultOptions,
+} from "@angular/material/form-field";
 
 @UntilDestroy()
 @Component({
-  selector: 'vex-order-booking',
-  templateUrl: './order-booking.component.html',
-  styleUrls: ['./order-booking.component.scss'],
+  selector: "vex-order-booking",
+  templateUrl: "./order-booking.component.html",
+  styleUrls: ["./order-booking.component.scss"],
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
-        appearance: 'standard'
-      } as MatFormFieldDefaultOptions
-    }
-  ]
+        appearance: "standard",
+      } as MatFormFieldDefaultOptions,
+    },
+  ],
 })
-export class OrderBookingComponent implements OnInit,AfterViewInit {
+export class OrderBookingComponent implements OnInit, AfterViewInit {
   rows: Order[] = [];
   searchForm: any;
   isLoading = false;
@@ -35,21 +44,21 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
   pageSizeOptions: number[] = [2, 10, 20, 50];
   filter: any[] = [
     {
-      name: 'Customer Name',
-      value: 'customerName'
+      name: "Customer Name",
+      value: "customerName",
     },
     {
-      name: 'Phone Number',
-      value: 'phoneNumber'
+      name: "Phone Number",
+      value: "phoneNumber",
     },
     {
-      name: 'Email Address',
-      value: 'email'
-    }
+      name: "Email Address",
+      value: "email",
+    },
   ];
   filterValue = {
-    name: 'Phone Number',
-    value: 'phoneNumber'
+    name: "Phone Number",
+    value: "phoneNumber",
   };
   searchCtrl = new UntypedFormControl();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -59,45 +68,66 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     private dialog: MatDialog,
     private router: Router,
     private orderData: OrderData
-  ) { }
+  ) {}
 
   dataSource: MatTableDataSource<Order> | null;
 
   @Input()
   columns: TableColumn<Order>[] = [
-    { label: 'NO.', property: 'numbers', type: 'text', visible: true },
-    { label: 'Customer Name', property: 'customerName', type: 'text', visible: true },
-    { label: 'Email', property: 'email', type: 'text', visible: true, },
-    { label: 'Phone Number', property: 'phoneNumber', type: 'text', visible: true },
-    { label: 'List Room Type', property: 'roomTypeNameList', type: 'text', visible: true },
-    { label: 'Create Time', property: 'createdTime', type: 'text', visible: true },
-    { label: 'Actions', property: 'actions', type: 'button', visible: true }
+    { label: "NO.", property: "numbers", type: "text", visible: true },
+    {
+      label: "Customer Name",
+      property: "customerName",
+      type: "text",
+      visible: true,
+    },
+    { label: "Email", property: "email", type: "text", visible: true },
+    {
+      label: "Phone Number",
+      property: "phoneNumber",
+      type: "text",
+      visible: true,
+    },
+    {
+      label: "List Room Type",
+      property: "roomTypeNameList",
+      type: "text",
+      visible: true,
+    },
+    {
+      label: "Create Time",
+      property: "createdTime",
+      type: "text",
+      visible: true,
+    },
+    { label: "Actions", property: "actions", type: "button", visible: true },
   ];
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
-
     console.log(typeof this.pageSizeOptions);
 
     this.searchForm = this.formBuilder.group({
       keyword: null,
       pageIndex: 1,
-      pageSize: 10
-    })
+      pageSize: 10,
+    });
     this.dataSource = new MatTableDataSource();
-    this.orderData.search().subscribe((x: Array<Order>) => this.listOrder = x || []);
+    this.orderData
+      .search()
+      .subscribe((x: Array<Order>) => (this.listOrder = x || []));
 
     this.reloadTable();
 
-    this.searchCtrl.valueChanges.pipe(
-      untilDestroyed(this)
-    ).subscribe(value => this.onFilterChange(value));
+    this.searchCtrl.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((value) => this.onFilterChange(value));
   }
 
   isObject(value: any) {
-    return typeof value === 'object';
+    return typeof value === "object";
   }
 
   getFilterValue(value: any) {
@@ -105,19 +135,23 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
   }
 
   onFilterChange(value: string) {
+    debugger;
     let a = this.filterValue.value;
     if (!this.dataSource) {
       return;
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
     this.dataSource.filterPredicate = (data: Order, filter: string) => {
-      if(data.hasOwnProperty(a)) {
+      if (data.hasOwnProperty(a)) {
+        debugger;
         return data[a].toLocaleLowerCase().includes(filter);
+      } else {
+        debugger;
+        return data.phoneNumber.toLocaleLowerCase().includes(filter);
       }
-      else return data.phoneNumber.toLocaleLowerCase().includes(filter);
-     };
+    };
+    this.dataSource.filter = value;
   }
 
   // onFilterChange(value: string) {
@@ -133,7 +167,7 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
   // }
 
   redirectDetail(item: any) {
-    this.router.navigate(['/pages/order-detail', item.id]);
+    this.router.navigate(["/pages/order-detail", item.id]);
   }
 
   submitSearch() {
@@ -150,11 +184,14 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
     const dialogConfig = new MatDialogConfig();
 
     // // Set the size of the dialog
-     dialogConfig.width = '900px';
+    dialogConfig.width = "900px";
     // dialogConfig.height = '356px';
-    this.dialog.open(OrderBookingCreateUpdateComponent, dialogConfig).afterClosed().subscribe(result => {
-      this.reloadTable();
-    });
+    this.dialog
+      .open(OrderBookingCreateUpdateComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((result) => {
+        this.reloadTable();
+      });
   }
   reloadTable() {
     this.isLoading = true;
@@ -168,8 +205,8 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
       error: (err) => {
         console.log(err);
         this.isLoading = false;
-      }
-    })
+      },
+    });
     // this.roomData.search()
     //   .subscribe({
     //     next: (response) => {
@@ -188,7 +225,9 @@ export class OrderBookingComponent implements OnInit,AfterViewInit {
   }
 
   get visibleColumns() {
-    return this.columns.filter(column => column.visible).map(column => column.property);
+    return this.columns
+      .filter((column) => column.visible)
+      .map((column) => column.property);
   }
 
   toggleColumnVisibility(column, event) {

@@ -134,10 +134,10 @@ export class RoomComponent implements OnInit, AfterViewInit {
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
     this.dataSource.filterPredicate = (data: Room, filter: string) => {
       return data.name.toLocaleLowerCase().includes(filter);
      };
+    this.dataSource.filter = value;
   }
 
 
