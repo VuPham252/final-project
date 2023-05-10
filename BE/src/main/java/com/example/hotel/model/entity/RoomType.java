@@ -27,12 +27,22 @@ public class RoomType {
 
     private BigDecimal price;
 
+    private Double size;
+
+    private Double area;
+
+    private String layout;
+
+    private String extraService;
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<Image> imageList;
 
+    @Lob
     private String shortDescription;
 
+    @Lob
     private String description;
 
     @CreationTimestamp

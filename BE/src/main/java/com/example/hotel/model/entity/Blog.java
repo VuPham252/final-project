@@ -22,8 +22,10 @@ public class Blog {
 
     private String title;
 
+    @Lob
     private String description;
 
+    @Lob
     private String shortDescription;
 
     @JsonManagedReference
