@@ -116,15 +116,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   createCustomer() {
-    this.dialog.open(CustomerCreateUpdateComponent).afterClosed().subscribe((customer: Customer) => {
-      /**
-       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-       */
+    this.dialog.open(CustomerCreateUpdateComponent).afterClosed().subscribe(customer => {
       if (customer) {
-        /**
-         * Here we are updating our local array.
-         * You would probably make an HTTP request here.
-         */
         this.getDataRoom();
       }
     });
@@ -139,8 +132,6 @@ export class AioTableComponent implements OnInit, AfterViewInit {
        * Customer is the updated customer (if the user pressed Save - otherwise it's null)
        */
       if (updatedCustomer) {
-
-
         this.getDataRoom();
       }
     });
@@ -152,7 +143,6 @@ export class AioTableComponent implements OnInit, AfterViewInit {
         title: "View Room Type",
         customer,
         isView: "view",
-
       }
     }).afterClosed().subscribe(updatedCustomer => {
       /**

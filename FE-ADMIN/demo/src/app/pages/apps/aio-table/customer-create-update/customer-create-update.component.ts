@@ -70,6 +70,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   ngOnInit() {
     // debugger;
+    this.dialogRef.updateSize('650px', 'auto');
     if (this.defaults && this.defaults.isView == 'view'){
       this.isView = this.defaults.isView;
       this.form = this.fb.group({

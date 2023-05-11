@@ -44,7 +44,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
 
   @Input()
   columns: TableColumn<Blog>[] = [
-    { label: "Id", property: "id", type: "text", visible: true },
+    { label: "NO.", property: "numbers", type: "text", visible: true },
     { label: "Title", property: "title", type: "text", visible: true },
     {
       label: "Description",

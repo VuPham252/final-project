@@ -34,7 +34,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
   @Input()
   columns: TableColumn<Contact>[] = [
-    { label: 'Id', property: 'id', type: 'text', visible: true },
+    { label: "NO.", property: "numbers", type: "text", visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },
     { label: 'Email', property: 'email', type: 'text', visible: true, },
     { label: 'Subject', property: 'subject', type: 'text', visible: true },

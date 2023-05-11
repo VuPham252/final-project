@@ -57,10 +57,10 @@
           />
         </form> -->
 
-        <button class="ml-2" mat-button [matMenuTriggerFor]="menu">
+        <button class="ml-2" mat-raised-button [matMenuTriggerFor]="menu" style="border-radius: 5px !important;">
           {{ filterValue.name }}
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu="matMenu" class="mt-1">
           <ng-container *ngFor="let item of filter; let idx = index">
             <button mat-menu-item (click)="getFilterValue(item)">
               {{ item.name }}

@@ -36,6 +36,17 @@
       </div>
       <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
       <table [dataSource]="dataSource" class="w-full" mat-table matSort>
+        <!-- Numbers column -->
+        <ng-container matColumnDef="numbers">
+          <th *matHeaderCellDef mat-header-cell>NO.</th>
+          <td
+            *matCellDef="let row; let i = index"
+            class="w-10 text-secondary"
+            mat-cell
+          >
+            {{ i + 1 }}
+          </td>
+        </ng-container>
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header>ACTION</th>
@@ -54,7 +65,7 @@
 
         <ng-container *ngFor="let column of columns">
 
-          <ng-container *ngIf="column.property != 'actions'" [matColumnDef]="column.property">
+          <ng-container *ngIf="column.property != 'actions' && column.property != 'numbers'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
           </ng-container>

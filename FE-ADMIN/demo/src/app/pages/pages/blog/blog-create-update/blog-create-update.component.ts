@@ -60,6 +60,7 @@ export class BlogCreateUpdateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.dialog.updateSize('650px', 'auto');
     console.log(this.defaults);
     if (this.defaults && this.defaults.isView == "view") {
       this.isView = this.defaults.isView;
