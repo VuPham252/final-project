@@ -8,9 +8,9 @@ export class Blog {
   constructor() {
     this.id = 0
     this.title = '';
-    this.description=  '';
+    this.description= '';
     this.shortDescription= '';
-    this.author=  '';
+    this.author= '';
   }
 
 }

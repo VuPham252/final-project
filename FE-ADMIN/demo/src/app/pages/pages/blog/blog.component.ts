@@ -50,7 +50,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
       label: "Description",
       property: "description",
       type: "text",
-      visible: true,
+      visible: false,
     },
     {
       label: "Short Description",
