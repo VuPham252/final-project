@@ -386,6 +386,7 @@ public class AdminServiceBean implements AdminService {
         existBlog.setTitle(updateRequest.getTitle());
         existBlog.setDescription(updateRequest.getDescription());
         existBlog.setShortDescription(updateRequest.getShortDescription());
+        existBlog.setAuthor(updateRequest.getAuthor());
         blogRepository.save(existBlog);
 
         if(!Objects.isNull(updateRequest.getImgCodeList())) {
