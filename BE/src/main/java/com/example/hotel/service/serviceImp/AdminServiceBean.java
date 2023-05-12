@@ -156,7 +156,11 @@ public class AdminServiceBean implements AdminService {
                 .typeName(roomTypeRequest.getTypeName())
                 .price(roomTypeRequest.getPrice())
                 .description(roomTypeRequest.getDescription())
-                .shortDescription(roomTypeRequest.getShortDescription()).build();
+                .shortDescription(roomTypeRequest.getShortDescription())
+                .area(roomTypeRequest.getArea())
+                .extraService(roomTypeRequest.getExtraService())
+                .area(roomTypeRequest.getArea())
+                .size(roomTypeRequest.getSize()).build();
         try{
             RoomType savedRoomType = roomTypeRepository.save(roomType);
             saveImage(roomTypeRequest.getImgCodeList(), savedRoomType);
@@ -221,6 +225,10 @@ public class AdminServiceBean implements AdminService {
         existRoomType.setPrice(roomTypeRequest.getPrice());
         existRoomType.setDescription(roomTypeRequest.getDescription());
         existRoomType.setShortDescription(roomTypeRequest.getShortDescription());
+        existRoomType.setExtraService(roomTypeRequest.getExtraService());
+        existRoomType.setArea(roomTypeRequest.getArea());
+        existRoomType.setSize(roomTypeRequest.getArea());
+        existRoomType.setLayout(roomTypeRequest.getLayout());
         roomTypeRepository.save(existRoomType);
 
         if(!Objects.isNull(roomTypeRequest.getImgCodeList())){
