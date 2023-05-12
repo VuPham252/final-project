@@ -69,14 +69,17 @@ export class CustomerCreateUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    // debugger;
     this.dialogRef.updateSize('650px', 'auto');
     if (this.defaults && this.defaults.isView == 'view'){
       this.isView = this.defaults.isView;
       this.form = this.fb.group({
         id: this.defaults.customer.id,
         typeName: [this.defaults.customer.typeName, [Validators.required]],
-        price: [this.defaults.customer.price, [Validators.required]],
+        price: [this.defaults.customer.price, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        area: [this.defaults.customer.area, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        size: [this.defaults.customer.size, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        layout: [this.defaults.customer.layout, [Validators.required]],
+        extraService: [this.defaults.customer.extraService, [Validators.required]],
         description: [this.defaults.customer.description, []],
         shortDescription: [this.defaults.customer.shortDescription, []],
         imgCodeList: this.fb.array([]),
@@ -92,7 +95,11 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.form = this.fb.group({
         id: this.defaults.id,
         typeName: [this.defaults.typeName, [Validators.required]],
-        price: [this.defaults.price, [Validators.required]],
+        price: [this.defaults.price, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        area: [this.defaults.area, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        size: [this.defaults.size, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        layout: [this.defaults.layout, [Validators.required]],
+        extraService: [this.defaults.extraService, [Validators.required]],
         description: [this.defaults.description, []],
         shortDescription: [this.defaults.shortDescription, []],
         imgCodeList: this.fb.array([]),
@@ -106,7 +113,11 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.form = this.fb.group({
         id: 0,
         typeName: ['', [Validators.required]],
-        price: [, [Validators.required]],
+        price: [, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        area: [, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        size: [, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        layout: ['', [Validators.required]],
+        extraService: ['', [Validators.required]],
         description: ['', []],
         shortDescription: ['', []],
         imgCodeList: this.fb.array([]),

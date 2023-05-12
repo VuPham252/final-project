@@ -108,7 +108,7 @@ export class BlogCreateUpdateComponent implements OnInit {
     if (this.form.invalid) return;
 
     const blog = this.form.value;
-    debugger;
+    // debugger;
     if (this.isCreateMode) {
       this.blogData.save(blog).subscribe({
         next: (response) => {
@@ -162,6 +162,7 @@ export class BlogCreateUpdateComponent implements OnInit {
     for (let i = 0; i < item.length; i++) {
       formData.append("file", item[i]);
     }
+    // debugger
     if (item.length > 0) {
       if (this.imgResponse.value.length > 0) {
         let a = this.imgResponse.value[0].fileCode;

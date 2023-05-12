@@ -92,10 +92,10 @@ export class BlogComponent implements OnInit,AfterViewInit {
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
     this.dataSource.filterPredicate = (data: Blog, filter: string) => {
       return data.title.toLocaleLowerCase().includes(filter);
-     };
+    };
+    this.dataSource.filter = value;
   }
 
   ngAfterViewInit() {
@@ -161,6 +161,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
   }
 
   update(item: any) {
+    // debugger
     this.dialog
       .open(BlogCreateUpdateComponent, {
         data: item,

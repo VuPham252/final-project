@@ -110,6 +110,7 @@ export class DashboardAnalyticsComponent {
   getOrderBooking() {
     this.orderData.search().subscribe({
       next: (res) => {
+        debugger
         this.numberOrder = res.length;
         console.log(res);
       },

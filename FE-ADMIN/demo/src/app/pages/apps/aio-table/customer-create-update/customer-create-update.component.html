@@ -37,6 +37,65 @@
         <mat-error *ngIf="submitted && f.price.hasError('required')"
           >Price is required</mat-error
         >
+        <mat-error *ngIf="submitted && f.price.hasError('pattern')"
+          >Price only has number</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Area</mat-label>
+        <input
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="area"
+          matInput
+        />
+        <mat-error *ngIf="submitted && f.area.hasError('required')"
+          >Area is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Size</mat-label>
+        <input
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="size"
+          matInput
+        />
+        <mat-error *ngIf="submitted && f.size.hasError('required')"
+          >Size is required</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Layout</mat-label>
+        <input
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="layout"
+          matInput
+        />
+        <mat-error *ngIf="submitted && f.layout.hasError('required')"
+          >Layout is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Extra Service</mat-label>
+        <input
+          [ngClass]="isView == 'view' ? 'ban' : ''"
+          [readonly]="isView == 'view'"
+          formControlName="extraService"
+          matInput
+        />
+        <mat-error *ngIf="submitted && f.extraService.hasError('required')"
+          >Extra Service is required</mat-error
+        >
       </mat-form-field>
     </div>
 
