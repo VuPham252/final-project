@@ -49,13 +49,13 @@ export class BlogComponent implements OnInit,AfterViewInit {
 
   @Input()
   columns: TableColumn<Blog>[] = [
-    { label: "Id", property: "id", type: "text", visible: true },
+    { label: "NO.", property: "numbers", type: "text", visible: true },
     { label: "Title", property: "title", type: "text", visible: true },
     {
       label: "Description",
       property: "description",
       type: "text",
-      visible: true,
+      visible: false,
     },
     {
       label: "Short Description",
@@ -92,10 +92,10 @@ export class BlogComponent implements OnInit,AfterViewInit {
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
     this.dataSource.filterPredicate = (data: Blog, filter: string) => {
       return data.title.toLocaleLowerCase().includes(filter);
-     };
+    };
+    this.dataSource.filter = value;
   }
 
   ngAfterViewInit() {
@@ -161,6 +161,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
   }
 
   update(item: any) {
+    // debugger
     this.dialog
       .open(BlogCreateUpdateComponent, {
         data: item,

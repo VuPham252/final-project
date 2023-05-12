@@ -180,13 +180,12 @@ export class WidgetLargeChartComponent implements OnInit {
   }
 
   getMonthValue(value: any) {
-    debugger
+    // debugger
     this.monthValue = value;
   }
 
   Filter(event: any) {
-    debugger
-    event
+    // debugger
     let item = this.chartData.bookingCountResponseList;
     console.log("item", item);
     for (let i = 0; i < item.length; i++) {

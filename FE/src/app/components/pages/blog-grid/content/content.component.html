@@ -53,8 +53,8 @@
               </h2>
               <p class="text-light-dark no-margin">
                 {{
-                  item.shortDescription.length > 5
-                    ? (item.shortDescription | slice : 0 : 5) + "..."
+                  item.shortDescription.length > 200
+                    ? (item.shortDescription | slice : 0 : 200) + "..."
                     : item.shortDescription
                 }}
               </p>

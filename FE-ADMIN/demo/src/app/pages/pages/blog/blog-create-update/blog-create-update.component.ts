@@ -60,6 +60,7 @@ export class BlogCreateUpdateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.dialog.updateSize('650px', 'auto');
     console.log(this.defaults);
     if (this.defaults && this.defaults.isView == "view") {
       this.isView = this.defaults.isView;
@@ -161,6 +162,7 @@ export class BlogCreateUpdateComponent implements OnInit {
     for (let i = 0; i < item.length; i++) {
       formData.append("file", item[i]);
     }
+    // debugger
     if (item.length > 0) {
       if (this.imgResponse.value.length > 0) {
         let a = this.imgResponse.value[0].fileCode;
