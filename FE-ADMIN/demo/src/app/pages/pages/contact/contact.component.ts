@@ -6,12 +6,13 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/core/model/blog';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, UntypedFormControl } from '@angular/forms';
 import { Contact } from 'src/app/core/model/contact';
 import { ContactData } from 'src/app/core/api/contact/contact-data';
 import { MatSort } from '@angular/material/sort';
 import { ContactCreateUpdateComponent } from './contact-create-update/contact-create-update.component';
-
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+@UntilDestroy()
 @Component({
   selector: 'vex-contact',
   templateUrl: './contact.component.html',
@@ -22,6 +23,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
   isLoading = false;
   pageSize = 10;
   pageSizeOptions: number[] = [2, 10, 20, 50];
+  searchCtrl = new UntypedFormControl();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
@@ -58,6 +61,22 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
     // this.dataSource.data = this.rows;
     this.reloadTable();
+
+    this.searchCtrl.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.onFilterChange(value));
+  }
+
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
+    }
+    value = value.trim();
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
+    this.dataSource.filterPredicate = (data: Contact, filter: string) => {
+      return data.name.toLocaleLowerCase().includes(filter);
+     };
   }
 
   view(customer: Contact) {

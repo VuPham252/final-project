@@ -12,11 +12,14 @@ import { TableColumn } from "../../../../@vex/interfaces/table-column.interface"
 import { ConfirmDialogComponent } from "src/app/dialogs/confirm-dialog/confirm-dialog.component";
 import { Router } from "@angular/router";
 import { Blog } from "src/app/core/model/blog";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, UntypedFormControl } from "@angular/forms";
 import { BlogData } from "src/app/core/api/blog/blog-data";
 import { BlogCreateUpdateComponent } from "./blog-create-update/blog-create-update.component";
 import { AlertService } from "src/app/_services/alert.service";
 import { MatSort } from "@angular/material/sort";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+@UntilDestroy()
 
 @Component({
   selector: "vex-blog",
@@ -37,6 +40,8 @@ export class BlogComponent implements OnInit,AfterViewInit {
     private blogData: BlogData,
     private a: AlertService
   ) {}
+  searchCtrl = new UntypedFormControl();
+
 
   dataSource: MatTableDataSource<Blog> = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -71,9 +76,28 @@ export class BlogComponent implements OnInit,AfterViewInit {
     });
     this.dataSource = new MatTableDataSource();
 
-    this.dataSource.data = this.rows;
+
     this.reloadTable();
+
+    this.dataSource.data = this.rows;
+    this.searchCtrl.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.onFilterChange(value));
   }
+
+
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
+    }
+    value = value.trim();
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
+    this.dataSource.filterPredicate = (data: Blog, filter: string) => {
+      return data.title.toLocaleLowerCase().includes(filter);
+     };
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -87,6 +111,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
     // this.searchObject.pageIndex = event.pageIndex + 1;
     // this.searchObject.pageSize = event.pageSize;
     this.reloadTable();
+
   }
 
   reloadTable() {
