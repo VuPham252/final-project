@@ -135,7 +135,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/room-type/{id}")
-    public  ResponseEntity<SuccessResponseObj>deleteRoomType(@PathVariable ("id")Long id){
+    public  ResponseEntity<CommonResponseObj>deleteRoomType(@PathVariable ("id")Long id){
         return adminService.deleteRoomType(id);
     }
 

@@ -31,7 +31,7 @@ public interface AdminService {
 
     ResponseEntity<SuccessResponseObj> updateRoomType(RoomTypeRequest roomTypeRequest, Long id) throws BookingBusinessException, IOException;
 
-    ResponseEntity<SuccessResponseObj>deleteRoomType(Long id);
+    ResponseEntity<CommonResponseObj>deleteRoomType(Long id);
 
 
     //CRUD ROOM

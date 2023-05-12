@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
         select Count(*) as booking_count, room_type_id, DATE_FORMAT(booking.check_out_date,'%M') as month
                                    from booking
                                    where created_time < ?1
+                                   and status = 'CHECKED_OUT'
                                    group by room_type_id, DATE_FORMAT(booking.check_out_date,'%M');
         """,
         resultSetMapping = "IncomeCountMapping"
