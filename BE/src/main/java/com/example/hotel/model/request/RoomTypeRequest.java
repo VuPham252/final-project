@@ -18,6 +18,14 @@ public class RoomTypeRequest {
 
     private String description;
 
+    private Double size;
+
+    private Double area;
+
+    private String layout;
+
+    private String extraService;
+
     private List<String> imgCodeList;
 
     private List<String> deleteImgCodeList;
