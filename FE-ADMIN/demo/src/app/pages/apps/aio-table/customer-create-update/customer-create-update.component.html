@@ -1,7 +1,7 @@
 <form (ngSubmit)="save()" [formGroup]="form">
   <div class="flex items-center" mat-dialog-title>
     <h2 class="title m-0" *ngIf="isView != 'view'">
-      {{ isCreateMode ? "Create" : "Update" }} Room Type
+      {{ mode == 'create' ? "Create" : "Update" }} Room Type
     </h2>
     <h2 class="title m-0" *ngIf="isView == 'view'">View Room Type</h2>
     <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
