@@ -273,12 +273,21 @@ public class AdminServiceBean implements AdminService {
     }
 
     @Override
-    public ResponseEntity<SuccessResponseObj> deleteRoomType(Long id) {
+    public ResponseEntity<CommonResponseObj> deleteRoomType(Long id) {
+        List<Booking> bookingList = bookingRepository.findAll();
+        boolean canDelete = bookingList.stream().anyMatch(booking -> booking.getRoomTypeId().equals(id));
+        if(!canDelete) {
+            CommonResponseObj commonResponseObj = CommonResponseObj.builder()
+                    .statusCode(HttpStatus.NOT_ACCEPTABLE.value())
+                    .message("Can not delete room type!").build();
+            return new ResponseEntity<>(commonResponseObj, HttpStatus.NOT_ACCEPTABLE);
+
+        }
         roomTypeRepository.deleteById(id);
-        SuccessResponseObj successResponseObj = SuccessResponseObj.builder()
+        CommonResponseObj responseObj = CommonResponseObj.builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Delete Roomtype Successfully").build();
-        return new ResponseEntity<>(successResponseObj, HttpStatus.OK);
+        return new ResponseEntity<>(responseObj, HttpStatus.OK);
     }
 
 
