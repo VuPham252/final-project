@@ -3,28 +3,28 @@
         "id":1,
         "title":"Restaurant",
         "image":"assets/images/offers01.jpg",
-        "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "text":"Hotel Restaurant Au Boeuf Couronne.",
         "link":"/hotel-grid"
     },
     {
         "id":2,
         "title":"Spa",
         "image":"assets/images/offers02.jpg",
-        "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "text":"The air-conditioned apartment consists of 1 bedroom, a living room, a fully equipped kitchenette with a fridge.",
         "link":"/flight-grid"
     },
     {
         "id":3,
         "title":"Poolside bar",
         "image":"assets/images/offers03.jpg",
-        "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "text":"Sip your favorite cocktail and enjoy a bite to eat while relaxing beside the refreshing outdoor swimming pool.",
         "link":"/cruise-grid"
     },
     {
         "id":4,
         "title":"Room Service",
         "image":"assets/images/offers04.jpg",
-        "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "text":"At Toor Hotels we have the best room service you could ask for.",
         "link":"/car-grid"
     }
 ]

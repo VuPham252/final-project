@@ -53,17 +53,23 @@ export class HotelBookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
-    if(this.id > 0) {
+    if (this.id > 0) {
       this.bookingForm = this.fb.group({
         customerName: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', [Validators.required]],
+        phoneNumber: [
+          '',
+          [Validators.required, Validators.pattern('^[0-9]*$')],
+        ],
         bookingRequestList: this.fb.array(
           [
             this.fb.group({
               inputCheckinDate: ['', [Validators.required]],
               inputCheckoutDate: ['', [Validators.required]],
-              amount: ['', [Validators.required, Validators.max, Validators.min]],
+              amount: [
+                '',
+                [Validators.required, Validators.max, Validators.min],
+              ],
               roomTypeId: [this.id, [Validators.required]],
               roomTypeName: ['', []],
               roomTypePrice: ['', []],
@@ -74,18 +80,28 @@ export class HotelBookingComponent implements OnInit {
           [Validators.required]
         ),
       });
-    }
-    else {
+    } else {
       this.bookingForm = this.fb.group({
         customerName: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', [Validators.required]],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[0-9]*$'),
+            Validators.maxLength(11),
+            Validators.minLength(9),
+          ],
+        ],
         bookingRequestList: this.fb.array(
           [
             this.fb.group({
               inputCheckinDate: ['', [Validators.required]],
               inputCheckoutDate: ['', [Validators.required]],
-              amount: ['', [Validators.required, Validators.max, Validators.min]],
+              amount: [
+                '',
+                [Validators.required, Validators.max, Validators.min],
+              ],
               roomTypeId: ['', [Validators.required]],
               roomTypeName: ['', []],
               roomTypePrice: ['', []],
@@ -176,7 +192,7 @@ export class HotelBookingComponent implements OnInit {
     let newForm = this.fb.group({
       inputCheckinDate: ['', [Validators.required]],
       inputCheckoutDate: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
+      amount: ['', [Validators.required, Validators.max, Validators.min]],
       roomTypeId: ['', [Validators.required]],
       roomTypeName: ['', []],
       roomTypePrice: ['', []],

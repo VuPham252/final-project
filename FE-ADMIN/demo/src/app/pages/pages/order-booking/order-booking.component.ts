@@ -144,10 +144,8 @@ export class OrderBookingComponent implements OnInit, AfterViewInit {
     value = value.toLowerCase();
     this.dataSource.filterPredicate = (data: Order, filter: string) => {
       if (data.hasOwnProperty(a)) {
-        // debugger;
         return data[a].toLocaleLowerCase().includes(filter);
       } else {
-        // debugger;
         return data.phoneNumber.toLocaleLowerCase().includes(filter);
       }
     };
