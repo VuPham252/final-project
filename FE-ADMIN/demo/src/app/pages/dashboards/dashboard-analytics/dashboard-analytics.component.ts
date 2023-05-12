@@ -9,6 +9,8 @@ import { roomType } from 'src/app/core/model/room-type';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderData } from 'src/app/core/api/order/order-data';
 import { BookingData } from 'src/app/core/api/booking/booking-data';
+import { ContactData } from 'src/app/core/api/contact/contact-data';
+import { BlogData } from 'src/app/core/api/blog/blog-data';
 
 type ApexXAxis = {
   type?: "category" | "datetime" | "numeric";
@@ -44,6 +46,8 @@ export class DashboardAnalyticsComponent {
   dataSource: MatTableDataSource<roomType> | null;
   numberRoom: number;
   numberOrder: number = 0;
+  numberContacts: string = '';
+  numberBlogs: string = '';
 
   public year: number = 0;
 
@@ -52,6 +56,8 @@ export class DashboardAnalyticsComponent {
     private roomType :RoomTypeData,
     private orderData: OrderData,
     private bookingData : BookingData,
+    private contactData: ContactData,
+    private blogData: BlogData,
   ){}
 
   tableColumns: TableColumn<any>[] = [
@@ -72,6 +78,8 @@ export class DashboardAnalyticsComponent {
     this.getIncome();
     this.getNumberRoom();
     this.getOrderBooking();
+    this.getContact();
+    this.getBlog();
     this.dataSource = new MatTableDataSource();
 
   }
@@ -87,7 +95,7 @@ export class DashboardAnalyticsComponent {
         console.log(res);
       },
       error: (err) =>{
-
+        console.log(err);
       }
     })
   }
@@ -102,7 +110,6 @@ export class DashboardAnalyticsComponent {
         },
         error: (error) => {
           console.log(error);
-
         }
       })
   }
@@ -110,8 +117,32 @@ export class DashboardAnalyticsComponent {
   getOrderBooking() {
     this.orderData.search().subscribe({
       next: (res) => {
-        debugger
+        // debugger
         this.numberOrder = res.length;
+        console.log(res);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  getContact() {
+    this.contactData.search().subscribe({
+      next: (res) => {
+        this.numberContacts = `${res.length}`;
+        console.log(res);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  getBlog() {
+    this.blogData.search().subscribe({
+      next: (res) => {
+        this.numberBlogs = `${res.length}`;
         console.log(res);
       },
       error: (error) => {

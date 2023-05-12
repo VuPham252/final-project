@@ -90,7 +90,7 @@
               </ng-container>
               <ng-container *ngIf="email.errors?.['email']">
                 <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
-                  Email is Invalid
+                  Email is Invalid (Example: Example@gmail.com)
                 </div>
               </ng-container>
             </ng-container>
@@ -126,6 +126,21 @@
               <ng-container *ngIf="phoneNumber.errors?.['required']">
                 <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
                   Phone number is required
+                </div>
+              </ng-container>
+              <ng-container *ngIf="phoneNumber.errors?.['pattern']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Phone number only has number
+                </div>
+              </ng-container>
+              <ng-container *ngIf="phoneNumber.errors?.['maxlength']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Phone number max length is 11
+                </div>
+              </ng-container>
+              <ng-container *ngIf="phoneNumber.errors?.['minlength']">
+                <div class="mt-2 ml-1" style="color: red; margin-bottom: -10px">
+                  Phone number min length is 9
                 </div>
               </ng-container>
             </ng-container>

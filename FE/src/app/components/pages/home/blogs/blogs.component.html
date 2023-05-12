@@ -4,7 +4,7 @@
             <div class="section-heading">
                 <h3 class="text-custom-black">Our Blog</h3>
                 <div class="section-description">
-                    <p class="text-light-dark">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                    <p class="text-light-dark">Know about the best, most luxurious, cheapest, budget, weird and all other kinds of hotels and resorts.</p>
                 </div>
             </div>
         </div>
@@ -40,8 +40,8 @@
                                         <a routerLink="/blog-details/{{item.id}}" class="text-custom-black fw-600 fs-20">{{item.title}}</a>
                                     </h2>
                                     <p class="text-light-dark no-margin">{{
-                                      item.shortDescription.length > 5
-                                        ? (item.shortDescription | slice : 0 : 5) + "..."
+                                      item.shortDescription.length > 150
+                                        ? (item.shortDescription | slice : 0 : 150) + "..."
                                         : item.shortDescription
                                     }}</p>
                                 </div>
