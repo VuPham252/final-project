@@ -16,12 +16,20 @@
           <span>Contact</span>
         </h2>
 
-        <form [formGroup]="searchForm" (ngSubmit)="submitSearch()"
-          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border-gray-300">
-          <mat-icon class="icon-sm text-secondary" svgIcon="mat:search"></mat-icon>
-          <input formControlName="keyword" id="keyword" name="keyword"
-            class="px-4 py-2 border-0 outline-none w-full bg-transparent" placeholder="Search..." type="text">
-        </form>
+        <div
+          class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border border-gray-300"
+        >
+          <mat-icon
+            class="icon-sm text-secondary"
+            svgIcon="mat:search"
+          ></mat-icon>
+          <input
+            [formControl]="searchCtrl"
+            class="px-4 py-2 border-0 outline-none w-full bg-transparent"
+            placeholder="Search..."
+            type="search"
+          />
+        </div>
 
         <span class="flex-1"></span>
 
